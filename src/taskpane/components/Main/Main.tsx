@@ -421,7 +421,7 @@ class Main extends React.Component<MainProps, MainState> {
             topBarContent = (
                 <div style={broadCampStyle}>
                     {backButton}
-                    <div>{_t('Contact Details')}</div>
+                    <div>{_t('Contact Details22222222222')}</div>
                     <div style={{ display: 'flex' }}>
                         <TooltipHost content={_t('Search In Odoo')}>
                             <div className="odoo-muted-button" onClick={this.onSearchClick} style={{ border: 'none' }}>
