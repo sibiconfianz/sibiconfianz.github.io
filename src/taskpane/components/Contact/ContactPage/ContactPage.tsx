@@ -3,7 +3,7 @@ import Partner from '../../../../classes/Partner';
 import AppContext from '../../AppContext';
 import ContactListItem from '../ContactList/ContactListItem/ContactListItem';
 import SectionLeads from '../../SectionLeads/SectionLeads';
-import SectionSales from '../../SectionLeads/SectionSales';
+import SectionSales from '../../SelctionSales/SectionSales';
 import CompanySection from '../../Company/CompanySection/CompanySection';
 import SectionTickets from '../../SectionTickets/SectionTickets';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../../utils/httpRequest';
