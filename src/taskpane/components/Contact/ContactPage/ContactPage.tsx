@@ -3,6 +3,7 @@ import Partner from '../../../../classes/Partner';
 import AppContext from '../../AppContext';
 import ContactListItem from '../ContactList/ContactListItem/ContactListItem';
 import SectionLeads from '../../SectionLeads/SectionLeads';
+import SectionSales from '../../SectionLeads/SectionSales';
 import CompanySection from '../../Company/CompanySection/CompanySection';
 import SectionTickets from '../../SectionTickets/SectionTickets';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../../utils/httpRequest';
@@ -12,6 +13,7 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { OdooTheme } from '../../../../utils/Themes';
 import './ContactPage.css';
 import Lead from '../../../../classes/Lead';
+import SaleOrder from '../../../../classes/SaleOrder';
 import HelpdeskTicket from '../../../../classes/HelpdeskTicket';
 import SectionTasks from '../../SectionTasks/SectionTasks';
 import Task from '../../../../classes/Task';
@@ -63,8 +65,11 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                         : Partner.fromJSON({ email: partner.email, name: partner.name }); // Maybe the partner has been deleted on the Odoo side
 
                 if (parsed.result.leads) {
-                    console.log('INININININININININININININININININI', parsed)
                     newPartner.leads = parsed.result.leads.map((lead_json) => Lead.fromJSON(lead_json));
+                }
+                if (parsed.result.sales) {
+                    console.log('INININININININININININININININININI-so', parsed)
+                    newPartner.sales = parsed.result.sales.map((sale_json) => SaleOrder.fromJSON(sale_json));
                 }
                 if (parsed.result.tasks) {
                     newPartner.tasks = parsed.result.tasks.map((task_json) => Task.fromJSON(task_json));
@@ -111,6 +116,10 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         return this.props.partner.leads !== undefined;
     };
 
+    private isSaleInstalled = (): boolean => {
+        return this.props.partner.sales !== undefined;
+    };
+
     private isProjectInstalled = (): boolean => {
         return this.props.partner.tasks !== undefined;
     };
@@ -144,6 +153,10 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
+        const saleList = this.isSaleInstalled() && (
+            <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+        );
+
         const tasksList = this.isProjectInstalled() && (
             <SectionTasks
                 partner={this.state.partner}
@@ -170,11 +183,12 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 {leadsList}
                 {tasksList}
                 {ticketsList}
+                {saleList}
                 <CompanySection
                     partner={this.state.partner}
                     canCreatePartner={this.state.canCreatePartner}
                     onPartnerInfoChanged={this.propagatePartnerInfoChange}
-                    hideCollapseButton={!leadsList && !tasksList && !ticketsList}
+                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList}
                 />
             </div>
         );
