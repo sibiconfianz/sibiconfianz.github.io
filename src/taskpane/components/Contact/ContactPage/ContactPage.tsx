@@ -154,7 +154,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         );
 
         const saleList = this.isSaleInstalled() && (
-            <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+            <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
         const tasksList = this.isProjectInstalled() && (
