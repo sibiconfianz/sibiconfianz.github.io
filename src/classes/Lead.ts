@@ -5,12 +5,15 @@ class Lead {
     probability: number;
     recurringRevenue?: string;
     recurringPlan?: string;
+    linkType?: 'direct' | 'child' | 'parent'; // <- new
 
     static fromJSON(o: Object): Lead {
         const lead = new Lead();
         lead.id = o['lead_id'];
         lead.name = o['name'];
         lead.probability = o['probability'];
+        lead.linkType = o['link_type']; // <- new
+
 
         lead.expectedRevenue = this.removeDecimals(o['expected_revenue']);
 

@@ -36,7 +36,14 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
             },
         );
 
-        return expectedRevenueString;
+//        return expectedRevenueString;
+        const linkTypeLabel = {
+            direct: '', // no need to label
+            child: '[Child Contact]',
+            parent: '[Parent Contact]',
+        }[lead.linkType];
+
+        return `${expectedRevenueString} ${linkTypeLabel || ''}`.trim();  // <- new
     };
 
     render() {
