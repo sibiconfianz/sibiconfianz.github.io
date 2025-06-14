@@ -98,6 +98,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const cids = this.context.getUserCompaniesString();
             const recordId = parsed.result[this.props.odooRecordIdName];
             const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+            console.log('----------', url)
             window.open(url);
         });
     };
@@ -110,6 +111,18 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         } else if (this.state.records.length > 0) {
+            console.log('Section-content', <div className="section-content">
+                    {this.state.records.map((record) => (
+                        <ListItem
+                            model={this.props.model}
+                            res_id={record.id}
+                            key={record.id}
+                            title={record.name}
+                            description={this.props.getRecordDescription(record)}
+                            logTitle={_t(this.props.msgLogEmail)}
+                        />
+                    ))}
+                </div>)
             return (
                 <div className="section-content">
                     {this.state.records.map((record) => (

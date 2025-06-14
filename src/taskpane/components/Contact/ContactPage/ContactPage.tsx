@@ -50,7 +50,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             requestData,
             true,
         );
-
+        console.log('ooooooo', api.baseURL + api.getPartner, requestData)
         this.context.addRequestCanceller(partnerRequest.cancel);
 
         partnerRequest.promise
@@ -63,6 +63,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                         : Partner.fromJSON({ email: partner.email, name: partner.name }); // Maybe the partner has been deleted on the Odoo side
 
                 if (parsed.result.leads) {
+                    console.log('INININININININININININININININININI', parsed)
                     newPartner.leads = parsed.result.leads.map((lead_json) => Lead.fromJSON(lead_json));
                 }
                 if (parsed.result.tasks) {
