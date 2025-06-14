@@ -30,7 +30,7 @@ class SectionSaleOrders extends React.Component<SaleOrderSectionProps, SectionSa
             parent: '[Parent Contact]',
         }[order.linkType];
         console.log('state00000', order.state)
-        return `${order.amountTotal} ${order.state} ${linkTypeLabel || ''}`.trim();
+        return `${order.amountTotal}| In ${order.state} state | ${linkTypeLabel || ''}`.trim();
     };
 
     render() {
