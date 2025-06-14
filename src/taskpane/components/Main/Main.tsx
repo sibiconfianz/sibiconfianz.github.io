@@ -1,4 +1,4 @@
-console.log('----------------------------------------------------------fffffffskmc;-');
+console.log('--------------------------------------------ssss--------------fffffffskmc;-');
 import * as React from 'react';
 
 import './Main.css';
@@ -85,6 +85,7 @@ class Main extends React.Component<MainProps, MainState> {
     }
 
     private addPartnerToDbRequest = () => {
+        console.log('---ooooo')
         if (!this.context.isConnected()) {
             this.context.navigation.goToLogin();
             return;
