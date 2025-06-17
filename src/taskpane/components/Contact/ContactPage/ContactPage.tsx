@@ -44,7 +44,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const requestData = this.props.partner.isAddedToDatabase()
             ? { partner_id: partner.id }
             : { email: partner.email, name: partner.name };
-
+        console.log('End Point-', api.baseURL + api.getPartner)
         const partnerRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.getPartner,
