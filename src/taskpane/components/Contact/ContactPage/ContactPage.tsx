@@ -53,7 +53,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             requestData,
             true,
         );
-        console.log('ooooooo', api.baseURL, '\n', api.getPartner)
         this.context.addRequestCanceller(partnerRequest.cancel);
 
         partnerRequest.promise
@@ -69,7 +68,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     newPartner.leads = parsed.result.leads.map((lead_json) => Lead.fromJSON(lead_json));
                 }
                 if (parsed.result.sales) {
-                    console.log('INININININININININININININININININI-so', parsed)
                     newPartner.sales = parsed.result.sales.map((sale_json) => SaleOrder.fromJSON(sale_json));
                 }
                 if (parsed.result.tasks) {

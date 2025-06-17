@@ -121,7 +121,6 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getAllMatchedPartnersRequest = () => {
-        console.log('main------', api.baseURL + api.searchPartner)
         if (!Office.context.mailbox.item) {
             return;
         }
