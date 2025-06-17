@@ -38,6 +38,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     }
 
     private fetchContact = () => {
+        console.log('partner', this.props.partner)
         const partner = this.props.partner;
 
         const requestData = this.props.partner.isAddedToDatabase()
@@ -52,7 +53,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             requestData,
             true,
         );
-        console.log('ooooooo', api.baseURL + api.getPartner, requestData)
+        console.log('ooooooo', api.baseURL, '\n', api.getPartner)
         this.context.addRequestCanceller(partnerRequest.cancel);
 
         partnerRequest.promise
@@ -140,6 +141,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     };
 
     componentDidMount() {
+        console.log('-----------componentDidMount------')
         if (this.props.loadPartner && this.context.isConnected()) this.fetchContact();
         else this.setState({ isLoading: false, partner: this.props.partner });
     }
