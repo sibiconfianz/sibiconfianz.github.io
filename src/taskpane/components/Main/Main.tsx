@@ -1,4 +1,3 @@
-console.log('--------------------------------------------ssss--------------fffffffskmc;-');
 import * as React from 'react';
 
 import './Main.css';
@@ -85,7 +84,6 @@ class Main extends React.Component<MainProps, MainState> {
     }
 
     private addPartnerToDbRequest = () => {
-        console.log('---ooooo')
         if (!this.context.isConnected()) {
             this.context.navigation.goToLogin();
             return;
@@ -122,6 +120,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getAllMatchedPartnersRequest = () => {
+        console.log('main------')
         if (!Office.context.mailbox.item) {
             return;
         }
@@ -421,7 +420,7 @@ class Main extends React.Component<MainProps, MainState> {
             topBarContent = (
                 <div style={broadCampStyle}>
                     {backButton}
-                    <div>{_t('Contact Details22222222222')}</div>
+                    <div>{_t('Contact Details')}</div>
                     <div style={{ display: 'flex' }}>
                         <TooltipHost content={_t('Search In Odoo')}>
                             <div className="odoo-muted-button" onClick={this.onSearchClick} style={{ border: 'none' }}>

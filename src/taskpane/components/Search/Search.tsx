@@ -59,6 +59,7 @@ class Search extends React.Component<SearchProps, SearchState> {
     };
 
     private getPartnersRequest = (query: String) => {
+        console.log('---------------', api.baseURL + api.searchPartner )
         this.setState({ isLoading: true });
         this.cancelOnGoingRequest();
         if (query.length > 0) {

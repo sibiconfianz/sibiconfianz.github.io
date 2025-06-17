@@ -57,7 +57,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                 odooRecordIdName="lead_id"
                 odooRedirectAction="crm_mail_plugin.crm_lead_action_form_edit"
                 title="Opportunities"
-                titleCount="Opportunities---------- (%(count)s)"
+                titleCount="Opportunities (%(count)s)"
                 msgNoPartner="Save Contact to create new Opportunities."
                 msgNoPartnerNoAccess="The Contact needs to exist to create Opportunity."
                 msgNoRecord="No opportunities found for this contact."
