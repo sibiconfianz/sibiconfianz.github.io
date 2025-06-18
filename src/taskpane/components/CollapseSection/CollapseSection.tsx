@@ -30,6 +30,7 @@ class CollapseSection extends React.Component<CollapseSectionProps, CollapseSect
     }
 
     private onCollapseButtonClick = () => {
+        console.log('COLLAPSEBUTTON-------')
         this.setState({ isCollapsed: !this.state.isCollapsed });
     };
 
