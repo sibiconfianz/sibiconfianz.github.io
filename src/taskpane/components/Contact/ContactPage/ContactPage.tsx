@@ -139,7 +139,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     };
 
     componentDidMount() {
-        console.log('-----------componentDidMount------')
         if (this.props.loadPartner && this.context.isConnected()) this.fetchContact();
         else this.setState({ isLoading: false, partner: this.props.partner });
     }

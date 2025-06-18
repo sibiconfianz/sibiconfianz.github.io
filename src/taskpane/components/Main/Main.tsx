@@ -277,6 +277,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private onSearchClick = (state) => {
+        console.log('SEARCHHHHHHHHHh')
         if (this.context.isConnected()) {
             const backStackItem = {
                 type: BackStackItemType.partner,

@@ -86,12 +86,14 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                     requestJson,
                     true,
                 ).promise;
+                console.log('-response-', response)
             } catch (error) {
                 this.context.showHttpErrorMessage(error);
                 return;
             }
 
             const parsed = JSON.parse(response);
+         console.log('-parsed-', parsed)
             if (parsed['error']) {
                 this.context.showTopBarMessage();
                 return;
@@ -163,13 +165,10 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 //    };
 
     render() {
-        console.log('Section')
         const recordCount = this.state.records && this.state.records.length;
         const title = this.state.records
             ? _t(this.props.titleCount, { count: recordCount.toString() })
             : _t(this.props.title);
-        console.log('recordCount', recordCount)
-        console.log('title', title)
         return (
             <CollapseSection
                 className={this.props.className}
