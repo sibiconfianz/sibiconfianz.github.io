@@ -102,7 +102,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         });
     };
 
-  updated to show leads even without a partner save don odoo side.
+//  updated to show leads even without a partner save don odoo side.
     private getSection = () => {
         const hasRecords = this.state.records.length > 0;
 
