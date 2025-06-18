@@ -105,12 +105,14 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     private getSection = () => {
         console.log('qqqqqqqqqqqqqqqq', this.props.partner)
         if (!this.props.partner.isAddedToDatabase()) {
+            console.log('ININININIININ-1')
             return (
                 <div className="list-text">
                     {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
                 </div>
             );
         } else if (this.state.records.length > 0) {
+            console.log('ININININIININ-2')
             return (
                 <div className="section-content">
                     {this.state.records.map((record) => (
