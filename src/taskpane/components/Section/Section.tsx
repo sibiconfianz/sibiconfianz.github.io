@@ -103,18 +103,45 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
 //  updated to show leads even without a partner save don odoo side.
-    private getSection = () => {
-        const hasRecords = this.state.records.length > 0;
+//    private getSection = () => {
+//        const hasRecords = this.state.records.length > 0;
 
-        if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
+//        if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
+//            return (
+//                <div className="list-text">
+//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
+//                </div>
+//            );
+//        }
+
+//        if (hasRecords) {
+//            return (
+//                <div className="section-content">
+//                    {this.state.records.map((record) => (
+//                        <ListItem
+//                            model={this.props.model}
+//                            res_id={record.id}
+//                            key={record.id}
+//                            title={record.name}
+//                            description={this.props.getRecordDescription(record)}
+//                            logTitle={_t(this.props.msgLogEmail)}
+//                        />
+//                    ))}
+//                </div>
+//            );
+//        }
+
+//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
+//    };
+
+    private getSection = () => {
+        if (!this.props.partner.isAddedToDatabase()) {
             return (
                 <div className="list-text">
                     {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
                 </div>
             );
-        }
-
-        if (hasRecords) {
+        } else if (this.state.records.length > 0) {
             return (
                 <div className="section-content">
                     {this.state.records.map((record) => (
@@ -130,7 +157,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         }
-
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
     };
 
