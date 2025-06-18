@@ -24,7 +24,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     }
 
     private getLeadDescription = (lead: Lead): string => {
-        console.log('----------------------------', lead.expectedRevenue, lead.probability)
+        console.log('----------------------------', lead.expectedRevenue, lead.probability, lead)
         const expectedRevenueString = _t(
             lead.recurringPlan
                 ? '%(expected_revenue)s + %(recurring_revenue)s %(recurring_plan)s at %(probability)s%'
