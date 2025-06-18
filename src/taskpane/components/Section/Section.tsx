@@ -132,7 +132,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         }
 
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
-//    };
+    };
 
 //    private getSection = () => {
 //        if (!this.props.partner.isAddedToDatabase()) {
