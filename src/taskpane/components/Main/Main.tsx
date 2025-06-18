@@ -442,6 +442,7 @@ class Main extends React.Component<MainProps, MainState> {
             </div>
         );
         if (this.context.isConnected()) {
+            console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC')
             connectionButton = (
                 <div
                     className="link-like-button connect-button"
