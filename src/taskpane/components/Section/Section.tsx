@@ -53,6 +53,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     }
 
     private onClickCreate = () => {
+        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkk')
         if (this.props.onClickCreate) {
             this.props.onClickCreate(this.createRecordRequest);
         } else {
