@@ -103,6 +103,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private getSection = () => {
+        console.log('qqqqqqqqqqqqqqqq', this.props.partner)
         if (!this.props.partner.isAddedToDatabase()) {
             return (
                 <div className="list-text">
@@ -129,11 +130,13 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     render() {
+        console.log('Section')
         const recordCount = this.state.records && this.state.records.length;
         const title = this.state.records
             ? _t(this.props.titleCount, { count: recordCount.toString() })
             : _t(this.props.title);
-
+        console.log('recordCount', recordCount)
+        console.log('title', title)
         return (
             <CollapseSection
                 className={this.props.className}
