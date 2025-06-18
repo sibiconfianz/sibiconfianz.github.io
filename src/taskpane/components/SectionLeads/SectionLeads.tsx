@@ -24,17 +24,9 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     }
 
     private getLeadDescription = (lead: Lead): string => {
-        const expectedRevenueString = _t(
-            lead.recurringPlan
-                ? '%(expected_revenue)s + %(recurring_revenue)s %(recurring_plan)s at %(probability)s%'
-                : '%(expected_revenue)s at %(probability)s%',
-            {
-                expected_revenue: lead.expectedRevenue,
-                recurring_revenue: lead.recurringRevenue,
-                recurring_plan: lead.recurringPlan,
-                probability: lead.probability,
-            },
-        );
+        const expectedRevenueString = lead.recurringPlan
+            ? `${lead.expectedRevenue} + ${lead.recurringRevenue} ${lead.recurringPlan} at ${lead.probability}%`
+            : `${lead.expectedRevenue} at ${lead.probability}%`;
 
 //        return expectedRevenueString;
         const linkTypeLabel = {
