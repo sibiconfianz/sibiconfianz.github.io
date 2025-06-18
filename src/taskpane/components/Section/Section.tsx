@@ -132,7 +132,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
     };
-s
+
     render() {
         console.log('Section')
         const recordCount = this.state.records && this.state.records.length;
