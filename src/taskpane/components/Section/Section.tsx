@@ -103,16 +103,17 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private getSection = () => {
-        console.log('qqqqqqqqqqqqqqqq', this.props.partner, this.state.records.length)
-        if (!this.props.partner.isAddedToDatabase()) {
-            console.log('ININININIININ-1')
+        const hasRecords = this.state.records.length > 0;
+
+        if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
             return (
                 <div className="list-text">
                     {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
                 </div>
             );
-        } else if (this.state.records.length > 0) {
-            console.log('ININININIININ-2')
+        }
+
+        if (hasRecords) {
             return (
                 <div className="section-content">
                     {this.state.records.map((record) => (
@@ -128,9 +129,10 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         }
+
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
     };
-
+s
     render() {
         console.log('Section')
         const recordCount = this.state.records && this.state.records.length;
