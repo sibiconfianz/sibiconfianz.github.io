@@ -54,7 +54,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     }
 
     private onClickCreate = () => {
-        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkk')
         if (this.props.onClickCreate) {
             this.props.onClickCreate(this.createRecordRequest);
         } else {
@@ -63,7 +62,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private createRecordRequest = (additionnalValues?) => {
-        console.log('===================')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -88,14 +86,12 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                     requestJson,
                     true,
                 ).promise;
-                console.log('-response-', response)
             } catch (error) {
                 this.context.showHttpErrorMessage(error);
                 return;
             }
 
             const parsed = JSON.parse(response);
-         console.log('-parsed-', parsed)
             if (parsed['error']) {
                 this.context.showTopBarMessage();
                 return;

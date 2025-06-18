@@ -149,6 +149,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const leadsList = this.isCrmInstalled() && (
             <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
+        console.log('wwwwwwwwwwwwww', leadsList)
 
         const saleList = this.isSaleInstalled() && (
             <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
