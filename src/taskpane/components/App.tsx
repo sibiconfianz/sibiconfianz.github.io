@@ -227,12 +227,14 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
     private goToLogin = () => {
+        console.log('lllllllllllllllllllllllllllllllllllllllllllll')
         this.setState({
             pageDisplayed: Page.Login,
         });
     };
 
     private goToMain = () => {
+        console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
         this.setState({
             pageDisplayed: Page.Main,
         });
