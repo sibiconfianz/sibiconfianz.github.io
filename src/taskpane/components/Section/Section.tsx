@@ -1,3 +1,4 @@
+console.log('======================SECTION+++++++++++++++++++++++++++=')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest';
