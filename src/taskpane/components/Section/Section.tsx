@@ -98,6 +98,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const cids = this.context.getUserCompaniesString();
             const recordId = parsed.result[this.props.odooRecordIdName];
             const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+            console.log('URL-', url)
             window.open(url);
         });
     };
