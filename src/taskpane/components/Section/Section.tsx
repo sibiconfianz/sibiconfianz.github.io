@@ -103,7 +103,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private getSection = () => {
-        console.log('qqqqqqqqqqqqqqqq', this.props.partner)
+        console.log('qqqqqqqqqqqqqqqq', this.props.partner, this.state.records.length)
         if (!this.props.partner.isAddedToDatabase()) {
             console.log('ININININIININ-1')
             return (
