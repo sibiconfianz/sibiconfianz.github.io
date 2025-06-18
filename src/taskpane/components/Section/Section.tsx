@@ -61,6 +61,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private createRecordRequest = (additionnalValues?) => {
+        console.log('===================')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
