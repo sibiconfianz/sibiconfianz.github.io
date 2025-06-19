@@ -62,6 +62,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private createRecordRequest = (additionnalValues?) => {
+        console.log('createRecordRequest')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -99,43 +100,14 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const cids = this.context.getUserCompaniesString();
             const recordId = parsed.result[this.props.odooRecordIdName];
             const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-            console.log('SECTION-' , url)
             window.open(url);
         });
     };
 
-//    private getSection = () => {
-//        if (!this.props.partner.isAddedToDatabase()) {
-//            return (
-//                <div className="list-text">
-//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
-//                </div>
-//            );
-//        } else if (this.state.records.length > 0) {
-//            return (
-//                <div className="section-content">
-//                    {this.state.records.map((record) => (
-//                        <ListItem
-//                            model={this.props.model}
-//                            res_id={record.id}
-//                            key={record.id}
-//                            title={record.name}
-//                            description={this.props.getRecordDescription(record)}
-//                            logTitle={_t(this.props.msgLogEmail)}
-//                        />
-//                    ))}
-//                </div>
-//            );
-//        }
-//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
-//    };
-
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
         const hasRecords = this.state.records.length > 0;
-        console.log('SECTION-1', hasRecords)
         if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
-            console.log('111111111111')
             return (
                 <div className="list-text">
                     {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
@@ -144,7 +116,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         }
 
         if (hasRecords) {
-            console.log('22222222222', this.state.records)
             return (
                 <div className="section-content">
                     {this.state.records.map((record) => (
@@ -163,32 +134,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
     };
-
-//    private getSection = () => {
-//        if (!this.props.partner.isAddedToDatabase()) {
-//            return (
-//                <div className="list-text">
-//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
-//                </div>
-//            );
-//        } else if (this.state.records.length > 0) {
-//            return (
-//                <div className="section-content">
-//                    {this.state.records.map((record) => (
-//                        <ListItem
-//                            model={this.props.model}
-//                            res_id={record.id}
-//                            key={record.id}
-//                            title={record.name}
-//                            description={this.props.getRecordDescription(record)}
-//                            logTitle={_t(this.props.msgLogEmail)}
-//                        />
-//                    ))}
-//                </div>
-//            );
-//        }
-//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
-//    };
 
     render() {
         const recordCount = this.state.records && this.state.records.length;

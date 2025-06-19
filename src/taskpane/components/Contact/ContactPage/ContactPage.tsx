@@ -134,7 +134,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const cids = this.context.getUserCompaniesString();
         const url = `${api.baseURL}/web#id=${partner.id}&model=res.partner&view_type=form${cids}`;
         window.open(url, '_blank');
-        console.log('CONTACTPAGE- ', url)
     };
 
     componentDidMount() {
@@ -150,7 +149,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const leadsList = this.isCrmInstalled() && (
             <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
-        console.log('wwwwwwwwwwwwww', leadsList)
 
         const saleList = this.isSaleInstalled() && (
             <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
