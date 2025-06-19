@@ -1,27 +1,27 @@
-.project-search-result-text {
+.Lead-search-result-text {
     cursor: pointer;
     font-weight: bold;
     margin-top: 8px;
 }
 
-.project-search-no-result-text {
+.Lead-search-no-result-text {
     margin-top: 8px;
 }
 
-.project-search-result-text:hover {
+.Lead-search-result-text:hover {
     color: #96417e;
 }
 
-.project-no-scroll {
+.Lead-no-scroll {
     overflow-y: hidden;
 }
 
-.project-result-spinner {
+.Lead-result-spinner {
     margin: 16px auto auto auto;
     height: 100%;
 }
 
-.project-search-bar {
+.Lead-search-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,19 +29,19 @@
     margin: 8px 0 8px 0;
 }
 
-.project-result-container {
+.Lead-result-container {
     display: flex;
     flex-direction: column;
     margin: 16px;
 }
 
-.create-project-text {
+.create-Lead-text {
     margin-top: 8px;
     margin-left: 16px;
     color: #0003e7;
     cursor: pointer;
 }
 
-.create-project-text:hover {
+.create-Lead-text:hover {
     color: #000063;
 }

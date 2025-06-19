@@ -73,7 +73,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             }
             return;
         }
-        const Leads = response.result.map((Lead_json) => Lead.fromJson(Lead_json));
+        const Leads = response.result.map((Lead_json) => Lead.fromJSON(Lead_json));
         this.setState({ Leads: Leads, isLoading: false });
     };
 
@@ -102,7 +102,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             return;
         }
 
-        const createdLead = Lead.fromJson(response.result);
+        const createdLead = Lead.fromJSON(response.result);
         this.props.onLeadClick(createdLead);
     };
 
