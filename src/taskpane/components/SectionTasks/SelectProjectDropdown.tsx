@@ -9,6 +9,7 @@ import api from '../../api';
 import './SelectProjectDropdown.css';
 import AppContext from '../AppContext';
 
+console.log('selectprojectdropdown----------------')
 type SelectProjectProps = {
     partner: Partner;
     canCreateProject: boolean;
@@ -30,6 +31,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     private projectsRequest;
 
     private onQueryChanged = (event) => {
+        console.log('onQueryChanged', event)
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelProjectsRequest();
@@ -77,6 +79,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     };
 
     private createProject = async () => {
+        console.log('createProject')
         const createProjectRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.createProject,
@@ -105,6 +108,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     };
 
     private getProjects = () => {
+        console.log('getProjects')
         const searchedTermExists = this.state.projects.filter(
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;
