@@ -19,6 +19,7 @@ class ListItem extends React.Component<ListItemProps, {}> {
         const cids = this.context.getUserCompaniesString();
         const url = `${api.baseURL}/web#id=${this.props.res_id}&model=${this.props.model}&view_type=form${cids}`;
         window.open(url, '_blank');
+        console.log('LISTITEM', url)
     };
 
     render() {

@@ -209,6 +209,7 @@ class Login extends React.Component<{}, LoginState> {
             'https://www.odoo.com/trial?selected_app=mail_plugin:crm_mail_plugin:helpdesk_mail_plugin',
             '_blank',
         );
+        console.log('LOGIN- ')
     };
 
     render() {

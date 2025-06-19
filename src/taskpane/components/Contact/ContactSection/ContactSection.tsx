@@ -17,6 +17,7 @@ class ContactSection extends React.Component<ContactSectionProps, {}> {
         const cids = this.context.getUserCompaniesString();
         const url = `${api.baseURL}/web#id=${partner.id}&model=res.partner&view_type=form${cids}`;
         window.open(url, '_blank');
+        console.log('CONTACTSECTION- ', url)
     };
 
     render() {

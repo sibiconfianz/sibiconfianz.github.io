@@ -134,6 +134,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const cids = this.context.getUserCompaniesString();
         const url = `${api.baseURL}/web#id=${partner.id}&model=res.partner&view_type=form${cids}`;
         window.open(url, '_blank');
+        console.log('CONTACTPAGE- ', url)
     };
 
     componentDidMount() {
