@@ -69,10 +69,12 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const subject = Office.context.mailbox.item.subject;
 
             const requestJson = Object.assign(
+                
                 {
                     partner_id: this.props.partner.id,
                     email_body: message,
                     email_subject: subject,
+                    email_address: this.props.partner.email,
                 },
                 additionnalValues || {},
             );
