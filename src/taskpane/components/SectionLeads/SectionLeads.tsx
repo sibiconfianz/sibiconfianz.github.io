@@ -5,7 +5,7 @@ import AppContext from '../AppContext';
 import api from '../../api';
 import Lead from '../../../classes/Lead';
 import Section from '../Section/Section';
-
+import SelectLeadDropdown from './SelectLeadDropdown';
 import { _t } from '../../../utils/Translator';
 
 type LeadSectionProps = {
