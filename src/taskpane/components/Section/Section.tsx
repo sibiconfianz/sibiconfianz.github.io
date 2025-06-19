@@ -92,9 +92,9 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 this.context.showHttpErrorMessage(error);
                 return;
             }
+            const parsed = JSON.parse(response);
             console.log('BB', parsed.result)
             console.log('cc', this.props.odooRecordIdName)
-            const parsed = JSON.parse(response);
             if (parsed['error']) {
                 this.context.showTopBarMessage();
                 return;
