@@ -15,13 +15,35 @@ type LeadSectionProps = {
 
 type SectionLeadsState = {
     leads: Lead[];
+    isCollapsed: boolean; //new
+    isLeadCalloutOpen: boolean; //new
+    createCallback?: (any?) => {}; //new
 };
 
 class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> {
     constructor(props, context) {
         super(props, context);
-        this.state = { leads: this.props.partner.leads };
+        this.state = {
+            leads: this.props.partner.leads,
+            isCollapsed: isCollapsed,
+            isLeadCalloutOpen: false,
+         };
     }
+
+    private toggleLeadCallout = (callback) => {
+        console.log('SECTIONLEAD-toggleLeadCallout', this.state.isLeadCalloutOpen)
+        this.setState({
+            isLeadCalloutOpen: !this.state.isLeadCalloutOpen,
+            createCallback: callback,
+        });
+    };
+
+    private onLeadSelected = (Lead: Lead) => {
+        console.log('SECTIONLEAD-onLeadSelected', this.state.isLeadCalloutOpen)
+        this.setState({ isLeadCalloutOpen: false });
+        this.state.createCallback({ Lead_id: Lead.id });
+    };
+
 
     private getLeadDescription = (lead: Lead): string => {
         const expectedRevenueString = _t(
@@ -41,6 +63,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
     render() {
         return (
+        <>
             <Section
                 records={this.state.leads}
                 partner={this.props.partner}
@@ -56,7 +79,27 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                 msgNoRecord="No opportunities found for this contact."
                 msgLogEmail="Log Email Into Lead"
                 getRecordDescription={this.getLeadDescription}
+                onClickCreate={this.toggleLeadCallout}
             />
+                {this.state.isLeadCalloutOpen && (
+                    <Callout
+                        directionalHint={DirectionalHint.bottomRightEdge}
+                        directionalHintFixed={true}
+                        onDismiss={() => this.setState({ isLeadCalloutOpen: false })}
+                        preventDismissOnScroll={true}
+                        setInitialFocus={true}
+                        doNotLayer={true}
+                        gapSpace={0}
+                        role="alertdialog"
+                        target=".collapse-lead-section .collapse-section-button">
+                        <SelectLeadDropdown
+                            partner={this.props.partner}
+                            canCreateLead={this.props.canCreateLead}
+                            onLeadClick={this.onLeadSelected}
+                        />
+                    </Callout>
+                )}
+            </>
         );
     }
 }
