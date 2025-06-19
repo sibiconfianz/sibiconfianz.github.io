@@ -94,6 +94,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     isLoading: false,
                     canCreatePartner: canCreatePartner,
                     canCreateProject: canCreateProject,
+                    canCreateLead: canCreateLead,
                 });
                 if (parsed.result.partner['enrichment_info']) {
                     const enrichmentInfo = new EnrichmentInfo(
