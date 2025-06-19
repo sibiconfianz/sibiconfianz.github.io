@@ -74,6 +74,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 }
                 // undefined should be considered as true for retro-compatibility
                 const canCreateProject = parsed.result.can_create_project !== false;
+                const canCreateLead = parsed.result.can_create_lead !== false;
 
                 if (parsed.result.tickets) {
                     newPartner.tickets = parsed.result.tickets.map((ticket_json) =>

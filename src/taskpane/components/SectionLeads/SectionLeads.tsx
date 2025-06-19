@@ -26,6 +26,7 @@ type SectionLeadsState = {
 class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> {
     constructor(props, context) {
         super(props, context);
+        const isCollapsed = !props.partner.leads || !props.partner.leads.length;
         this.state = {
             leads: this.props.partner.leads,
             isCollapsed: isCollapsed,
