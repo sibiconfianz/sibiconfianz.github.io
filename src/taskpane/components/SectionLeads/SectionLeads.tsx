@@ -28,7 +28,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         super(props, context);
         this.state = {
             leads: this.props.partner.leads,
-//            isCollapsed: isCollapsed,
+            isCollapsed: isCollapsed,
             isLeadCalloutOpen: false,
          };
     }
@@ -41,7 +41,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         });
     };
 
-    private onLeadSelected = (Lead: Lead) => {
+    private onLeadSelected = (lead: Lead) => {
         console.log('SECTIONLEAD-onLeadSelected', this.state.isLeadCalloutOpen)
         this.setState({ isLeadCalloutOpen: false });
         this.state.createCallback({ lead_id: lead.id });
