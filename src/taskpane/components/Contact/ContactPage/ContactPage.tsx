@@ -29,12 +29,13 @@ type ContactPageState = {
     canCreatePartner: boolean;
     isLoading: boolean;
     canCreateProject: boolean;
+    canCreateLead: boolean;
 };
 
 class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     constructor(props, context) {
         super(props, context);
-        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true };
+        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true, canCreateLead: true};
     }
 
     private fetchContact = () => {
@@ -147,7 +148,11 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         }
 
         const leadsList = this.isCrmInstalled() && (
-            <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+            <SectionLeads 
+                partner={this.state.partner}
+                canCreatePartner={this.state.canCreatePartner}
+                canCreateLead={this.state.canCreateLead}
+             />
         );
 
         const saleList = this.isSaleInstalled() && (
