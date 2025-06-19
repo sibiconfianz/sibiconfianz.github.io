@@ -7,10 +7,13 @@ import Lead from '../../../classes/Lead';
 import Section from '../Section/Section';
 import SelectLeadDropdown from './SelectLeadDropdown';
 import { _t } from '../../../utils/Translator';
+import { Callout, DirectionalHint } from 'office-ui-fabric-react';
+
 
 type LeadSectionProps = {
     partner: Partner;
     canCreatePartner: boolean;
+    canCreateLead: boolean;
 };
 
 type SectionLeadsState = {
@@ -25,7 +28,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         super(props, context);
         this.state = {
             leads: this.props.partner.leads,
-            isCollapsed: isCollapsed,
+//            isCollapsed: isCollapsed,
             isLeadCalloutOpen: false,
          };
     }
@@ -41,7 +44,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     private onLeadSelected = (Lead: Lead) => {
         console.log('SECTIONLEAD-onLeadSelected', this.state.isLeadCalloutOpen)
         this.setState({ isLeadCalloutOpen: false });
-        this.state.createCallback({ Lead_id: Lead.id });
+        this.state.createCallback({ lead_id: lead.id });
     };
 
 
