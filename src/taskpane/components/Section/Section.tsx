@@ -78,6 +78,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             );
 
             let response = null;
+            console.log('==========================', api.baseURL + this.props.odooEndpointCreateRecord)
             try {
                 response = await sendHttpRequest(
                     HttpVerb.POST,
