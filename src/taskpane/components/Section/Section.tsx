@@ -145,7 +145,8 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 className={this.props.className}
                 isCollapsed={this.state.isCollapsed}
                 title={title}
-                hasAddButton={this.props.partner.isAddedToDatabase()}
+                hasAddButton={this.props.partner.isAddedToDatabase() ||
+    (this.props.partner.leads && this.props.partner.leads.length > 0)}
                 onAddButtonClick={this.onClickCreate}>
                 {this.getSection()}
             </CollapseSection>
