@@ -1,3 +1,4 @@
+console.log('---SECTIONTEASKs----')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import Project from '../../../classes/Project';
@@ -34,10 +35,13 @@ class SectionTasks extends React.Component<SectionTasksProps, SectionTasksState>
     }
 
     private toggleProjectCallout = (callback) => {
+        console.log('toggleProjectCallout', callback)
+        console.log('isProjectCalloutOpen', isProjectCalloutOpen)
         this.setState({
             isProjectCalloutOpen: !this.state.isProjectCalloutOpen,
             createCallback: callback,
         });
+        console.log('isProjectCalloutOpen', isProjectCalloutOpen)
     };
 
     private onProjectSelected = (project: Project) => {

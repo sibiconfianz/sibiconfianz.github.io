@@ -1,3 +1,4 @@
+console.log('----COLLAPSESECTION----')
 import * as React from 'react';
 import { faChevronDown, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

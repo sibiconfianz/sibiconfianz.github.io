@@ -1,3 +1,4 @@
+console.log('---SECTION----')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest';
@@ -53,6 +54,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     }
 
     private onClickCreate = () => {
+        console.log('----FROM TASK')
         if (this.props.onClickCreate) {
             this.props.onClickCreate(this.createRecordRequest);
         } else {
