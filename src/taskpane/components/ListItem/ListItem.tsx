@@ -18,6 +18,7 @@ class ListItem extends React.Component<ListItemProps, {}> {
     openInOdoo = () => {
         const cids = this.context.getUserCompaniesString();
         const url = `${api.baseURL}/web#id=${this.props.res_id}&model=${this.props.model}&view_type=form${cids}`;
+        console.log('ddddddddddddddddddddddddddddddddd', url)
         window.open(url, '_blank');
     };
 
