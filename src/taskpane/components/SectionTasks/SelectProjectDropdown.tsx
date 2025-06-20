@@ -31,6 +31,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     private projectsRequest;
 
     private onQueryChanged = (event) => {
+        console.log('PROJECTDROPDOWN-onQueryChanged')
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelProjectsRequest();
@@ -42,16 +43,18 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     };
 
     private cancelProjectsRequest = () => {
+        console.log('PROJECTDROPDOWN-cancelProjectsRequest')
         if (this.projectsRequest) this.projectsRequest.cancel();
     };
 
     private getProjectsRequest = async (searchTerm: string) => {
+        console.log('PROJECTDROPDOWN-getProjectsRequest')
         if (!searchTerm || !searchTerm.length) {
             return;
         }
 
         this.setState({ isLoading: true });
-
+        console.log('ENDPOINT-', api.baseURL + api.searchProject, searchTerm)
         this.projectsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchProject,
@@ -78,6 +81,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     };
 
     private createProject = async () => {
+        console.log('PROJECTDROPDOWN-createProject', api.baseURL + api.createProject)
         const createProjectRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.createProject,
@@ -106,6 +110,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     };
 
     private getProjects = () => {
+        console.log('PROJECTDROPDOWN-getProjects')
         const searchedTermExists = this.state.projects.filter(
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;
