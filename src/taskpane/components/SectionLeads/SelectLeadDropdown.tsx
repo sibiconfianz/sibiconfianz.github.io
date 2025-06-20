@@ -87,11 +87,11 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             return;
         }
         const allLeads = response.result;
-        console.log('allllll', allLeads)
-//        const filteredLeads = allLeads.filter(lead => !existingLeadIds.includes(lead.id));
+        console.log('allLeads', allLeads)
+        console.log('existingLeadIds', existingLeadIds)
         const filteredLeads = allLeads.filter(lead => {
-            const isExisting = existingLeadIds.includes(lead.id);
-            console.log('Checking lead:', lead.id, 'Is existing:', isExisting);
+            const isExisting = existingLeadIds.includes(lead.lead_id);  // Use lead.lead_id instead of lead.id
+            console.log('Checking lead:', lead.lead_id, 'Is existing:', isExisting);
             return !isExisting;
         });
         console.log('filteredLeads', filteredLeads)
