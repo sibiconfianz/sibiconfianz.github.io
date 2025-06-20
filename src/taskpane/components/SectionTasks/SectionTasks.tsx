@@ -35,7 +35,7 @@ class SectionTasks extends React.Component<SectionTasksProps, SectionTasksState>
     }
 
     private toggleProjectCallout = (callback) => {
-        console.log('toggleProjectCallout', callback)
+        console.log('toggleProjectCallout-TASK', callback)
         console.log('isProjectCalloutOpen', this.state.isProjectCalloutOpen)
         this.setState({
             isProjectCalloutOpen: !this.state.isProjectCalloutOpen,
@@ -45,6 +45,7 @@ class SectionTasks extends React.Component<SectionTasksProps, SectionTasksState>
     };
 
     private onProjectSelected = (project: Project) => {
+        console.log('onProjectSelected-TASK', project)
         this.setState({ isProjectCalloutOpen: false });
         this.state.createCallback({ project_id: project.id });
     };

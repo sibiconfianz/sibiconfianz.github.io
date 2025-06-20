@@ -1,3 +1,4 @@
+console.log('---SECTIONLEAD----')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 
@@ -35,6 +36,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     }
 
     private toggleLeadCallout = (callback) => {
+        console.log('toggleLeadCallout-LEAD', callback)
         this.setState({
             isLeadCalloutOpen: !this.state.isLeadCalloutOpen,
             createCallback: callback,
@@ -42,6 +44,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     };
 
     private onLeadSelected = (lead: Lead) => {
+        console.log('onLeadSelected-LEAD', project)
         this.setState({ isLeadCalloutOpen: false });
         this.state.createCallback({ lead_id: lead.id });
     };
@@ -67,6 +70,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         return (
         <>
             <Section
+                className="collapse-lead-section"
                 records={this.state.leads}
                 partner={this.props.partner}
                 canCreatePartner={this.props.canCreatePartner}
