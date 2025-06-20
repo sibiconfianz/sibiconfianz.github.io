@@ -31,6 +31,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     private LeadsRequest;
 
     private onQueryChanged = (event) => {
+        console.log('LEADDROPDOWN-onQueryChanged')
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelLeadsRequest();
@@ -42,16 +43,18 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private cancelLeadsRequest = () => {
+        console.log('LEADDROPDOWN-cancelLeadsRequest')
         if (this.LeadsRequest) this.LeadsRequest.cancel();
     };
 
     private getLeadsRequest = async (searchTerm: string) => {
+        console.log('LEADDROPDOWN-getLeadsRequest')
         if (!searchTerm || !searchTerm.length) {
             return;
         }
 
         this.setState({ isLoading: true });
-
+        console.log('ENDPOINT-', api.baseURL + api.searchProject, searchTerm)
         this.LeadsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchLead,
@@ -78,6 +81,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private createLead = async () => {
+        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createProject)
         const createLeadRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.createLead,
@@ -106,6 +110,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private getLeads = () => {
+        console.log('LEADDROPDOWN-getLeads')
         const searchedTermExists = this.state.Leads.filter(
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;
