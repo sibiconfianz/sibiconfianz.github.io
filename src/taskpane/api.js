@@ -14,7 +14,7 @@ const api = {
     searchPartner: '/mail_plugin/partner/search',
     getTranslations: '/mail_plugin/get_translations',
     searchProject: '/mail_plugin/project/search',
-    searchLead: '/mail_plugin/project/search',
+    searchLead: '/mail_plugin/lead/search',
 
     // Authentication
     loginPage: '/web/login', // Should be the usual Odoo login page.
