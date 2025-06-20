@@ -84,6 +84,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             }
             return;
         }
+        const allLeads = response.result;
         const filteredLeads = allLeads.filter(lead => !existingLeadIds.includes(lead.id));
 //        const Leads = response.result.map((Lead_json) => Lead.fromJSON(Lead_json));
         this.setState({ Leads: filteredLeads, isLoading: false });

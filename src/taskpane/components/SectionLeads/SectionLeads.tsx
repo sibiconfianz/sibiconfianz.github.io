@@ -16,6 +16,8 @@ type LeadSectionProps = {
     canCreatePartner: boolean;
     canCreateLead: boolean;
 //    exstingLeads: [];
+    opportunityLeads: Lead[];  // Add this property to the type
+
 };
 
 type SectionLeadsState = {
