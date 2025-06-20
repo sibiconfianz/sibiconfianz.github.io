@@ -54,13 +54,19 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         }
 
         this.setState({ isLoading: true });
-        console.log('ENDPOINT-', api.baseURL + api.searchLead, searchTerm)
+        console.log('ENDPOINT-', api.baseURL + api.searchLead, searchTerm, Partner, this.props.partner.email)
         this.LeadsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchLead,
             ContentType.Json,
             this.context.getConnectionToken(),
             { search_term: searchTerm },
+//            {
+//                partner_id: this.props.partner.id,
+//                email_body: message,
+//                email_subject: subject,
+//                email_address: this.props.partner.email,
+//            },
             true,
         );
         console.log('LEAD response', this.LeadsRequest)
@@ -81,7 +87,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private createLead = async () => {
-        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createProject)
+        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createLead)
         const createLeadRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.createLead,
