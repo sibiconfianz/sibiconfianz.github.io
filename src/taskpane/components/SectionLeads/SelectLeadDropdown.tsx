@@ -54,7 +54,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         }
 
         this.setState({ isLoading: true });
-        console.log('ENDPOINT-', api.baseURL + api.searchProject, searchTerm)
+        console.log('ENDPOINT-', api.baseURL + api.searchLead, searchTerm)
         this.LeadsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchLead,
@@ -63,7 +63,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             { search_term: searchTerm },
             true,
         );
-
+        console.log('LEAD response', this.LeadsRequest)
         this.context.addRequestCanceller(this.LeadsRequest.cancel);
 
         let response = null;
