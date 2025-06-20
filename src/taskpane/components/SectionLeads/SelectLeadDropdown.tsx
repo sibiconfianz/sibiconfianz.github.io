@@ -14,6 +14,7 @@ type SelectLeadProps = {
     partner: Partner;
     canCreateLead: boolean;
     onLeadClick: (Lead: Lead) => void;
+    opportunityLeads: Lead[];
 };
 
 type SelectLeadState = {

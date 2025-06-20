@@ -154,6 +154,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 partner={this.state.partner}
                 canCreatePartner={this.state.canCreatePartner}
                 canCreateLead={this.state.canCreateLead}
+                opportunityLeads={this.state.partner.leads || []}  // Pass the leads here
              />
         );
 
