@@ -18,7 +18,7 @@ type SelectLeadProps = {
 type SelectLeadState = {
     query: string;
     isLoading: boolean;
-    Leads: Lead[];
+    leads: Lead[];
 };
 
 class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadState> {
@@ -30,7 +30,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     private LeadsRequest;
 
     private onQueryChanged = (event) => {
-        console.log('onQueryChanged', event)
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelLeadsRequest();
@@ -78,7 +77,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private createLead = async () => {
-        console.log('createLead')
         const createLeadRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.createLead,
@@ -107,7 +105,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private getLeads = () => {
-        console.log('getLeads')
         const searchedTermExists = this.state.Leads.filter(
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;

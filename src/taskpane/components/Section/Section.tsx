@@ -1,4 +1,3 @@
-console.log('======================SECTION+++++++++++++++++++++++++++=')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest';
@@ -62,7 +61,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private createRecordRequest = (additionnalValues?) => {
-        console.log('createRecordRequest')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -80,7 +78,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             );
 
             let response = null;
-            console.log('==========================', api.baseURL + this.props.odooEndpointCreateRecord)
             try {
                 response = await sendHttpRequest(
                     HttpVerb.POST,
@@ -95,8 +92,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 return;
             }
             const parsed = JSON.parse(response);
-            console.log('BB', parsed.result)
-            console.log('cc', this.props.odooRecordIdName)
             if (parsed['error']) {
                 this.context.showTopBarMessage();
                 return;
@@ -104,7 +99,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const cids = this.context.getUserCompaniesString();
             const recordId = parsed.result[this.props.odooRecordIdName];
             const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-            console.log('URL=', url)
             window.open(url);
         });
     };

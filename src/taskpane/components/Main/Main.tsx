@@ -1,4 +1,3 @@
-console.log('111111111111111111111111111-mani')
 import * as React from 'react';
 
 import './Main.css';
@@ -442,7 +441,6 @@ class Main extends React.Component<MainProps, MainState> {
             </div>
         );
         if (this.context.isConnected()) {
-            console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC')
             connectionButton = (
                 <div
                     className="link-like-button connect-button"

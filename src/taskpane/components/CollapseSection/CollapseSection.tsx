@@ -37,7 +37,6 @@ class CollapseSection extends React.Component<CollapseSectionProps, CollapseSect
         const addButton = this.props.hasAddButton && (
             <FontAwesomeIcon icon={faPlus} className="collapse-section-button" onClick={this.props.onAddButtonClick} />
         );
-        console.log('COLLAPSESECTION', addButton)
         const collapseButton = !this.props.hideCollapseButton && (
             <FontAwesomeIcon
                 className="collapse-section-button"
