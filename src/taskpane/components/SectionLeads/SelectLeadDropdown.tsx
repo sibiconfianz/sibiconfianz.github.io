@@ -18,7 +18,7 @@ type SelectLeadProps = {
 type SelectLeadState = {
     query: string;
     isLoading: boolean;
-    leads: Lead[];
+    Lead: Lead[];
 };
 
 class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadState> {
