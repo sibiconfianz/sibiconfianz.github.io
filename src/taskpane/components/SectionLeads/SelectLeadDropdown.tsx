@@ -48,6 +48,8 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private getLeadsRequest = async (searchTerm: string) => {
+        const { opportunityLeads } = this.props;
+        const existingLeadIds = opportunityLeads.map(lead => lead.id);
         console.log('LEADDROPDOWN-getLeadsRequest')
         if (!searchTerm || !searchTerm.length) {
             return;
@@ -82,8 +84,9 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             }
             return;
         }
-        const Leads = response.result.map((Lead_json) => Lead.fromJSON(Lead_json));
-        this.setState({ Leads: Leads, isLoading: false });
+        const filteredLeads = allLeads.filter(lead => !existingLeadIds.includes(lead.id));
+//        const Leads = response.result.map((Lead_json) => Lead.fromJSON(Lead_json));
+        this.setState({ Leads: filteredLeads, isLoading: false });
     };
 
     private createLead = async () => {

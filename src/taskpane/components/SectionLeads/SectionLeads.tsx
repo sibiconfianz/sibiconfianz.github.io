@@ -15,6 +15,7 @@ type LeadSectionProps = {
     partner: Partner;
     canCreatePartner: boolean;
     canCreateLead: boolean;
+//    exstingLeads: [];
 };
 
 type SectionLeadsState = {
@@ -102,6 +103,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                             partner={this.props.partner}
                             canCreateLead={this.props.canCreateLead}
                             onLeadClick={this.onLeadSelected}
+                            opportunityLeads={this.state.leads}  // Pass the already linked leads
                         />
                     </Callout>
                 )}
