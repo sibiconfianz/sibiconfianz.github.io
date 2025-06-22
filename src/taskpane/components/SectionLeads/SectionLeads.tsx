@@ -79,21 +79,23 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         // Normalize lead shape
         const normalizedLead: Lead = {
             ...lead,
-            id: lead.id || lead.lead_id, // Fallback if only lead_id is present
+            id: lead.id || lead.lead_id,
         };
 
         // Close the callout
         this.setState({ isLeadCalloutOpen: false }, () => {
-            console.log('Callout closed');
         });
 
         console.log('Normalized lead:', normalizedLead);
         console.log('Current leads in state:', this.state.leads);
+        const updateData = this.props.partner.id
+        ? { partner_id: this.props.partner.id }
+        : { email_from: Office.context.mailbox.item.from.emailAddress };
+        console.log('------------', updateData)
 
         // Optional: Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
         if (alreadyExists) {
-            console.log('Lead already exists in the list — skipping');
             return;
         }
 
@@ -101,7 +103,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         this.setState(prevState => ({
             leads: [...prevState.leads, normalizedLead],
         }), () => {
-            console.log('Updated leads after adding:', this.state.leads);
         });
     };
 
