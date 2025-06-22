@@ -15,7 +15,7 @@ const api = {
     getTranslations: '/mail_plugin/get_translations',
     searchProject: '/mail_plugin/project/search',
     searchLead: '/mail_plugin/lead/search',
-    odooEndpointUpdateLead: '/mail_plugin/lead/update'
+    odooEndpointUpdateLead: '/mail_plugin/lead/update',
 
     // Authentication
     loginPage: '/web/login', // Should be the usual Odoo login page.
