@@ -88,11 +88,11 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         console.log('this.state.leads', this.state.leads)
         // Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
-        if (alreadyExists) {
-            console.log('Lead already in the list, skipping.');
-            return;
-        }
-
+//        if (alreadyExists) {
+//            console.log('Lead already in the list, skipping.');
+//            return;
+//        }
+        console.log('alreadyExists',alreadyExists)
         // Add the lead to the current leads
         this.setState(prevState => ({
             leads: [...prevState.leads, normalizedLead],
