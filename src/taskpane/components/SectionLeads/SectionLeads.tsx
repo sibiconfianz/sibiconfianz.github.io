@@ -54,6 +54,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
     private onLeadSelected = (lead: Lead) => {
         console.log('onLeadSelected--------------1LEAD', lead);
+        console.log('Section', Section)
 
         // Close the callout
         this.setState({ isLeadCalloutOpen: false });
@@ -61,11 +62,11 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         // Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === lead.id);
         console.log('sssssssss', alreadyExists)
+        console.log('Section', Section)
         if (alreadyExists) {
             console.log('Lead already in the list, skipping.');
             return;
         }
-        console.log('Section', Section)
         // Add the lead to the current leads in UI only
         this.setState(prevState => ({
             leads: [...prevState.leads, lead],
