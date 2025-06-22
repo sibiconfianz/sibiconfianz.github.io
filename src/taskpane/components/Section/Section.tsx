@@ -111,7 +111,8 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
-        const hasRecords = this.state.records.length > 0;
+//        const hasRecords = this.state.records.length > 0;
+        const hasRecords = this.props.records.length > 0;
         if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
             return (
                 <div className="list-text">
@@ -119,11 +120,12 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         }
+//{this.state.records.map((record) => (
 
         if (hasRecords) {
             return (
                 <div className="section-content">
-                    {this.state.records.map((record) => (
+                    {this.props.records.map((record) => (
                         <ListItem
                             model={this.props.model}
                             res_id={record.id}
@@ -141,10 +143,10 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     render() {
-        const recordCount = this.state.records && this.state.records.length;
-        const title = this.state.records
-            ? _t(this.props.titleCount, { count: recordCount.toString() })
-            : _t(this.props.title);
+    const recordCount = this.props.records && this.props.records.length;
+    const title = this.props.records
+        ? _t(this.props.titleCount, { count: recordCount.toString() })
+        : _t(this.props.title)
         return (
             <CollapseSection
                 className={this.props.className}
