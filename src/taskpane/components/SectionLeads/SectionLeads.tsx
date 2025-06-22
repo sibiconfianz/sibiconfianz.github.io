@@ -74,59 +74,49 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 //        }));
 //    };
 
-    private onLeadSelected = (lead: any) => {
+    private onLeadSelected = async (lead: any) => {
         console.log('onLeadSelected--------------*LEAD', lead);
 
-        // Normalize lead shape
         const normalizedLead: Lead = {
             ...lead,
             id: lead.id || lead.lead_id,
         };
 
-        // Close the callout
-        this.setState({ isLeadCalloutOpen: false }, () => {
-        });
+        this.setState({ isLeadCalloutOpen: false });
 
-        console.log('Normalized lead:', normalizedLead);
-        console.log('Current leads in state:', this.state.leads);
         const updateData = this.props.partner.id
-        ? { partner_id: this.props.partner.id }
-        : { email_from: Office.context.mailbox.item.to[0].emailAddress};
+            ? { partner_id: this.props.partner.id }
+            : { email_from: Office.context.mailbox.item.to[0].emailAddress };
 
         const updateRequest = sendHttpRequest(
-                HttpVerb.POST,
-                api.baseURL + api.odooEndpointUpdateLead,
-                ContentType.Json,
-                this.context.getConnectionToken(),
-                {
-                    lead_id: normalizedLead.id,
-                    values: updateData,
-                },
-                true
-            );
+            HttpVerb.POST,
+            api.baseURL + api.odooEndpointUpdateLead,
+            ContentType.Json,
+            this.context.getConnectionToken(),
+            {
+                lead_id: normalizedLead.id,
+                values: updateData,
+            },
+            true
+        );
 
-            try {
-                const response = JSON.parse(await updateRequest.promise);
-                console.log('Lead updated successfully:', response);
-            } catch (error) {
-                this.context.showHttpErrorMessage(error);
-                return;
-            }
+        try {
+            const response = JSON.parse(await updateRequest.promise);
+            console.log('Lead updated successfully:', response);
+        } catch (error) {
+            this.context.showHttpErrorMessage(error);
+            return;
+        }
 
-        // Optional: Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
         if (alreadyExists) {
             return;
         }
 
-        // Add the new lead to state
         this.setState(prevState => ({
             leads: [...prevState.leads, normalizedLead],
-        }), () => {
-        });
+        }));
     };
-
-
 
     private getLeadDescription = (lead: Lead): string => {
         const expectedRevenueString = _t(
