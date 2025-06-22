@@ -39,7 +39,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     }
 
     private toggleLeadCallout = (callback) => {
-        console.log('toggleLeadCallout-LEAD', callback)
+//        console.log('toggleLeadCallout-LEAD', callback)
         this.setState({
             isLeadCalloutOpen: !this.state.isLeadCalloutOpen,
             createCallback: callback,
@@ -47,7 +47,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     };
 
     private onLeadSelected = (lead: Lead) => {
-        console.log('onLeadSelected-LEAD', lead)
+        console.log('onLeadSelected--------------LEAD', lead)
         this.setState({ isLeadCalloutOpen: false });
         this.state.createCallback({ lead_id: lead.id });
     };
