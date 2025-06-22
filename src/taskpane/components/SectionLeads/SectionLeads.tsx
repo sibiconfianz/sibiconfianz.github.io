@@ -53,13 +53,14 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 //    };
 
     private onLeadSelected = (lead: Lead) => {
-        console.log('onLeadSelected--------------LEAD', lead);
+        console.log('onLeadSelected--------------1LEAD', lead);
 
         // Close the callout
         this.setState({ isLeadCalloutOpen: false });
 
         // Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === lead.id);
+        console.log('sssssssss', alreadyExists)
         if (alreadyExists) {
             console.log('Lead already in the list, skipping.');
             return;
