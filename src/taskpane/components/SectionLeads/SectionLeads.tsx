@@ -95,7 +95,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
         const updateRequest = sendHttpRequest(
                 HttpVerb.POST,
-                api.baseURL + this.props.odooEndpointUpdateLead,
+                api.baseURL + api.odooEndpointUpdateLead,
                 ContentType.Json,
                 this.context.getConnectionToken(),
                 {
