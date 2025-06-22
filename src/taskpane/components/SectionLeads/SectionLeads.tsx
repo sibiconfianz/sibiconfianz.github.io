@@ -92,6 +92,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         ? { partner_id: this.props.partner.id }
         : { email_from: Office.context.mailbox.item.from.emailAddress };
         console.log('------------', updateData)
+        console.log('------------', Office.context.mailbox)
 
         // Optional: Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
