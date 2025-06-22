@@ -88,7 +88,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
             partner_id: this.props.partner.id,  // even if it's -1
             email_from: Office.context.mailbox.item.to[0].emailAddress,
         };
-        console.log('updateddata', updatedData)
+        console.log('updateddata', updateData)
         const updateRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.odooEndpointUpdateLead,
