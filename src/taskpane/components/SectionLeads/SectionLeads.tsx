@@ -46,11 +46,31 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         });
     };
 
+//    private onLeadSelected = (lead: Lead) => {
+//        console.log('onLeadSelected--------------LEAD', lead)
+//        this.setState({ isLeadCalloutOpen: false });
+//        this.state.createCallback({ lead_id: lead.id });
+//    };
+
     private onLeadSelected = (lead: Lead) => {
-        console.log('onLeadSelected--------------LEAD', lead)
+        console.log('onLeadSelected--------------LEAD', lead);
+
+        // Close the callout
         this.setState({ isLeadCalloutOpen: false });
-        this.state.createCallback({ lead_id: lead.id });
+
+        // Prevent duplicates
+        const alreadyExists = this.state.leads.some(existing => existing.id === lead.id);
+        if (alreadyExists) {
+            console.log('Lead already in the list, skipping.');
+            return;
+        }
+
+        // Add the lead to the current leads in UI only
+        this.setState(prevState => ({
+            leads: [...prevState.leads, lead],
+        }));
     };
+
 
 
     private getLeadDescription = (lead: Lead): string => {
