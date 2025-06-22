@@ -84,9 +84,10 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
         this.setState({ isLeadCalloutOpen: false });
 
-        const updateData = this.props.partner.id
-            ? { partner_id: this.props.partner.id }
-            : { email_from: Office.context.mailbox.item.to[0].emailAddress };
+        const updateData = {
+            partner_id: this.props.partner.id,  // even if it's -1
+            email_from: Office.context.mailbox.item.to[0].emailAddress,
+        };
 
         const updateRequest = sendHttpRequest(
             HttpVerb.POST,
