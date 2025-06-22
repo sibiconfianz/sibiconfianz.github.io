@@ -79,25 +79,32 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         // Normalize lead shape
         const normalizedLead: Lead = {
             ...lead,
-            id: lead.id || lead.lead_id, // map lead_id to id if not already present
+            id: lead.id || lead.lead_id, // Fallback if only lead_id is present
         };
 
         // Close the callout
-        this.setState({ isLeadCalloutOpen: false });
-        console.log('normalizedLead', normalizedLead)
-        console.log('this.state.leads', this.state.leads)
-        // Prevent duplicates
-//        const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
-//        if (alreadyExists) {
-//            console.log('Lead already in the list, skipping.');
-//            return;
-//        }
-        console.log('alreadyExists')
-        // Add the lead to the current leads
+        this.setState({ isLeadCalloutOpen: false }, () => {
+            console.log('Callout closed');
+        });
+
+        console.log('Normalized lead:', normalizedLead);
+        console.log('Current leads in state:', this.state.leads);
+
+        // Optional: Prevent duplicates
+        const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
+        if (alreadyExists) {
+            console.log('Lead already exists in the list — skipping');
+            return;
+        }
+
+        // Add the new lead to state
         this.setState(prevState => ({
             leads: [...prevState.leads, normalizedLead],
-        }));
+        }), () => {
+            console.log('Updated leads after adding:', this.state.leads);
+        });
     };
+
 
 
     private getLeadDescription = (lead: Lead): string => {
