@@ -65,7 +65,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
             console.log('Lead already in the list, skipping.');
             return;
         }
-
+        console.log('Section', Section)
         // Add the lead to the current leads in UI only
         this.setState(prevState => ({
             leads: [...prevState.leads, lead],
