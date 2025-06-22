@@ -52,27 +52,52 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 //        this.state.createCallback({ lead_id: lead.id });
 //    };
 
-    private onLeadSelected = (lead: Lead) => {
-        console.log('onLeadSelected--------------1LEAD', lead);
-        console.log('Section', Section)
+//    private onLeadSelected = (lead: Lead) => {
+//        console.log('onLeadSelected--------------1LEAD', lead);
+//        console.log('Section', Section)
+
+//        // Close the callout
+//        this.setState({ isLeadCalloutOpen: false });
+
+//        // Prevent duplicates
+//        const alreadyExists = this.state.leads.some(existing => existing.id === lead.id);
+//        console.log('sssssssss', alreadyExists)
+//        console.log('Section', Section)
+//        if (alreadyExists) {
+//            console.log('Lead already in the list, skipping.');
+//            return;
+//        }
+//        // Add the lead to the current leads in UI only
+//        this.setState(prevState => ({
+//            leads: [...prevState.leads, lead],
+//        }));
+//    };
+
+    private onLeadSelected = (lead: any) => {
+        console.log('onLeadSelected--------------*LEAD', lead);
+
+        // Normalize lead shape
+        const normalizedLead: Lead = {
+            ...lead,
+            id: lead.id || lead.lead_id, // map lead_id to id if not already present
+        };
 
         // Close the callout
         this.setState({ isLeadCalloutOpen: false });
-
+        console.log('normalizedLead', normalizedLead)
+        console.log('this.state.leads', this.state.leads)
         // Prevent duplicates
-        const alreadyExists = this.state.leads.some(existing => existing.id === lead.id);
-        console.log('sssssssss', alreadyExists)
-        console.log('Section', Section)
+        const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
         if (alreadyExists) {
             console.log('Lead already in the list, skipping.');
             return;
         }
-        // Add the lead to the current leads in UI only
+
+        // Add the lead to the current leads
         this.setState(prevState => ({
-            leads: [...prevState.leads, lead],
+            leads: [...prevState.leads, normalizedLead],
         }));
     };
-
 
 
     private getLeadDescription = (lead: Lead): string => {
