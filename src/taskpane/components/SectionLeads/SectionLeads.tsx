@@ -9,6 +9,7 @@ import Section from '../Section/Section';
 import SelectLeadDropdown from './SelectLeadDropdown';
 import { _t } from '../../../utils/Translator';
 import { Callout, DirectionalHint } from 'office-ui-fabric-react';
+import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest';
 
 
 type LeadSectionProps = {
