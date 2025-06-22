@@ -90,10 +90,27 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         console.log('Current leads in state:', this.state.leads);
         const updateData = this.props.partner.id
         ? { partner_id: this.props.partner.id }
-        : { email_from: Office.context.mailbox.item.from.emailAddress };
-        console.log('------------', updateData)
-        console.log('------------', Office.context.mailbox)
-        console.log('------------', Office.context.mailbox.item.to[0].emailAddress)
+        : { email_from: Office.context.mailbox.item.to[0].emailAddress};
+
+        const updateRequest = sendHttpRequest(
+                HttpVerb.POST,
+                api.baseURL + this.props.odooEndpointUpdateLead,
+                ContentType.Json,
+                this.context.getConnectionToken(),
+                {
+                    lead_id: normalizedLead.id,
+                    values: updateData,
+                },
+                true
+            );
+
+            try {
+                const response = JSON.parse(await updateRequest.promise);
+                console.log('Lead updated successfully:', response);
+            } catch (error) {
+                this.context.showHttpErrorMessage(error);
+                return;
+            }
 
         // Optional: Prevent duplicates
         const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
