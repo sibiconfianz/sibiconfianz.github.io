@@ -136,14 +136,13 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             }
 
 
+            const parsed = JSON.parse(response);
+            const createdLead = Lead.fromJSON(parsed.result);
+            const recordId = parsed.result.lead_id;
             this.setState({ isLoading: false });
 
             // Also notify parent to update the UI if needed
             this.props.onLeadClick(createdLead);
-
-            const parsed = JSON.parse(response);
-            const createdLead = Lead.fromJSON(parsed.result);
-            const recordId = parsed.result.lead_id;
             console.log('kkkkkkkkkkkk', parsed)
             console.log('kksssskkkkkkkkkk', createdLead)
             console.log('kksssskkssssssssssssssssskkkkkkkk', recordId)
