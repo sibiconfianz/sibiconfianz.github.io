@@ -54,18 +54,14 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     }
 
     private onClickCreate = () => {
-        console.log('----FROM TASK')
         if (this.props.onClickCreate) {
-            console.log('11111111')
             this.props.onClickCreate(this.createRecordRequest);
         } else {
-            console.log('222222')
             this.createRecordRequest();
         }
     };
 
     private createRecordRequest = (additionnalValues?) => {
-        console.log('ccccccccccccccccccccccccccc')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -104,7 +100,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const cids = this.context.getUserCompaniesString();
             const recordId = parsed.result[this.props.odooRecordIdName];
             const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-            console.log('----url', url)
             window.open(url);
         });
     };

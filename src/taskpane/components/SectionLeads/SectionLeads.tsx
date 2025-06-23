@@ -40,7 +40,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     }
 
     private toggleLeadCallout = (callback) => {
-//        console.log('toggleLeadCallout-LEAD', callback)
         this.setState({
             isLeadCalloutOpen: !this.state.isLeadCalloutOpen,
             createCallback: callback,
@@ -75,7 +74,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 //    };
 
     private onLeadSelected = async (lead: any) => {
-        console.log('onLeadSelected--------------*LEAD', lead);
 
         const normalizedLead: Lead = {
             ...lead,
@@ -88,7 +86,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
             partner_id: this.props.partner.id,  // even if it's -1
             email_from: Office.context.mailbox.item.to[0].emailAddress,
         };
-        console.log('updateddata', updateData)
         const updateRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.odooEndpointUpdateLead,
@@ -103,7 +100,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
         try {
             const response = JSON.parse(await updateRequest.promise);
-            console.log('Lead updated successfully:', response);
         } catch (error) {
             this.context.showHttpErrorMessage(error);
             return;

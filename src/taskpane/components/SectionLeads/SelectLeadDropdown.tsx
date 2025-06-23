@@ -32,7 +32,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     private LeadsRequest;
 
     private onQueryChanged = (event) => {
-        console.log('LEADDROPDOWN-onQueryChanged')
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelLeadsRequest();
@@ -44,21 +43,17 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
     };
 
     private cancelLeadsRequest = () => {
-        console.log('LEADDROPDOWN-cancelLeadsRequest')
         if (this.LeadsRequest) this.LeadsRequest.cancel();
     };
 
     private getLeadsRequest = async (searchTerm: string) => {
         const { opportunityLeads } = this.props;
         const existingLeadIds = opportunityLeads.map(lead => lead.id);  
-        console.log('leadssssssssssssssssssssssss', existingLeadIds)
-        console.log('LEADDROPDOWN-getLeadsRequest')
         if (!searchTerm || !searchTerm.length) {
             return;
         }
 
         this.setState({ isLoading: true });
-        console.log('ENDPOINT-', api.baseURL + api.searchLead, searchTerm, Partner, this.props.partner.email)
         this.LeadsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchLead,
@@ -73,7 +68,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //            },
             true,
         );
-        console.log('LEAD response', this.LeadsRequest)
         this.context.addRequestCanceller(this.LeadsRequest.cancel);
 
         let response = null;
@@ -87,14 +81,10 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             return;
         }
         const allLeads = response.result;
-        console.log('allLeads', allLeads)
-        console.log('existingLeadIds', existingLeadIds)
         const filteredLeads = allLeads.filter(lead => {
             const isExisting = existingLeadIds.includes(lead.lead_id);  // Use lead.lead_id instead of lead.id
-            console.log('Checking lead:', lead.lead_id, 'Is existing:', isExisting);
             return !isExisting;
         });
-        console.log('filteredLeads', filteredLeads)
 //        const Leads = response.result.map((Lead_json) => Lead.fromJSON(Lead_json));
         this.setState({ Leads: filteredLeads, isLoading: false });
     };
@@ -187,7 +177,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //    };
 
     private getLeads = () => {
-        console.log('LEADDROPDOWN-getLeads')
         const searchedTermExists = this.state.Leads.filter(
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;
