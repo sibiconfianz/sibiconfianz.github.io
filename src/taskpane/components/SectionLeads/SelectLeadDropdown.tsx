@@ -137,13 +137,17 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 
 
             const parsed = JSON.parse(response);
+
+            if (parsed['error']) {
+                this.context.showTopBarMessage();
+                return;
+            }
             const createdLead = Lead.fromJSON(parsed.result);
             const recordId = parsed.result.lead_id;
-            this.setState({ isLoading: false });
+//            this.setState({ isLoading: false });
 
             // Also notify parent to update the UI if needed
-            this.props.onLeadClick(createdLead);
-            console.log('kkkkkkkkkkkk', parsed)
+//            this.props.onLeadClick(createdLead);
             console.log('kksssskkkkkkkkkk', createdLead)
             console.log('kksssskkssssssssssssssssskkkkkkkk', recordId)
             // Open Odoo form view
