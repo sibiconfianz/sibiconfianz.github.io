@@ -101,25 +101,24 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 
     private createLead = async () => {
         console.log('LEADDROPDOWN-createLead');
-        
+
         this.setState({ isLoading: true });
 
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
-//            const subject = Office.context.mailbox.item.subject;
             const emailAddress = Office.context.mailbox.item.to[0]?.emailAddress || '';
 
             const requestJson = {
-//                name: this.state.query,
                 email_body: message,
                 email_subject: this.state.query,
                 email_address: emailAddress,
                 partner_id: this.props.partner?.isAddedToDatabase() ? this.props.partner.id : false,
             };
-            console.log('requestJson', requestJson)
-            let response = null;
+
+            console.log('requestJson', requestJson);
+
             try {
-                response = await sendHttpRequest(
+                const response = await sendHttpRequest(
                     HttpVerb.POST,
                     api.baseURL + api.createLead,
                     ContentType.Json,
@@ -127,35 +126,34 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                     requestJson,
                     true
                 ).promise;
-                console.log('dddddddddddddddddddd', response)
+
+                console.log('Lead created successfully:', response);
+
+                if (response.error) {
+                    this.context.showTopBarMessage();
+                    this.setState({ isLoading: false });
+                    return;
+                }
+
+                const createdLead = Lead.fromJSON(response.result);
+                const recordId = response.result.lead_id;
+
+                // Optional: Notify parent
+                this.props.onLeadClick(createdLead);
+
+                // Redirect to Odoo Lead Form View
+                const cids = this.context.getUserCompaniesString?.() || '';
+                const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
+                console.log('Redirecting to:', url);
+                window.open(url, '_blank');
+
+                this.setState({ isLoading: false });
+
             } catch (error) {
-                console.log('11111111111111111111111', error)
+                console.error('Lead creation error:', error);
                 this.context.showHttpErrorMessage(error);
                 this.setState({ isLoading: false });
-                return;
             }
-
-
-            const parsed = JSON.parse(response);
-
-            if (parsed['error']) {
-                this.context.showTopBarMessage();
-                return;
-            }
-            const createdLead = Lead.fromJSON(parsed.result);
-            const recordId = parsed.result.lead_id;
-//            this.setState({ isLoading: false });
-
-            // Also notify parent to update the UI if needed
-//            this.props.onLeadClick(createdLead);
-            console.log('kksssskkkkkkkkkk', createdLead)
-            console.log('kksssskkssssssssssssssssskkkkkkkk', recordId)
-            // Open Odoo form view
-            const cids = this.context.getUserCompaniesString?.() || '';
-            console.log('kksssskkssssssssssssssssskkkkkkkk', cids)
-            const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
-            window.open(url, '_blank');
-
         });
     };
 
