@@ -147,34 +147,78 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //        });
 //    };
 
-    private createLead = async () => {
-        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createLead)
-        const createLeadRequest = sendHttpRequest(
-            HttpVerb.POST,
-            api.baseURL + api.createLead,
-            ContentType.Json,
-            this.context.getConnectionToken(),
-            { name: this.state.query },
-            true,
-        );
+    private createLead = (additionnalValues?) => {
+        console.log('=======================================LEAD')
+        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
+            // Remove the history and only log the most recent message.
+            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
+            const subject = Office.context.mailbox.item.subject;
 
-        this.setState({ isLoading: true });
+            const requestJson = Object.assign(
+                
+                {
+                    partner_id: this.props.partner.id,
+                    email_body: message,
+                    email_subject: subject,
+                    email_address: this.props.partner.email,
+                },
+                additionnalValues || {},
+            );
 
-        let response = null;
-        try {
-            response = JSON.parse(await createLeadRequest.promise);
-        } catch (error) {
-            if (error) {
-                this.setState({ isLoading: false, Leads: [] });
+            let response = null;
+            try {
+                response = await sendHttpRequest(
+                    HttpVerb.POST,
+                    api.baseURL + this.props.odooEndpointCreateRecord,
+                    ContentType.Json,
+                    this.context.getConnectionToken(),
+                    requestJson,
+                    true,
+                ).promise;
+            } catch (error) {
                 this.context.showHttpErrorMessage(error);
-                this.setState({ isLoading: false });
+                return;
             }
-            return;
-        }
-
-        const createdLead = Lead.fromJSON(response.result);
-        this.props.onLeadClick(createdLead);
+            const parsed = JSON.parse(response);
+            if (parsed['error']) {
+                this.context.showTopBarMessage();
+                return;
+            }
+            const cids = this.context.getUserCompaniesString();
+            const recordId = parsed.result[this.props.odooRecordIdName];
+            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+            window.open(url);
+        });
     };
+
+//    private createLead = async () => {
+//        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createLead)
+//        const createLeadRequest = sendHttpRequest(
+//            HttpVerb.POST,
+//            api.baseURL + api.createLead,
+//            ContentType.Json,
+//            this.context.getConnectionToken(),
+//            { name: this.state.query },
+//            true,
+//        );
+
+//        this.setState({ isLoading: true });
+
+//        let response = null;
+//        try {
+//            response = JSON.parse(await createLeadRequest.promise);
+//        } catch (error) {
+//            if (error) {
+//                this.setState({ isLoading: false, Leads: [] });
+//                this.context.showHttpErrorMessage(error);
+//                this.setState({ isLoading: false });
+//            }
+//            return;
+//        }
+
+//        const createdLead = Lead.fromJSON(response.result);
+//        this.props.onLeadClick(createdLead);
+//    };
 
     private getLeads = () => {
         const searchedTermExists = this.state.Leads.filter(
