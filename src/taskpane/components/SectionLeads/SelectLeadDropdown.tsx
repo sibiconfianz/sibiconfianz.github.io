@@ -169,7 +169,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             try {
                 response = await sendHttpRequest(
                     HttpVerb.POST,
-                    api.baseURL + this.props.odooEndpointCreateRecord,
+                    api.baseURL + api.createLead,
                     ContentType.Json,
                     this.context.getConnectionToken(),
                     requestJson,
