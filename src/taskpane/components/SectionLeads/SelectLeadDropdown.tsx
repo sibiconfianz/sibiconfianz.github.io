@@ -99,6 +99,47 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         this.setState({ Leads: filteredLeads, isLoading: false });
     };
 
+    private createLead = async () => {
+        console.log('LEADDROPDOWN-createLead');
+        
+        this.setState({ isLoading: true });
+
+        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
+            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
+//            const subject = Office.context.mailbox.item.subject;
+            const emailAddress = Office.context.mailbox.item.to[0]?.emailAddress || '';
+
+            const requestJson = {
+//                name: this.state.query,
+                email_body: message,
+                email_subject: this.state.query,
+                email_address: emailAddress,
+                partner_id: this.props.partner?.isAddedToDatabase() ? this.props.partner.id : false,
+            };
+            console.log('requestJson', requestJson)
+            let response = null;
+            try {
+                response = await sendHttpRequest(
+                    HttpVerb.POST,
+                    api.baseURL + api.createLead,
+                    ContentType.Json,
+                    this.context.getConnectionToken(),
+                    requestJson,
+                    true
+                ).promise;
+            } catch (error) {
+                this.context.showHttpErrorMessage(error);
+                this.setState({ isLoading: false });
+                return;
+            }
+
+            const createdLead = Lead.fromJSON(JSON.parse(response).result);
+            console.log('createdLead-', createdLead)
+            this.setState({ isLoading: false });
+            this.props.onLeadClick(createdLead);
+        });
+    };
+
 //    private createLead = async () => {
 //        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createLead)
 //        const createLeadRequest = sendHttpRequest(
@@ -127,46 +168,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //        const createdLead = Lead.fromJSON(response.result);
 //        this.props.onLeadClick(createdLead);
 //    };
-
-    private createLead = async () => {
-        console.log('LEADDROPDOWN-createLead');
-        
-        this.setState({ isLoading: true });
-
-        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
-            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
-//            const subject = Office.context.mailbox.item.subject;
-            const emailAddress = Office.context.mailbox.item.to[0]?.emailAddress || '';
-
-            const requestJson = {
-//                name: this.state.query,
-                email_body: message,
-                email_subject: this.state.query,
-                email_address: emailAddress,
-                partner_id: this.props.partner?.isAddedToDatabase() ? this.props.partner.id : false,
-            };
-
-            let response = null;
-            try {
-                response = await sendHttpRequest(
-                    HttpVerb.POST,
-                    api.baseURL + api.createLead,
-                    ContentType.Json,
-                    this.context.getConnectionToken(),
-                    requestJson,
-                    true
-                ).promise;
-            } catch (error) {
-                this.context.showHttpErrorMessage(error);
-                this.setState({ isLoading: false });
-                return;
-            }
-
-            const createdLead = Lead.fromJSON(JSON.parse(response).result);
-            this.setState({ isLoading: false });
-            this.props.onLeadClick(createdLead);
-        });
-    };
 
     private getLeads = () => {
         console.log('LEADDROPDOWN-getLeads')
