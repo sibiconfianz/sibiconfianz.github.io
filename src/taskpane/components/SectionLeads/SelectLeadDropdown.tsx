@@ -126,16 +126,16 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                }
                 console.log('hhhhhhhhhhhhhhhhh', response.result)
 //                const createdLead = Lead.fromJSON(response.result);
-                const recordId = response.result.lead_id;
+//                const recordId = response.result.lead_id;
 
                 // Optional: Notify parent
 //                this.props.onLeadClick(createdLead);
 
                 // Redirect to Odoo Lead Form View
-                const cids = this.context.getUserCompaniesString?.() || '';
-                const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
-                console.log('Redirecting to:', url);
-                window.open(url, '_blank');
+//                const cids = this.context.getUserCompaniesString?.() || '';
+//                const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
+//                console.log('Redirecting to:', url);
+//                window.open(url, '_blank');
 
                 this.setState({ isLoading: false });
 
