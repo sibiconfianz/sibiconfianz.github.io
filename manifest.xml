@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Odoo for Outlook"/>
   <Description DefaultValue="Odoo for Outlook."/>
-  <IconUrl DefaultValue="https://sibiconfianz.github.io/assets/odoo-full.png"/>
-  <HighResolutionIconUrl DefaultValue="https://sibiconfianz.github.io/assets/odoo-full.png"/>
+  <IconUrl DefaultValue="https://sibiconfianz.github.io/assets/odoo.png"/>
+  <HighResolutionIconUrl DefaultValue="https://sibiconfianz.github.io/assets/odoo.png"/>
   <SupportUrl DefaultValue="https://www.odoo.com/help"/>
   <AppDomains>
     <AppDomain>https://sibiconfianz.github.io</AppDomain>
