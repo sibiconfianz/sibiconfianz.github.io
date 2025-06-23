@@ -125,11 +125,11 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                     return;
                 }
 
-                const createdLead = Lead.fromJSON(response.result);
+//                const createdLead = Lead.fromJSON(response.result);
                 const recordId = response.result.lead_id;
 
                 // Optional: Notify parent
-                this.props.onLeadClick(createdLead);
+//                this.props.onLeadClick(createdLead);
 
                 // Redirect to Odoo Lead Form View
                 const cids = this.context.getUserCompaniesString?.() || '';
