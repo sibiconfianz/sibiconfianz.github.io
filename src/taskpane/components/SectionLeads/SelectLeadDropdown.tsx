@@ -185,8 +185,9 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                 return;
             }
             const cids = this.context.getUserCompaniesString();
-            const recordId = parsed.result[this.props.odooRecordIdName];
-            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+            console.log('llllll', parsed.result)
+            const recordId = parsed.result.lead_id;
+            const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
             window.open(url);
         });
     };
