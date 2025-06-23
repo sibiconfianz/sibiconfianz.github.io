@@ -159,7 +159,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                 {
                     partner_id: this.props.partner.id,
                     email_body: message,
-                    email_subject: subject,
+                    email_subject: this.state.query,
                     email_address: this.props.partner.email,
                 },
                 additionnalValues || {},
