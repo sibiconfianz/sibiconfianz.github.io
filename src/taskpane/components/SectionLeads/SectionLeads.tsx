@@ -99,7 +99,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         );
 
         try {
-            const response = JSON.parse(await updateRequest.promise);
+//            const response = JSON.parse(await updateRequest.promise);
         } catch (error) {
             this.context.showHttpErrorMessage(error);
             return;
