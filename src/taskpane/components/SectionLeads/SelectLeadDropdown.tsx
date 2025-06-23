@@ -135,7 +135,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
-            const subject = Office.context.mailbox.item.subject;
+//            const subject = Office.context.mailbox.item.subject;
             const emailAddress = Office.context.mailbox.item.to[0]?.emailAddress || '';
 
             const requestJson = {
