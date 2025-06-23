@@ -137,11 +137,11 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             console.log('createdLead-', createdLead)
             this.setState({ isLoading: false });
             this.props.onLeadClick(createdLead);
-            const cids = this.context.getUserCompaniesString();
-            const recordId = parsed.result[this.props.odooRecordIdName];
-            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-            console.log('----url', url)
-            window.open(url);
+//            const cids = this.context.getUserCompaniesString();
+//            const recordId = parsed.result[this.props.odooRecordIdName];
+//            const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
+//            console.log('----url', url)
+//            window.open(url);
         });
     };
 
