@@ -140,6 +140,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
     render() {
     const recordCount = this.props.records && this.props.records.length;
+    console.log('Check PLUS button', this.props.partner, this.props)
     const title = this.props.records
         ? _t(this.props.titleCount, { count: recordCount.toString() })
         : _t(this.props.title)
