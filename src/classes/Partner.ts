@@ -2,6 +2,7 @@ import Company from './Company';
 import EnrichmentInfo from './EnrichmentInfo';
 import Lead from './Lead';
 import SaleOrder from './SaleOrder';
+import Invoice from './Invoice';
 import HelpdeskTicket from './HelpdeskTicket';
 import Task from './Task';
 
@@ -25,6 +26,7 @@ class Partner {
     tasks?: Task[];
     tickets?: HelpdeskTicket[];
     sales?: SaleOrder[];
+    invoices?: Invoice[];
     isCompany: boolean;
     canWriteOnPartner: boolean;
 

@@ -4,6 +4,7 @@ import AppContext from '../../AppContext';
 import ContactListItem from '../ContactList/ContactListItem/ContactListItem';
 import SectionLeads from '../../SectionLeads/SectionLeads';
 import SectionSales from '../../SelctionSales/SectionSales';
+import SectionInvoices from '../../SelctionInvoices/SectionInvoices';
 import CompanySection from '../../Company/CompanySection/CompanySection';
 import SectionTickets from '../../SectionTickets/SectionTickets';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../../utils/httpRequest';
@@ -14,6 +15,7 @@ import { OdooTheme } from '../../../../utils/Themes';
 import './ContactPage.css';
 import Lead from '../../../../classes/Lead';
 import SaleOrder from '../../../../classes/SaleOrder';
+import Invoice from '../../../../classes/Invoice';
 import HelpdeskTicket from '../../../../classes/HelpdeskTicket';
 import SectionTasks from '../../SectionTasks/SectionTasks';
 import Task from '../../../../classes/Task';
@@ -70,6 +72,9 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 if (parsed.result.sales) {
                     newPartner.sales = parsed.result.sales.map((sale_json) => SaleOrder.fromJSON(sale_json));
                 }
+                if (parsed.result.invoices) {
+                    newPartner.invoices = parsed.result.invoices.map((invoice_json) => Invoice.fromJSON(invoice_json));
+                }
                 if (parsed.result.tasks) {
                     newPartner.tasks = parsed.result.tasks.map((task_json) => Task.fromJSON(task_json));
                 }
@@ -121,6 +126,10 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         return this.props.partner.sales !== undefined;
     };
 
+    private isAccountingInstalled = (): boolean => {
+        return this.props.partner.invoices !== undefined;
+    };
+
     private isProjectInstalled = (): boolean => {
         return this.props.partner.tasks !== undefined;
     };
@@ -163,6 +172,10 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
+        const invoiceList = this.isInvoiceInstalled() && (
+            <SectionInvoices partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+        );
+
         const tasksList = this.isProjectInstalled() && (
             <SectionTasks
                 partner={this.state.partner}
@@ -190,11 +203,12 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 {tasksList}
                 {ticketsList}
                 {saleList}
+                {invoiceList}
                 <CompanySection
                     partner={this.state.partner}
                     canCreatePartner={this.state.canCreatePartner}
                     onPartnerInfoChanged={this.propagatePartnerInfoChange}
-                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList}
+                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList && !invoicelist}
                 />
             </div>
         );
