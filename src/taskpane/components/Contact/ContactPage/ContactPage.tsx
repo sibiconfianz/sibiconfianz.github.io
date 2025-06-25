@@ -136,11 +136,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     };
 
     private isProjectInstalled = (): boolean => {
-        return this.props.partner.projects !== undefined;
-    };
-
-    private isProjectInstalled = (): boolean => {
-        return this.props.partner.tasks !== undefined;
+        return this.props.partner.tasks !== undefined && this.props.partner.projects !== undefined;
     };
 
     private isHelpdeskInstalled = (): boolean => {
@@ -213,7 +209,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     />
                 </div>
                 {leadsList}
-                {projecstList}
+                {projectsList}
                 {tasksList}
                 {ticketsList}
                 {saleList}

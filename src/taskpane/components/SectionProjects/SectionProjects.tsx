@@ -13,7 +13,7 @@ type ProjectSectionProps = {
     canCreatePartner: boolean;
 };
 
-type SectionProjectOrdersState = {
+type SectionProjectsState = {
     projects: Project[];
 };
 
