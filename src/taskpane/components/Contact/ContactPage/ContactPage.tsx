@@ -172,7 +172,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
-        const invoiceList = this.isInvoiceInstalled() && (
+        const invoiceList = this.isAccountingInstalled() && (
             <SectionInvoices partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
