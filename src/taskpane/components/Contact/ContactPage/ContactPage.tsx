@@ -77,9 +77,9 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 if (parsed.result.invoices) {
                     newPartner.invoices = parsed.result.invoices.map((invoice_json) => Invoice.fromJSON(invoice_json));
                 }
-//                if (parsed.result.projects) {
-//                    newPartner.projects = parsed.result.projects.map((project_json) => Project.fromJSON(project_json));
-//                }
+                if (parsed.result.projects) {
+                    newPartner.projects = parsed.result.projects.map((project_json) => Project.fromJson(project_json));
+                }
                 if (parsed.result.tasks) {
                     newPartner.tasks = parsed.result.tasks.map((task_json) => Task.fromJSON(task_json));
                 }
