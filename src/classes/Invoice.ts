@@ -8,11 +8,11 @@ class Invoice {
         inv.id = o['inv_id'];
         inv.name = o['name'];
         inv.amountTotal = o['amount_total'];
-        return so;
+        return inv;
     }
 
     static copy(inv: Invoice): Invoice {
-        const newSo = new Invoice();
+        const newInv = new Invoice();
         newInv.id = inv.id;
         newInv.name = inv.name;
         newInv.amountTotal = inv.amountTotal;
