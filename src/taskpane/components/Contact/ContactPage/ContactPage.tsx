@@ -19,7 +19,7 @@ import Invoice from '../../../../classes/Invoice';
 import HelpdeskTicket from '../../../../classes/HelpdeskTicket';
 import SectionTasks from '../../SectionTasks/SectionTasks';
 import Task from '../../../../classes/Task';
-
+console.log('--------------------------------contactpageinv', SectionInvoices)
 type ContactPageProps = {
     partner: Partner;
     onPartnerChanged?: (Partner) => void;
