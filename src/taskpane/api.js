@@ -5,6 +5,8 @@ const api = {
     createProject: '/mail_plugin/project/create',
     createTask: '/mail_plugin/task/create',
     createTicket: '/mail_plugin/ticket/create',
+//    createSale: '',
+//    createInvoice: '',
     enrichCompany: '/mail_plugin/partner/enrich_and_create_company',
     enrichAndCreate: '/mail_plugin/partner/enrich_and_create_company',
     enrichAndUpdate: '/mail_plugin/partner/enrich_and_update_company',
