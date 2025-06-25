@@ -23,9 +23,9 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
         this.state = { projects: this.props.partner.projects || [] };
     }
 
-//    private getProjectDescription = (prj: Project): string => {
-//        return `${prj.amountTotal}`.trim();
-//    };
+    private getProjectDescription = (prj: Project): string => {
+        return `${prj.name}`.trim();
+    };
 
     render() {
         return (
@@ -43,7 +43,7 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
                 msgNoPartnerNoAccess="The Contact needs to exist to create Projects."
                 msgNoRecord="No Projects found for this contact."
                 msgLogEmail="Log Email Into Project"
-//                getRecordDescription={this.getProjectDescription}
+                getRecordDescription={this.getProjectDescription}
             />
         );
     }

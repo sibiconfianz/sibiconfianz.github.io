@@ -3,7 +3,7 @@ import EnrichmentInfo from './EnrichmentInfo';
 import Lead from './Lead';
 import SaleOrder from './SaleOrder';
 import Invoice from './Invoice';
-import Projects from './Project';
+import Project from './Project';
 import HelpdeskTicket from './HelpdeskTicket';
 import Task from './Task';
 console.log('==============partnerProjects', Projects)

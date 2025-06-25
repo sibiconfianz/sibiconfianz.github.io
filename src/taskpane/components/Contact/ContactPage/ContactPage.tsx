@@ -218,7 +218,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     partner={this.state.partner}
                     canCreatePartner={this.state.canCreatePartner}
                     onPartnerInfoChanged={this.propagatePartnerInfoChange}
-                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList && !invoiceList && !projecstList}
+                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList && !invoiceList && !projectsList}
                 />
             </div>
         );
