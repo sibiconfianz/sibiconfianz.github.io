@@ -174,6 +174,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getEmailInfo = () => {
+        console.log('getEmailInfo-IN')
         let email = Office.context.mailbox.item.from.emailAddress;
         let displayName = Office.context.mailbox.item.from.displayName;
         console.log('--------mailbox',Office.context.mailbox)
