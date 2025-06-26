@@ -257,7 +257,7 @@ class Main extends React.Component<MainProps, MainState> {
             return;
         }
         Office.context.mailbox.getUserIdentityTokenAsync((idTokenResult) => {
-            let email = this.getEmailInfo().email;
+            let email = await this.getEmailInfo();
             let displayName = this.getEmailInfo().displayName;
 
             const partner = PartnerData.createNewPartnerFromEmail(displayName, email);
