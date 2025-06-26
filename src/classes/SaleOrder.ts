@@ -4,7 +4,6 @@ class SaleOrder {
     amountTotal: string; // formatted amount
     state: string;
     dateOrder: string;
-    linkType?: 'direct' | 'child' | 'parent'; // optional metadata like lead
 
     static fromJSON(o: Object): SaleOrder {
         const so = new SaleOrder();
@@ -13,7 +12,6 @@ class SaleOrder {
         so.amountTotal = o['amount_total'];
         so.state = o['state'];
         so.dateOrder = o['date_order'];
-        so.linkType = o['link_type']; // direct, child, parent
         return so;
     }
 

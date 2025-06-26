@@ -24,11 +24,6 @@ class SectionSaleOrders extends React.Component<SaleOrderSectionProps, SectionSa
     }
 
     private getSaleOrderDescription = (order: SaleOrder): string => {
-        const linkTypeLabel = {
-            direct: '',
-            child: '[Child Contact]',
-            parent: '[Parent Contact]',
-        }[order.linkType];
         return `${order.amountTotal}`.trim();
     };
 
