@@ -1,4 +1,3 @@
-console.log('---SECTIONLEADDROPDOWN----')
 import { Spinner, SpinnerSize, TextField } from 'office-ui-fabric-react';
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
@@ -148,7 +147,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //    };
 
     private createLead = (additionnalValues?) => {
-        console.log('=======================================LEAD')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -185,7 +183,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                 return;
             }
             const cids = this.context.getUserCompaniesString();
-            console.log('llllll', parsed.result)
             const recordId = parsed.result.lead_id;
             const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
             window.open(url);

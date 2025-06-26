@@ -1,4 +1,3 @@
-console.log('---SECTIONTEASKs----')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import Project from '../../../classes/Project';

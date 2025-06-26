@@ -1,4 +1,3 @@
-console.log('---------------------------------INVOICE')
 class Invoice {
     id: number;
     name: string;

@@ -1,4 +1,3 @@
-console.log('---------------------------------INVOICESECTION')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 

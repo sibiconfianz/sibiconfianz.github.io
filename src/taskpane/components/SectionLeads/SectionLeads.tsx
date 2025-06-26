@@ -1,4 +1,3 @@
-console.log('---SECTIONLEAD-2---')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 
@@ -100,7 +99,6 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
         try {
             const response = JSON.parse(await updateRequest.promise);
-            console.log('fffffffffffff', response)
         } catch (error) {
             this.context.showHttpErrorMessage(error);
             return;

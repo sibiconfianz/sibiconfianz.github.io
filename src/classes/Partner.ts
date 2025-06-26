@@ -6,7 +6,6 @@ import Invoice from './Invoice';
 import Project from './Project';
 import HelpdeskTicket from './HelpdeskTicket';
 import Task from './Task';
-console.log('==============partnerProjects', Project)
 /***
  * id value for partners which have not been yet added to a Odoo database
  */

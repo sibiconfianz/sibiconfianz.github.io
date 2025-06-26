@@ -1,4 +1,3 @@
-console.log('---SELECTPROJECTDROPDOWN----')
 import { Spinner, SpinnerSize, TextField } from 'office-ui-fabric-react';
 import * as React from 'react';
 import Partner from '../../../classes/Partner';

@@ -1,4 +1,3 @@
-console.log('---SECTION----')
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest';
@@ -62,7 +61,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     private createRecordRequest = (additionnalValues?) => {
-        console.log('=======================================')
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
@@ -140,7 +138,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
     render() {
     const recordCount = this.props.records && this.props.records.length;
-    console.log('Check PLUS button', this.props.partner, this.props)
     const title = this.props.records
         ? _t(this.props.titleCount, { count: recordCount.toString() })
         : _t(this.props.title)

@@ -106,7 +106,6 @@ export default class App extends React.Component<AppProps, AppState> {
             },
 
             showTopBarMessage: (enrichmentInfo) => {
-            console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhlllllllllllllllllll')
                 if (enrichmentInfo)
                     this.setState({
                         EnrichmentInfo: enrichmentInfo,
@@ -120,7 +119,6 @@ export default class App extends React.Component<AppProps, AppState> {
             },
 
             showHttpErrorMessage: (error?) => {
-                console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
                 if (error && error.message == '0') {
                     this.setState({
                         EnrichmentInfo: new EnrichmentInfo(EnrichmentInfoType.ConnectionError),
