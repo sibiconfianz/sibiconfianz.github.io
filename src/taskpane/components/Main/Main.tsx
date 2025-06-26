@@ -173,17 +173,59 @@ class Main extends React.Component<MainProps, MainState> {
             });
     };
 
-    private getEmailInfo = () => {
-        console.log('getEmailInfo-IN')
-        let email = Office.context.mailbox.item.from.emailAddress;
-        let displayName = Office.context.mailbox.item.from.displayName;
-        console.log('--------mailbox',Office.context.mailbox)
-        console.log('--------getEmailInfo',Office.context.mailbox.item)
-        if (Office.context.mailbox.userProfile.emailAddress == Office.context.mailbox.item.from.emailAddress) {
-            email = Office.context.mailbox.item.to[0].emailAddress;
-            displayName = Office.context.mailbox.item.to[0].displayName;
+//    private getEmailInfo = () => {
+//        console.log('getEmailInfo-IN')
+//        let email = Office.context.mailbox.item.from.emailAddress;
+//        let displayName = Office.context.mailbox.item.from.displayName;
+//        console.log('--------mailbox',Office.context.mailbox)
+//        console.log('--------getEmailInfo',Office.context.mailbox.item)
+//        if (Office.context.mailbox.userProfile.emailAddress == Office.context.mailbox.item.from.emailAddress) {
+//            email = Office.context.mailbox.item.to[0].emailAddress;
+//            displayName = Office.context.mailbox.item.to[0].displayName;
+//        }
+//        return { email: email, displayName: displayName };
+//    };
+
+    private getEmailInfo = async (): Promise<{ email: string, displayName: string }> => {
+        console.log('getEmailInfo-IN');
+
+        const item = Office.context.mailbox.item;
+
+        const isCompose = typeof item.from?.getAsync === 'function';
+
+        if (isCompose) {
+            console.log('999999999999999999999999999')
+            return new Promise((resolve, reject) => {
+                item.to.getAsync((result) => {  
+                    console.log('inininininiini')
+                    if (result.status === Office.AsyncResultStatus.Succeeded) {
+                        const toRecipients = result.value;
+                        if (toRecipients.length > 0) {
+                            const first = toRecipients[0];
+                            console.log("Compose mode detected. TO recipient:", first);
+                            resolve({ email: first.emailAddress, displayName: first.displayName });
+                        } else {
+                            resolve({ email: '', displayName: '' });
+                        }
+                    } else {
+                        console.error('Error retrieving recipients:', result.error);
+                        reject(result.error);
+                    }
+                });
+            });
+        } else {
+            const from = item.from;
+            const userEmail = Office.context.mailbox.userProfile.emailAddress;
+            let email = from.emailAddress;
+            let displayName = from.displayName;
+
+            if (userEmail === from.emailAddress && item.to?.length > 0) {
+                email = item.to[0].emailAddress;
+                displayName = item.to[0].displayName;
+            }
+
+            return { email, displayName };
         }
-        return { email: email, displayName: displayName };
     };
 
     private getTranslations = () => {
