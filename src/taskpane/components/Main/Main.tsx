@@ -122,13 +122,13 @@ class Main extends React.Component<MainProps, MainState> {
             });
     };
 
-    private getAllMatchedPartnersRequest = () => {
+    private getAllMatchedPartnersRequest = async () => {
         console.log('--------------getAllMatchedPartnersRequest')
         if (!Office.context.mailbox.item) {
             return;
         }
 
-        let emailInfo = this.getEmailInfo();
+        let emailInfo = await this.getEmailInfo();
         let email = emailInfo.email;
         let displayName = emailInfo.displayName;
         console.log('========email, displayname', email, displayName)
