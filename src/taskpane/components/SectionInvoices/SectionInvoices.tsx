@@ -36,7 +36,7 @@ class SectionInvoices extends React.Component<InvoiceSectionProps, SectionInvoic
                 model="account.move"
                 odooEndpointCreateRecord={api.createLead} //TODO
                 odooRecordIdName="inv_id"
-                odooRedirectAction="account.sale_order_action" //TODO
+                odooRedirectAction="accounting_mail_plugin.invoice_action_form_edit"
                 title="Invoices"
                 titleCount="Invoices (%(count)s)"
                 msgNoPartner="Save Contact to create new Invoice."

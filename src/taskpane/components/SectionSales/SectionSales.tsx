@@ -34,9 +34,9 @@ class SectionSaleOrders extends React.Component<SaleOrderSectionProps, SectionSa
                 partner={this.props.partner}
                 canCreatePartner={this.props.canCreatePartner}
                 model="sale.order"
-                odooEndpointCreateRecord={api.createLead} //TODO
+                odooEndpointCreateRecord={api.createLead}
                 odooRecordIdName="order_id"
-                odooRedirectAction="sale.sale_action_form_edit" //TODO
+                odooRedirectAction="sale_mail_plugin.sale_action_form_edit"
                 title="Sales Orders"
                 titleCount="Sales Orders (%(count)s)"
                 msgNoPartner="Save Contact to create new Sales Order."
