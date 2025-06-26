@@ -253,15 +253,12 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getPartnerDisconnectedRequest = async () => {
-        if (!Office.context.mailbox.item) {
-            return;
-        }
-        Office.context.mailbox.getUserIdentityTokenAsync((idTokenResult) => {
-            let email = await this.getEmailInfo();
-            let displayName = this.getEmailInfo().displayName;
+        if (!Office.context.mailbox.item) return;
+
+        Office.context.mailbox.getUserIdentityTokenAsync(async (idTokenResult) => {
+            const { email, displayName } = await this.getEmailInfo();
 
             const partner = PartnerData.createNewPartnerFromEmail(displayName, email);
-
             const cachedCompany: CompanyData = this.companyCache.get(email);
 
             if (cachedCompany) {
@@ -287,42 +284,111 @@ class Main extends React.Component<MainProps, MainState> {
                         },
                     },
                 );
+
                 this.context.addRequestCanceller(cancellableRequest.cancel);
-                cancellableRequest.promise
-                    .then((response) => {
-                        const parsed = JSON.parse(response);
-                        if ('error' in parsed.result) {
-                            const enrichmentInfo = new EnrichmentInfo(
-                                parsed.result.error.type,
-                                parsed.result.error.info,
-                            );
-                            if (enrichmentInfo.type != EnrichmentInfoType.NoData)
-                                this.context.showTopBarMessage(enrichmentInfo);
-                            partner.company = CompanyData.getEmptyCompany();
-                            partner.company.enrichmentStatus = EnrichmentStatus.enrichmentEmpty;
-                            this.setState({
-                                matchedPartners: [partner],
-                                selectedPartner: partner,
-                                partnersLoading: false,
-                            });
-                            return;
+                try {
+                    const response = await cancellableRequest.promise;
+                    const parsed = JSON.parse(response);
+                    if ('error' in parsed.result) {
+                        const enrichmentInfo = new EnrichmentInfo(
+                            parsed.result.error.type,
+                            parsed.result.error.info,
+                        );
+                        if (enrichmentInfo.type !== EnrichmentInfoType.NoData) {
+                            this.context.showTopBarMessage(enrichmentInfo);
                         }
+                        partner.company = CompanyData.getEmptyCompany();
+                        partner.company.enrichmentStatus = EnrichmentStatus.enrichmentEmpty;
+                    } else {
                         partner.company = CompanyData.fromRevealJSON(parsed.result);
                         this.companyCache.add(partner.company);
                         partner.company.enrichmentStatus = EnrichmentStatus.enriched;
-                        this.setState({
-                            matchedPartners: [partner],
-                            selectedPartner: partner,
-                            partnersLoading: false,
-                        });
-                    })
-                    .catch((error) => {
-                        this.context.showHttpErrorMessage(error);
-                        this.setState({ partnersLoading: false });
-                    });
+                    }
+                } catch (error) {
+                    this.context.showHttpErrorMessage(error);
+                }
+
+                this.setState({
+                    matchedPartners: [partner],
+                    selectedPartner: partner,
+                    partnersLoading: false,
+                });
             }
         });
     };
+
+
+//    private getPartnerDisconnectedRequest = () => {
+//        if (!Office.context.mailbox.item) {
+//            return;
+//        }
+//        Office.context.mailbox.getUserIdentityTokenAsync((idTokenResult) => {
+//            let email = await this.getEmailInfo();
+//            let displayName = this.getEmailInfo().displayName;
+
+//            const partner = PartnerData.createNewPartnerFromEmail(displayName, email);
+
+//            const cachedCompany: CompanyData = this.companyCache.get(email);
+
+//            if (cachedCompany) {
+//                partner.company = cachedCompany;
+//                partner.company.enrichmentStatus = EnrichmentStatus.enriched;
+//                this.setState({
+//                    matchedPartners: [partner],
+//                    selectedPartner: partner,
+//                    partnersLoading: false,
+//                });
+//            } else {
+//                const senderDomain = email.split('@')[1];
+//                const cancellableRequest = sendHttpRequest(
+//                    HttpVerb.POST,
+//                    api.iapLeadEnrichment,
+//                    ContentType.Json,
+//                    null,
+//                    {
+//                        params: {
+//                            email: email,
+//                            domain: senderDomain,
+//                            extuid: idTokenResult.value,
+//                        },
+//                    },
+//                );
+//                this.context.addRequestCanceller(cancellableRequest.cancel);
+//                cancellableRequest.promise
+//                    .then((response) => {
+//                        const parsed = JSON.parse(response);
+//                        if ('error' in parsed.result) {
+//                            const enrichmentInfo = new EnrichmentInfo(
+//                                parsed.result.error.type,
+//                                parsed.result.error.info,
+//                            );
+//                            if (enrichmentInfo.type != EnrichmentInfoType.NoData)
+//                                this.context.showTopBarMessage(enrichmentInfo);
+//                            partner.company = CompanyData.getEmptyCompany();
+//                            partner.company.enrichmentStatus = EnrichmentStatus.enrichmentEmpty;
+//                            this.setState({
+//                                matchedPartners: [partner],
+//                                selectedPartner: partner,
+//                                partnersLoading: false,
+//                            });
+//                            return;
+//                        }
+//                        partner.company = CompanyData.fromRevealJSON(parsed.result);
+//                        this.companyCache.add(partner.company);
+//                        partner.company.enrichmentStatus = EnrichmentStatus.enriched;
+//                        this.setState({
+//                            matchedPartners: [partner],
+//                            selectedPartner: partner,
+//                            partnersLoading: false,
+//                        });
+//                    })
+//                    .catch((error) => {
+//                        this.context.showHttpErrorMessage(error);
+//                        this.setState({ partnersLoading: false });
+//                    });
+//            }
+//        });
+//    };
 
     private onSearchClick = (state) => {
         if (this.context.isConnected()) {
