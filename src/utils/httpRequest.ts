@@ -19,15 +19,15 @@ export const sendHttpRequest = function(
     const promise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url);
-
+        console.log('------xhr-url', method, url)
         if (contentType) {
             xhr.setRequestHeader('Content-Type', contentType);
         }
-
+        console.log('----contenttype', contentType)
         if (token) {
             xhr.setRequestHeader('Authorization', token);
         }
-
+        console.log('----token', token)
         xhr.setRequestHeader('Accept-Language', '*');
 
         xhr.onload = function() {
@@ -38,6 +38,7 @@ export const sendHttpRequest = function(
             }
         };
         xhr.onerror = function() {
+            console.log('---------onerror')
             console.log(xhr);
             reject(new Error(xhr.status.toString()));
         };

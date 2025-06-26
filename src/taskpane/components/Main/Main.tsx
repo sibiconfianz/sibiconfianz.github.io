@@ -86,6 +86,7 @@ class Main extends React.Component<MainProps, MainState> {
     }
 
     private addPartnerToDbRequest = () => {
+        console.log('--------------addPartnerToDbRequest')
         if (!this.context.isConnected()) {
             this.context.navigation.goToLogin();
             return;
@@ -122,6 +123,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getAllMatchedPartnersRequest = () => {
+        console.log('--------------getAllMatchedPartnersRequest')
         if (!Office.context.mailbox.item) {
             return;
         }
@@ -183,6 +185,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getTranslations = () => {
+        console.log('--------------getTranslations')
         this.setState({ translationsLoading: true });
         const requestPromise = sendHttpRequest(
             HttpVerb.POST,
