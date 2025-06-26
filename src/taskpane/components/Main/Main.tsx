@@ -176,7 +176,8 @@ class Main extends React.Component<MainProps, MainState> {
     private getEmailInfo = () => {
         let email = Office.context.mailbox.item.from.emailAddress;
         let displayName = Office.context.mailbox.item.from.displayName;
-
+        console.log('--------mailbox',Office.context.mailbox)
+        console.log('--------getEmailInfo',Office.context.mailbox.item)
         if (Office.context.mailbox.userProfile.emailAddress == Office.context.mailbox.item.from.emailAddress) {
             email = Office.context.mailbox.item.to[0].emailAddress;
             displayName = Office.context.mailbox.item.to[0].displayName;
