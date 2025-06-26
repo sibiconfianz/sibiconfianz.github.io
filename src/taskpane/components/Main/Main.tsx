@@ -131,7 +131,7 @@ class Main extends React.Component<MainProps, MainState> {
         let emailInfo = this.getEmailInfo();
         let email = emailInfo.email;
         let displayName = emailInfo.displayName;
-
+        console.log('========email, displayname', email, displayName)
         const CancellableMatchedPartnersRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchPartner,
