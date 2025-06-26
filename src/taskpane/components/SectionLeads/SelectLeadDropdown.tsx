@@ -147,6 +147,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //    };
 
     private createLead = (additionnalValues?) => {
+        console.log('-----------------------', api.baseURL , api.createLead)
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
