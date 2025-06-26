@@ -252,7 +252,7 @@ class Main extends React.Component<MainProps, MainState> {
             });
     };
 
-    private getPartnerDisconnectedRequest = () => {
+    private getPartnerDisconnectedRequest = async () => {
         if (!Office.context.mailbox.item) {
             return;
         }
