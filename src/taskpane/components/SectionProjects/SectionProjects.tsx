@@ -34,7 +34,7 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
                 partner={this.props.partner}
                 canCreatePartner={this.props.canCreatePartner}
                 model="project.project"
-                odooEndpointCreateRecord={api.createProject}
+                odooEndpointCreateRecord={api.createLead}
                 odooRecordIdName="project_id"
                 odooRedirectAction="project_mail_plugin_extension.project_action_form_edit"
                 title="Projects"
