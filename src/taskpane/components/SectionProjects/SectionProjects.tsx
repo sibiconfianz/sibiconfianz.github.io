@@ -36,7 +36,7 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
                 model="project.project"
                 odooEndpointCreateRecord={api.createLead} //TODO
                 odooRecordIdName="project_id"
-                odooRedirectAction="sale.sale_order_action" //TODO
+                odooRedirectAction="project.project_action_form_edit" //TODO
                 title="Projects"
                 titleCount="Projects (%(count)s)"
                 msgNoPartner="Save Contact to create new Projects."
