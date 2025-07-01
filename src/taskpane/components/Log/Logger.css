@@ -19,3 +19,16 @@
     color: #777;
     font-size: smaller;
 }
+
+.Lead-search-result-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.log-email-icon {
+    margin-left: 8px;
+    cursor: pointer;
+}

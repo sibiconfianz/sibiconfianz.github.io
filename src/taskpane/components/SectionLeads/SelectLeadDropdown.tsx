@@ -2,7 +2,7 @@ import { Spinner, SpinnerSize, TextField } from 'office-ui-fabric-react';
 import * as React from 'react';
 import Partner from '../../../classes/Partner';
 import Lead from '../../../classes/Lead';
-import { ContentType, HttpVerb, sendHttpRequest, faEnvelope } from '../../../utils/httpRequest';
+import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpRequest'; //faEnvelope
 import { OdooTheme } from '../../../utils/Themes';
 import { _t } from '../../../utils/Translator';
 import api from '../../api';
@@ -231,18 +231,16 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         return (
             <div>
                 {this.state.Leads.map((lead) => (
-                    <div key={lead.id} className="Lead-search-result-text">
-                        <span onClick={() => this.props.onLeadClick(lead)}>
-                            {lead.name}
-                        </span>
-                        <span
-                            className="log-email-icon"
-                            onClick={() => this.logEmailToLead(lead)}
-                            title="Log this email to the selected lead"
-                        >
-                            📩
-                        </span>
-                    </div>
+                <div key={lead.id} className="Lead-search-result-text">
+                    <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
+                    <span className="log-email-icon">
+                        <Logger
+                            resId={lead.id}
+                            model="crm.lead"
+                            tooltipContent={`Log this email to ${lead.name}`}
+                        />
+                    </span>
+                </div>
                 ))}
                 {this.state.query.length && !this.state.Leads.length ? (
                     <div>{_t('No Lead Found')}</div>
