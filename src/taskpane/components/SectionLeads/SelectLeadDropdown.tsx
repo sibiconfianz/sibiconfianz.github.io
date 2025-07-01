@@ -8,6 +8,7 @@ import { _t } from '../../../utils/Translator';
 import api from '../../api';
 import './SelectLeadDropdown.css';
 import AppContext from '../AppContext';
+import Logger from '../Log/Logger';
 
 type SelectLeadProps = {
     partner: Partner;
