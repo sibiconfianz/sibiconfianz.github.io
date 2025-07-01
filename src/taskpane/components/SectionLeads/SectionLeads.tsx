@@ -165,7 +165,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                         <SelectLeadDropdown
                             partner={this.props.partner}
                             canCreateLead={this.props.canCreateLead}
-//                            onLeadClick={this.onLeadSelected}
+                            onLeadClick={() => {}}
                             opportunityLeads={this.props.opportunityLeads}   // Pass the already linked leads
                         />
                     </Callout>
