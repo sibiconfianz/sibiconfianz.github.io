@@ -237,11 +237,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                         {Lead.name}
                     </div>
                 ))}
-                {allowCreateNewLead && (
-                    <div className="create-Lead-text" onClick={this.createLead}>
-                        {_t('Create %(name)s', { name: this.state.query })}
-                    </div>
-                )}
                 {this.state.query.length && !allowCreateNewLead && !this.state.Leads.length ? (
                     <div>{_t('No Lead Found')}</div>
                 ) : null}
@@ -271,6 +266,14 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         );
     }
 }
+
+
+//                {allowCreateNewLead && (
+//                    <div className="create-Lead-text" onClick={this.createLead}>
+//                        {_t('Create %(name)s', { name: this.state.query })}
+//                    </div>
+//                )}
+
 
 SelectLeadDropdown.contextType = AppContext;
 export default SelectLeadDropdown;
