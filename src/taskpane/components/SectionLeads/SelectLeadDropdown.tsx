@@ -227,6 +227,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 
         const allowCreateNewLead = this.props.canCreateLead && !!this.state.query.length && !searchedTermExists;
         console.log('allowCreateNewLead', allowCreateNewLead)
+        console.log('-----------', this.state.query.length, this.state.Leads.length)
         return (
             <div>
                 {this.state.Leads.map((Lead) => (
