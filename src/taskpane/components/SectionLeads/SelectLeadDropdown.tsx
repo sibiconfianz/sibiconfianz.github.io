@@ -146,50 +146,50 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //        });
 //    };
 
-    private createLead = (additionnalValues?) => {
-        console.log('-----------------------createLead', api.baseURL , api.createLead)
-        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
-            // Remove the history and only log the most recent message.
-            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
-//            const subject = Office.context.mailbox.item.subject;
+//    private createLead = (additionnalValues?) => {
+//        console.log('-----------------------createLead', api.baseURL , api.createLead)
+//        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
+//            // Remove the history and only log the most recent message.
+//            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
+////            const subject = Office.context.mailbox.item.subject;
 
-            const requestJson = Object.assign(
-                
-                {
-                    partner_id: this.props.partner.id,
-                    email_body: message,
-                    email_subject: this.state.query,
-                    email_address: this.props.partner.email,
-                },
-                additionnalValues || {},
-            );
+//            const requestJson = Object.assign(
+//                
+//                {
+//                    partner_id: this.props.partner.id,
+//                    email_body: message,
+//                    email_subject: this.state.query,
+//                    email_address: this.props.partner.email,
+//                },
+//                additionnalValues || {},
+//            );
 
-            let response = null;
-            try {
-                response = await sendHttpRequest(
-                    HttpVerb.POST,
-                    api.baseURL + api.createLead,
-                    ContentType.Json,
-                    this.context.getConnectionToken(),
-                    requestJson,
-                    true,
-                ).promise;
-            } catch (error) {
-                this.context.showHttpErrorMessage(error);
-                return;
-            }
-            const parsed = JSON.parse(response);
-            console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', parsed)
-            if (parsed['error']) {
-                this.context.showTopBarMessage();
-                return;
-            }
-            const cids = this.context.getUserCompaniesString();
-            const recordId = parsed.result.lead_id;
-            const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
-            window.open(url);
-        });
-    };
+//            let response = null;
+//            try {
+//                response = await sendHttpRequest(
+//                    HttpVerb.POST,
+//                    api.baseURL + api.createLead,
+//                    ContentType.Json,
+//                    this.context.getConnectionToken(),
+//                    requestJson,
+//                    true,
+//                ).promise;
+//            } catch (error) {
+//                this.context.showHttpErrorMessage(error);
+//                return;
+//            }
+//            const parsed = JSON.parse(response);
+//            console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', parsed)
+//            if (parsed['error']) {
+//                this.context.showTopBarMessage();
+//                return;
+//            }
+//            const cids = this.context.getUserCompaniesString();
+//            const recordId = parsed.result.lead_id;
+//            const url = `${api.baseURL}/web#action=crm_mail_plugin.crm_lead_action_form_edit&id=${recordId}&model=crm.lead&view_type=form${cids}`;
+//            window.open(url);
+//        });
+//    };
 
 //    private createLead = async () => {
 //        console.log('LEADDROPDOWN-createLead', api.baseURL + api.createLead)
