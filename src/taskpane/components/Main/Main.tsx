@@ -16,7 +16,7 @@ import AppContext from '../AppContext';
 import ContactPage from '../Contact/ContactPage/ContactPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Search, { SearchState } from '../Search/Search';
-import { faArrowLeft, faPlusCircle, faRedoAlt, faSearch, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlusCircle, faRedoAlt, faSearch} from '@fortawesome/free-solid-svg-icons';
 import EnrichmentInfo, { EnrichmentInfoType } from '../../../classes/EnrichmentInfo';
 import Progress from '../GrayOverlay';
 import { TooltipHost } from 'office-ui-fabric-react';

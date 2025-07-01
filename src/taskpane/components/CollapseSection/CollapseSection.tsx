@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faChevronDown, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronRight, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './CollapseSection.css';
 import { ReactElement } from 'react';
@@ -53,6 +53,7 @@ class CollapseSection extends React.Component<CollapseSectionProps, CollapseSect
                 <div className="section-top">
                     <div className="section-title-text">{this.props.title}</div>
                     <div>
+                        {searchButton}
                         {addButton}
                         {collapseButton}
                     </div>
