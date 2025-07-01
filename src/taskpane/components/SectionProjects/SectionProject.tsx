@@ -23,9 +23,9 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
         this.state = { projects: this.props.partner.projects || [] };
     }
 
-//    private getProjectDescription = (prj: Project): string => {
-//        return `${prj.amountTotal}`.trim();
-//    };
+    private getProjectDescription = (prj: Project): string => {
+        return `${prj.amountTotal}`.trim();
+    };
 
     render() {
         return (
