@@ -72,47 +72,47 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 //        }));
 //    };
 
-    private onLeadSelected = async (lead: any) => {
+//    private onLeadSelected = async (lead: any) => {
 
-        const normalizedLead: Lead = {
-            ...lead,
-            id: lead.id || lead.lead_id,
-        };
+//        const normalizedLead: Lead = {
+//            ...lead,
+//            id: lead.id || lead.lead_id,
+//        };
 
-        this.setState({ isLeadCalloutOpen: false });
+//        this.setState({ isLeadCalloutOpen: false });
 
-        const updateData = {
-            partner_id: this.props.partner.id,  // even if it's -1
-            email_from: Office.context.mailbox.item.to[0].emailAddress,
-        };
-        const updateRequest = sendHttpRequest(
-            HttpVerb.POST,
-            api.baseURL + api.odooEndpointUpdateLead,
-            ContentType.Json,
-            this.context.getConnectionToken(),
-            {
-                lead_id: normalizedLead.id,
-                values: updateData,
-            },
-            true
-        );
+//        const updateData = {
+//            partner_id: this.props.partner.id,  // even if it's -1
+//            email_from: Office.context.mailbox.item.to[0].emailAddress,
+//        };
+//        const updateRequest = sendHttpRequest(
+//            HttpVerb.POST,
+//            api.baseURL + api.odooEndpointUpdateLead,
+//            ContentType.Json,
+//            this.context.getConnectionToken(),
+//            {
+//                lead_id: normalizedLead.id,
+//                values: updateData,
+//            },
+//            true
+//        );
 
-        try {
-            const response = JSON.parse(await updateRequest.promise);
-        } catch (error) {
-            this.context.showHttpErrorMessage(error);
-            return;
-        }
+//        try {
+//            const response = JSON.parse(await updateRequest.promise);
+//        } catch (error) {
+//            this.context.showHttpErrorMessage(error);
+//            return;
+//        }
 
-        const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
-        if (alreadyExists) {
-            return;
-        }
+//        const alreadyExists = this.state.leads.some(existing => existing.id === normalizedLead.id);
+//        if (alreadyExists) {
+//            return;
+//        }
 
-        this.setState(prevState => ({
-            leads: [...prevState.leads, normalizedLead],
-        }));
-    };
+//        this.setState(prevState => ({
+//            leads: [...prevState.leads, normalizedLead],
+//        }));
+//    };
 
     private getLeadDescription = (lead: Lead): string => {
         const expectedRevenueString = _t(
@@ -165,7 +165,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                         <SelectLeadDropdown
                             partner={this.props.partner}
                             canCreateLead={this.props.canCreateLead}
-                            onLeadClick={this.onLeadSelected}
+//                            onLeadClick={this.onLeadSelected}
                             opportunityLeads={this.props.opportunityLeads}   // Pass the already linked leads
                         />
                     </Callout>
