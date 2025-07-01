@@ -184,7 +184,6 @@ class Main extends React.Component<MainProps, MainState> {
 //    };
 
     private getEmailInfo = async (): Promise<{ email: string, displayName: string }> => {
-        console.log('getEmailInfo-IN');
 
         const item = Office.context.mailbox.item;
 
