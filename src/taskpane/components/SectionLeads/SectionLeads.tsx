@@ -45,11 +45,11 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         });
     };
 
-//    private onLeadSelected = (lead: Lead) => {
-//        console.log('onLeadSelected--------------LEAD', lead)
-//        this.setState({ isLeadCalloutOpen: false });
-//        this.state.createCallback({ lead_id: lead.id });
-//    };
+    private onLeadSelected = (lead: Lead) => {
+        console.log('onLeadSelected--------------LEAD', lead)
+        this.setState({ isLeadCalloutOpen: false });
+        this.state.createCallback({ lead_id: lead.id });
+    };
 
 //    private onLeadSelected = (lead: Lead) => {
 //        console.log('onLeadSelected--------------1LEAD', lead);
@@ -165,7 +165,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                         <SelectLeadDropdown
                             partner={this.props.partner}
                             canCreateLead={this.props.canCreateLead}
-                            onLeadClick={() => {}}
+                            onLeadClick={this.onLeadSelected}
                             opportunityLeads={this.props.opportunityLeads}   // Pass the already linked leads
                         />
                     </Callout>
