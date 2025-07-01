@@ -238,7 +238,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                         {Lead.name}
                     </div>
                 ))}
-                {this.state.query.length && !allowCreateNewLead && !this.state.Leads.length ? (
+                {this.state.query.length && !this.state.Leads.length ? (
                     <div>{_t('No Lead Found')}</div>
                 ) : null}
                 {this.state.isLoading && (
