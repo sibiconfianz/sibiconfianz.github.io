@@ -16,7 +16,7 @@ import AppContext from '../AppContext';
 import ContactPage from '../Contact/ContactPage/ContactPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Search, { SearchState } from '../Search/Search';
-import { faArrowLeft, faPlusCircle, faRedoAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlusCircle, faRedoAlt, faSearch, faSearch} from '@fortawesome/free-solid-svg-icons';
 import EnrichmentInfo, { EnrichmentInfoType } from '../../../classes/EnrichmentInfo';
 import Progress from '../GrayOverlay';
 import { TooltipHost } from 'office-ui-fabric-react';
@@ -86,7 +86,6 @@ class Main extends React.Component<MainProps, MainState> {
     }
 
     private addPartnerToDbRequest = () => {
-        console.log('--------------addPartnerToDbRequest')
         if (!this.context.isConnected()) {
             this.context.navigation.goToLogin();
             return;
@@ -123,7 +122,6 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getAllMatchedPartnersRequest = async () => {
-        console.log('--------------getAllMatchedPartnersRequest')
         if (!Office.context.mailbox.item) {
             return;
         }
@@ -131,7 +129,6 @@ class Main extends React.Component<MainProps, MainState> {
         let emailInfo = await this.getEmailInfo();
         let email = emailInfo.email;
         let displayName = emailInfo.displayName;
-        console.log('========email, displayname', email, displayName)
         const CancellableMatchedPartnersRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchPartner,
@@ -194,10 +191,8 @@ class Main extends React.Component<MainProps, MainState> {
         const isCompose = typeof item.from?.getAsync === 'function';
 
         if (isCompose) {
-            console.log('999999999999999999999999999')
             return new Promise((resolve, reject) => {
                 item.to.getAsync((result) => {  
-                    console.log('inininininiini')
                     if (result.status === Office.AsyncResultStatus.Succeeded) {
                         const toRecipients = result.value;
                         if (toRecipients.length > 0) {
@@ -229,8 +224,7 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
     private getTranslations = () => {
-        console.log('--------------getTranslations')
-        this.setState({ translationsLoading: true });
+         this.setState({ translationsLoading: true });
         const requestPromise = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.getTranslations,
