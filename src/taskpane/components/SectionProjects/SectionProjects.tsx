@@ -13,7 +13,7 @@ type ProjectSectionProps = {
     canCreatePartner: boolean;
 };
 
-type SectionProjectOrdersState = {
+type SectionProjectsState = {
     projects: Project[];
 };
 
@@ -24,7 +24,7 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
     }
 
     private getProjectDescription = (prj: Project): string => {
-        return `${prj.amountTotal}`.trim();
+        return `${prj.name}`.trim();
     };
 
     render() {
@@ -34,9 +34,9 @@ class SectionProjects extends React.Component<ProjectSectionProps, SectionProjec
                 partner={this.props.partner}
                 canCreatePartner={this.props.canCreatePartner}
                 model="project.project"
-                odooEndpointCreateRecord={api.createLead} //TODO
+                odooEndpointCreateRecord={api.createLead}
                 odooRecordIdName="project_id"
-                odooRedirectAction="sale.sale_order_action" //TODO
+                odooRedirectAction="project_mail_plugin_extension.project_action_form_edit"
                 title="Projects"
                 titleCount="Projects (%(count)s)"
                 msgNoPartner="Save Contact to create new Projects."
