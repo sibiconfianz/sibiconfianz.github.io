@@ -15,7 +15,7 @@ type SelectLeadDropdownProps = {
 type SelectLeadDropdownState = {
     query: string;
     isLoading: boolean;
-    Leads: Lead[];
+    leads: Lead[];
 };
 
 class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, SelectLeadDropdownState> {
@@ -82,7 +82,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
                     autoComplete="off"
                     onFocus={(e) => e.target.select()}
                 />
-                {this.state.Leads.map((lead) => (
+                {this.state.leads.map((lead) => (
                   <div key={lead.id} className="Lead-search-result-text">
                     <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
                     <span className="log-email-icon">
