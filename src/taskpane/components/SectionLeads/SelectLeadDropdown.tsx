@@ -226,7 +226,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
         ).length;
 
-        const allowCreateNewLead = this.props.canCreateLead && !!this.state.query.length && !searchedTermExists;
+//        const allowCreateNewLead = this.props.canCreateLead && !!this.state.query.length && !searchedTermExists;
         return (
             <div>
                 {this.state.Leads.map((lead) => (
