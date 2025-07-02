@@ -1,11 +1,9 @@
 import Company from './Company';
 import EnrichmentInfo from './EnrichmentInfo';
 import Lead from './Lead';
-import SaleOrder from './SaleOrder';
-import Invoice from './Invoice';
-import Project from './Project';
 import HelpdeskTicket from './HelpdeskTicket';
 import Task from './Task';
+
 /***
  * id value for partners which have not been yet added to a Odoo database
  */
@@ -25,9 +23,6 @@ class Partner {
     leads?: Lead[];
     tasks?: Task[];
     tickets?: HelpdeskTicket[];
-    sales?: SaleOrder[];
-    invoices?: Invoice[];
-    projects?: Project[];
     isCompany: boolean;
     canWriteOnPartner: boolean;
 

@@ -18,12 +18,15 @@ export const sendHttpRequest = function(
     const promise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url);
+
         if (contentType) {
             xhr.setRequestHeader('Content-Type', contentType);
         }
+
         if (token) {
             xhr.setRequestHeader('Authorization', token);
         }
+
         xhr.setRequestHeader('Accept-Language', '*');
 
         xhr.onload = function() {

@@ -159,8 +159,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
 
             requestJson.message = doc.body.innerHTML;
             requestJson.attachments = attachments;
-            console.log('-------------requestJson', requestJson)
-            console.log('-------------logSingleMail', api.baseURL + api.logSingleMail)
+
             const logRequest = sendHttpRequest(
                 HttpVerb.POST,
                 api.baseURL + api.logSingleMail,
