@@ -6,6 +6,7 @@ import AppContext from '../AppContext';
 import api from '../../api';
 import Lead from '../../../classes/Lead';
 import './SelectLeadDropdown.css';
+import Logger from '../Log/Logger';
 
 type SelectLeadDropdownProps = {
     onLeadClick: (lead: Lead) => void;
@@ -81,10 +82,17 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
                     autoComplete="off"
                     onFocus={(e) => e.target.select()}
                 />
-                {this.state.leads.map((lead) => (
-                    <div key={lead.id} className="lead-search-result-text" onClick={() => this.props.onLeadClick(lead)}>
-                        {lead.name}
-                    </div>
+                {this.state.Leads.map((lead) => (
+                  <div key={lead.id} className="Lead-search-result-text">
+                    <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
+                    <span className="log-email-icon">
+                      <Logger
+                        resId={lead.id || lead.lead_id}
+                        model="crm.lead"
+                        tooltipContent={`Log this email to ${lead.name}`}
+                      />
+                    </span>
+                  </div>
                 ))}
                 {this.state.isLoading && (
                     <Spinner size={SpinnerSize.large} className="lead-result-spinner" />
