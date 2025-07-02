@@ -48,6 +48,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     };
 
     render() {
+        console.log('Render: isLeadSearchCalloutOpen =', this.state.isLeadSearchCalloutOpen);
         return (
             <>
             <Section
