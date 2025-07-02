@@ -66,7 +66,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                 msgNoRecord="No opportunities found for this contact."
                 msgLogEmail="Log Email Into Lead"
                 getRecordDescription={this.getLeadDescription}
-               // showSearchButton={true} // <-- ONLY HERE
+                showSearchButton={true} // <-- ONLY HERE
                 onSearchButtonClick={this.toggleLeadSearchCallout} // ✅ NEW
             />
             {this.state.isLeadSearchCalloutOpen && (
