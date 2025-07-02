@@ -26,7 +26,7 @@ type SectionAbstractProps = {
     // (e.g.: Search a project and add the project ID before creating a task)
     onClickCreate?: (callback: (any?) => void) => void;
 
-    extraButtons?: React.ReactNode;
+//    extraButtons?: React.ReactNode;
 
     // Messages
     title: string;
@@ -143,7 +143,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 title={title}
                 hasAddButton={this.props.partner.isAddedToDatabase()}
                 onAddButtonClick={this.onClickCreate}
-                extraButtons={this.props.extraButtons}  // Pass-through
+//                extraButtons={this.props.extraButtons}  // Pass-through
 >
                 {this.getSection()}
             </CollapseSection>
