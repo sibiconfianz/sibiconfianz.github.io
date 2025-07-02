@@ -1,7 +1,18 @@
+/*.Lead-search-result-text {*/
+/*    cursor: pointer;*/
+/*    font-weight: bold;*/
+/*    margin-top: 8px;*/
+/*}*/
+
 .Lead-search-result-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-email-icon {
+    margin-left: 10px;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 8px;
 }
 
 .Lead-search-no-result-text {
