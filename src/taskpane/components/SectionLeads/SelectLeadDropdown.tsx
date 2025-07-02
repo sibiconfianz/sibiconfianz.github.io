@@ -222,9 +222,9 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
 //    };
 
     private getLeads = () => {
-        const searchedTermExists = this.state.Leads.filter(
-            (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
-        ).length;
+//        const searchedTermExists = this.state.Leads.filter(
+//            (p) => p.name.toUpperCase() === this.state.query.toUpperCase(),
+//        ).length;
 
 //        const allowCreateNewLead = this.props.canCreateLead && !!this.state.query.length && !searchedTermExists;
         return (
