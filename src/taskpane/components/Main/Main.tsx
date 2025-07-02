@@ -1,5 +1,3 @@
-console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii------MAIN' )
-
 import * as React from 'react';
 
 import './Main.css';
