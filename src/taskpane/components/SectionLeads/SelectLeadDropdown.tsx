@@ -27,9 +27,10 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
 
     private onQueryChanged = (event) => {
         const query = event.target.value;
-        this.setState({ query });
+        this.setState({ query: query });
         this.cancelLeadsRequest();
         if (query.length > 0) {
+            console.log('---------------getLeads')
             this.getLeads(query);
         } else {
             this.setState({ isLoading: false, leads: [] });
@@ -41,6 +42,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
     };
 
     private getLeads = async (searchTerm: string) => {
+        console.log('---------------getLeads--', api.baseURL + api.searchLead)
         this.setState({ isLoading: true });
 
         this.leadsRequest = sendHttpRequest(
@@ -51,7 +53,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             { search_term: searchTerm },
             true
         );
-
+        console.log('-------------------leadsRequest', leadsRequest)
         this.context.addRequestCanceller(this.leadsRequest.cancel);
 
         let response = null;
