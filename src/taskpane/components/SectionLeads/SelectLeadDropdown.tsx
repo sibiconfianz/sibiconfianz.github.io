@@ -234,8 +234,8 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
             <div>
                 {this.state.Leads.map((lead) => (
                 <div key={lead.id} className="Lead-search-result-text">
-                    <span className="log-email-icon">
                     <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
+                    <span className="log-email-icon">
                         <Logger
                             resId={lead.id || lead.lead_id}
                             model="crm.lead"
