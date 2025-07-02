@@ -51,6 +51,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         return (
             <>
             <Section
+                className="collapse-lead-section"
                 records={this.state.leads}
                 partner={this.props.partner}
                 canCreatePartner={this.props.canCreatePartner}
