@@ -11,6 +11,8 @@ import { OdooTheme } from '../../../utils/Themes';
 
 type SelectLeadDropdownProps = {
     onLeadClick: (lead: Lead) => void;
+    canCreateLead: boolean;
+    opportunityLeads: Lead[];
 };
 
 type SelectLeadDropdownState = {
