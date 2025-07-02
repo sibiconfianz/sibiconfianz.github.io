@@ -44,9 +44,13 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
     };
 
     private getLeads = async (searchTerm: string) => {
-        console.log('---------------getLeads--', api.searchLead)
-        this.setState({ isLoading: true });
+        const { opportunityLeads } = this.props;
+        const existingLeadIds = opportunityLeads.map((lead) => lead.id);
+        if (!searchTerm || !searchTerm.length) {
+            return;
+        }
 
+        this.setState({ isLoading: true });
         this.leadsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchLead, // '/mail_plugin/lead/search'
@@ -55,7 +59,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             { search_term: searchTerm },
             true
         );
-        console.log('-------------------leadsRequest', this.leadsRequest)
         this.context.addRequestCanceller(this.leadsRequest.cancel);
 
         let response = null;
@@ -67,8 +70,13 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             return;
         }
 
-        const leads = response.result.map((json) => Lead.fromJSON(json));
-        this.setState({ leads, isLoading: false });
+        const allLeads = response.result.map((json) => Lead.fromJSON(json));
+
+        const filteredLeads = allLeads.filter((lead) => {
+            return !existingLeadIds.includes(lead.id || lead.lead_id);
+        });
+
+        this.setState({ leads: filteredLeads, isLoading: false });
     };
 
 //    render() {
