@@ -53,7 +53,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             { search_term: searchTerm },
             true
         );
-        console.log('-------------------leadsRequest', leadsRequest)
+        console.log('-------------------leadsRequest', this.leadsRequest)
         this.context.addRequestCanceller(this.leadsRequest.cancel);
 
         let response = null;
