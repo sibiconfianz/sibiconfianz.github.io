@@ -33,7 +33,7 @@ type ContactPageState = {
 class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     constructor(props, context) {
         super(props, context);
-        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true, canCreateLead: true;};
+        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true, canCreateLead: true};
     }
 
     private fetchContact = () => {
