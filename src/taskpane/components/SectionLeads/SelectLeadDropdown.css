@@ -1,0 +1,21 @@
+.lead-result-container {
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+}
+
+.lead-search-result-text {
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.lead-search-result-text:hover {
+    color: #96417e;
+}
+
+.lead-result-spinner {
+    margin: 16px auto auto auto;
+    height: 100%;
+}
+

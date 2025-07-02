@@ -5,8 +5,9 @@ import AppContext from '../AppContext';
 import api from '../../api';
 import Lead from '../../../classes/Lead';
 import Section from '../Section/Section';
-
+import SelectLeadDropdown from './SelectLeadDropdown';
 import { _t } from '../../../utils/Translator';
+import { Callout, DirectionalHint } from 'office-ui-fabric-react';
 
 type LeadSectionProps = {
     partner: Partner;
@@ -41,11 +42,13 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
     };
 
     private toggleLeadSearchCallout = () => {
+        console.log('---------toggleLeadSearchCallout')
         this.setState({ isLeadSearchCalloutOpen: !this.state.isLeadSearchCalloutOpen });
     };
 
     render() {
         return (
+            <>
             <Section
                 records={this.state.leads}
                 partner={this.props.partner}
@@ -64,6 +67,28 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                // showSearchButton={true} // <-- ONLY HERE
                 onSearchButtonClick={this.toggleLeadSearchCallout} // ✅ NEW
             />
+            {this.state.isLeadSearchCalloutOpen && (
+                <Callout
+                    directionalHint={DirectionalHint.bottomRightEdge}
+                    directionalHintFixed={true}
+                    onDismiss={() => this.setState({ isLeadSearchCalloutOpen: false })}
+                    preventDismissOnScroll={true}
+                    setInitialFocus={true}
+                    doNotLayer={true}
+                    gapSpace={0}
+                    role="alertdialog"
+                    target=".collapse-lead-section .collapse-section-button"
+                >
+                    <SelectLeadDropdown
+                        onLeadClick={(lead) => {
+                            this.setState({ isLeadSearchCalloutOpen: false });
+                            // Optional: handle something with the selected lead (e.g., open detail view)
+                            window.open(`${api.baseURL}/web#id=${lead.id}&model=crm.lead&view_type=form`);
+                        }}
+                    />
+                </Callout>
+            )}
+        </>
         );
     }
 }
