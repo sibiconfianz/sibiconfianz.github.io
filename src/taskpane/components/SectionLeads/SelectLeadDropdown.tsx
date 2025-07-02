@@ -34,7 +34,6 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
         this.setState({ query: query });
         this.cancelLeadsRequest();
         if (query.length > 0) {
-            console.log('---------------getLeads')
             this.getLeads(query);
         } else {
             this.setState({ isLoading: false, leads: [] });
