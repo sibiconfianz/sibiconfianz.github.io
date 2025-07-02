@@ -39,7 +39,7 @@ class CollapseSection extends React.Component<CollapseSectionProps, CollapseSect
 //        console.log('================showSearchButton', showSearchButton)
 
         const searchButton = this.props.showSearchButton && (
-            <FontAwesomeIcon icon={faSearch} className="collapse-section-button-search" onClick={this.props.onAddButtonClick} />
+            <FontAwesomeIcon icon={faSearch} className="collapse-section-button" onClick={this.props.onAddButtonClick} />
         );
 
         const addButton = this.props.hasAddButton && (
