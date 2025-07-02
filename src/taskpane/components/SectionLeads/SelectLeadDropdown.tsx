@@ -42,7 +42,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
     };
 
     private getLeads = async (searchTerm: string) => {
-        console.log('---------------getLeads--', api.baseURL + api.searchLead)
+        console.log('---------------getLeads--', api.searchLead)
         this.setState({ isLoading: true });
 
         this.leadsRequest = sendHttpRequest(
