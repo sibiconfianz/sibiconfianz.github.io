@@ -104,7 +104,50 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
 //            </div>
 //        );
 //    }
-private getLeads = () => {
+
+//    render() {
+//        return (
+//            <div className="Lead-result-container"> {/* Capitalized like old version */}
+//                <div>{_t('Pick a Lead')}</div> {/* Use old title */}
+//                <div className="Lead-search-bar"> {/* Old container for input */}
+//                    <TextField
+//                        className="input-search"
+//                        placeholder={_t('Search Leads...')}
+//                        onChange={this.onQueryChanged}
+//                        value={this.state.query}
+//                        autoComplete="off"
+//                        onFocus={(e) => e.target.select()}
+//                    />
+//                </div>
+
+//                <div>
+//                    {this.state.leads.map((lead) => (
+//                        <div key={lead.id} className="Lead-search-result-text">
+//                            <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
+//                            <span className="log-email-icon">
+//                                <Logger
+//                                    resId={lead.id || lead.lead_id}
+//                                    model="crm.lead"
+//                                    tooltipContent={`Log this email to ${lead.name}`}
+//                                />
+//                            </span>
+//                        </div>
+//                    ))}
+
+//                    {this.state.query.length > 0 && !this.state.leads.length && !this.state.isLoading && (
+//                        <div>{_t('No Lead Found')}</div>
+//                    )}
+
+//                    {this.state.isLoading && (
+//                        <Spinner theme={OdooTheme} size={SpinnerSize.large} className="Lead-result-spinner" />
+//                    )}
+//                </div>
+//            </div>
+//        );
+//    }
+
+
+private renderLeadsList = () => {
     return (
         <div>
             {this.state.leads.map((lead) => (
@@ -145,10 +188,11 @@ render() {
                     onFocus={(e) => e.target.select()}
                 />
             </div>
-            {this.getLeads()}
+            {this.renderLeadsList()}
         </div>
     );
 }
+
 
 }
 
