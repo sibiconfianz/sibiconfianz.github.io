@@ -237,7 +237,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                     <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
                     <span className="log-email-icon">
                         <Logger
-                            resId={lead.id}
+                            resId={lead.id || lead.lead_id}
                             model="crm.lead"
                             tooltipContent={`Log this email to ${lead.name}`}
                         />

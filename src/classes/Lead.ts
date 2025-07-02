@@ -1,4 +1,5 @@
 class Lead {
+    lead_id?: number; // 👈 Add this line
     id: number;
     name: string;
     expectedRevenue: string; // string because formatted
