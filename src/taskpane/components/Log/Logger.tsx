@@ -56,7 +56,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
     }
 
     private logRequest = async (event): Promise<any> => {
-        console.log('---------------------------logRequest')
+        console.log('---------------------------logRequestsss')
         event.stopPropagation();
 
         this.setState({ logged: 1 });
