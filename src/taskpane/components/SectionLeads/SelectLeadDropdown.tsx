@@ -229,6 +229,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
         const allowCreateNewLead = this.props.canCreateLead && !!this.state.query.length && !searchedTermExists;
         console.log('allowCreateNewLead', allowCreateNewLead)
         console.log('-----------', this.state.query.length, this.state.Leads.length)
+        console.log('==========', this.state.Leads)
         return (
             <div>
                 {this.state.Leads.map((lead) => (
@@ -236,7 +237,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadProps, SelectLeadStat
                     <span onClick={() => this.props.onLeadClick(lead)}>{lead.name}</span>
                     <span className="log-email-icon">
                         <Logger
-                            resId={lead.id || lead.lead_id}
+                            resId={lead.id}
                             model="crm.lead"
                             tooltipContent={`Log this email to ${lead.name}`}
                         />
