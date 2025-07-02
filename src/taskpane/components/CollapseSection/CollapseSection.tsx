@@ -13,6 +13,7 @@ type CollapseSectionProps = {
     children: ReactElement;
     className?: string;
     showSearchButton?: boolean; // <-- NEW
+    onSearchButtonClick?: () => void; // ✅ NEW
 };
 
 type CollapseSectionSate = {
@@ -39,7 +40,7 @@ class CollapseSection extends React.Component<CollapseSectionProps, CollapseSect
 //        console.log('================showSearchButton', showSearchButton)
 
         const searchButton = this.props.showSearchButton && (
-            <FontAwesomeIcon icon={faSearch} className="collapse-section-button" onClick={this.props.onAddButtonClick} />
+            <FontAwesomeIcon icon={faSearch} className="collapse-section-button" onClick={this.props.onSearchButtonClick} />
         );
 
         const addButton = this.props.hasAddButton && (

@@ -13,6 +13,7 @@ type SectionAbstractProps = {
     partner: Partner;
     canCreatePartner: boolean;
     showSearchButton?: boolean; // <-- NEW
+    onSearchButtonClick?: () => void; // ✅ NEW
 
     // Odoo Record creation
     model: string;
@@ -189,7 +190,10 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 title={title}
                 hasAddButton={this.props.partner.isAddedToDatabase() || (this.props.partner.leads && this.props.partner.leads.length > 0)}
                 onAddButtonClick={this.onClickCreate}
-                showSearchButton={this.props.showSearchButton}>
+                //showSearchButton={this.props.showSearchButton}
+                onSearchButtonClick={this.props.onSearchButtonClick} // ✅ NEW
+                showSearchButton={!!this.props.onSearchButtonClick} // ✅ NEW
+            >
                 {this.getSection()}
             </CollapseSection>
         );

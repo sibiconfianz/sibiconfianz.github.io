@@ -15,12 +15,13 @@ type LeadSectionProps = {
 
 type SectionLeadsState = {
     leads: Lead[];
+    isLeadSearchCalloutOpen: boolean; // ✅ NEW
 };
 
 class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> {
     constructor(props, context) {
         super(props, context);
-        this.state = { leads: this.props.partner.leads };
+        this.state = { leads: this.props.partner.leads, isLeadSearchCalloutOpen: false };
     }
 
     private getLeadDescription = (lead: Lead): string => {
@@ -37,6 +38,10 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
         );
 
         return expectedRevenueString;
+    };
+
+    private toggleLeadSearchCallout = () => {
+        this.setState({ isLeadSearchCalloutOpen: !this.state.isLeadSearchCalloutOpen });
     };
 
     render() {
@@ -56,7 +61,8 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                 msgNoRecord="No opportunities found for this contact."
                 msgLogEmail="Log Email Into Lead"
                 getRecordDescription={this.getLeadDescription}
-                showSearchButton={true} // <-- ONLY HERE
+               // showSearchButton={true} // <-- ONLY HERE
+                onSearchButtonClick={this.toggleLeadSearchCallout} // ✅ NEW
             />
         );
     }
