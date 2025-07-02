@@ -4,11 +4,11 @@
 /*    margin: 16px;*/
 /*}*/
 
-/*.lead-search-result-text {*/
-/*    cursor: pointer;*/
-/*    font-weight: bold;*/
-/*    margin-top: 8px;*/
-/*}*/
+.lead-search-result-text {
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+}
 
 /*.lead-search-result-text:hover {*/
 /*    color: #96417e;*/
@@ -32,9 +32,14 @@
 /*    align-items: center;*/
 /*}*/
 
+/*.log-email-icon {*/
+/*    margin-left: 10px;*/
+/*    cursor: pointer;*/
+/*}*/
+
 .log-email-icon {
-    margin-left: 10px;
-    cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 12px;
 }
 
 .Lead-search-no-result-text {
