@@ -12,6 +12,8 @@ import { Callout, DirectionalHint } from 'office-ui-fabric-react';
 type LeadSectionProps = {
     partner: Partner;
     canCreatePartner: boolean;
+    canCreateLead: boolean;
+    opportunityLeads: Lead[];  // Add this property to the type
 };
 
 type SectionLeadsState = {
@@ -83,6 +85,8 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                     target=".collapse-lead-section .collapse-section-button"
                 >
                     <SelectLeadDropdown
+                        canCreateLead={this.props.canCreateLead}
+                        opportunityLeads={this.props.opportunityLeads}
                         onLeadClick={(lead) => {
                             this.setState({ isLeadSearchCalloutOpen: false });
                             // Optional: handle something with the selected lead (e.g., open detail view)
