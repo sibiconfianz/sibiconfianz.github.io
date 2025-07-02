@@ -126,10 +126,9 @@ class Main extends React.Component<MainProps, MainState> {
             return;
         }
 
-        let emailInfo = this.getEmailInfo();
+        let emailInfo = await this.getEmailInfo();
         let email = emailInfo.email;
         let displayName = emailInfo.displayName;
-
         const CancellableMatchedPartnersRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchPartner,
