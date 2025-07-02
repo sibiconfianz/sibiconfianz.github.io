@@ -7,6 +7,7 @@ import api from '../../api';
 import Lead from '../../../classes/Lead';
 import './SelectLeadDropdown.css';
 import Logger from '../Log/Logger';
+import { OdooTheme } from '../../../utils/Themes';
 
 type SelectLeadDropdownProps = {
     onLeadClick: (lead: Lead) => void;
