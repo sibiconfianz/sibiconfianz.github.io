@@ -119,7 +119,7 @@ class Main extends React.Component<MainProps, MainState> {
             });
     };
 
-    private getAllMatchedPartnersRequest = () => {
+    private getAllMatchedPartnersRequest = async () => {
         if (!Office.context.mailbox.item) {
             return;
         }
