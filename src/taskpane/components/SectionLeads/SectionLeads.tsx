@@ -43,6 +43,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
 
     private toggleLeadSearchCallout = () => {
         console.log('---------toggleLeadSearchCallout')
+        console.log('-------isLeadSearchCalloutOpen', this.state.isLeadSearchCalloutOpen)
         this.setState({ isLeadSearchCalloutOpen: !this.state.isLeadSearchCalloutOpen });
     };
 
