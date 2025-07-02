@@ -26,8 +26,6 @@ type SectionAbstractProps = {
     // (e.g.: Search a project and add the project ID before creating a task)
     onClickCreate?: (callback: (any?) => void) => void;
 
-//    extraButtons?: React.ReactNode;
-
     // Messages
     title: string;
     titleCount: string;
@@ -104,17 +102,64 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         });
     };
 
+//    private getSection = () => {
+//        if (!this.props.partner.isAddedToDatabase()) {
+//            return (
+//                <div className="list-text">
+//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
+//                </div>
+//            );
+//        } else if (this.state.records.length > 0) {
+//            return (
+//                <div className="section-content">
+//                    {this.state.records.map((record) => (
+//                        <ListItem
+//                            model={this.props.model}
+//                            res_id={record.id}
+//                            key={record.id}
+//                            title={record.name}
+//                            description={this.props.getRecordDescription(record)}
+//                            logTitle={_t(this.props.msgLogEmail)}
+//                        />
+//                    ))}
+//                </div>
+//            );
+//        }
+//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
+//    };
+
+//    render() {
+//        const recordCount = this.state.records && this.state.records.length;
+//        const title = this.state.records
+//            ? _t(this.props.titleCount, { count: recordCount.toString() })
+//            : _t(this.props.title);
+
+//        return (
+//            <CollapseSection
+//                className={this.props.className}
+//                isCollapsed={this.state.isCollapsed}
+//                title={title}
+//                hasAddButton={this.props.partner.isAddedToDatabase()}
+//                onAddButtonClick={this.onClickCreate}>
+//                {this.getSection()}
+//            </CollapseSection>
+//        );
+//    }
+
+//  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
-        if (!this.props.partner.isAddedToDatabase()) {
+        const hasRecords = this.props.records.length > 0;
+        if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
             return (
                 <div className="list-text">
                     {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
                 </div>
             );
-        } else if (this.state.records.length > 0) {
+        }
+        if (hasRecords) {
             return (
                 <div className="section-content">
-                    {this.state.records.map((record) => (
+                    {this.props.records.map((record) => (
                         <ListItem
                             model={this.props.model}
                             res_id={record.id}
@@ -131,20 +176,18 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     };
 
     render() {
-        const recordCount = this.state.records && this.state.records.length;
-        const title = this.state.records
+        const recordCount = this.props.records && this.props.records.length;
+        const title = this.props.records
             ? _t(this.props.titleCount, { count: recordCount.toString() })
-            : _t(this.props.title);
+            : _t(this.props.title)
 
         return (
             <CollapseSection
                 className={this.props.className}
                 isCollapsed={this.state.isCollapsed}
                 title={title}
-                hasAddButton={this.props.partner.isAddedToDatabase()}
-                onAddButtonClick={this.onClickCreate}
-//                extraButtons={this.props.extraButtons}  // Pass-through
->
+                hasAddButton={this.props.partner.isAddedToDatabase() || (this.props.partner.leads && this.props.partner.leads.length > 0)}
+                onAddButtonClick={this.onClickCreate}>
                 {this.getSection()}
             </CollapseSection>
         );
