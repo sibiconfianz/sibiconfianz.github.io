@@ -63,7 +63,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             return;
         }
 
-        const leads = response.result.map((json) => Lead.fromJson(json));
+        const leads = response.result.map((json) => Lead.fromJSON(json));
         this.setState({ leads, isLoading: false });
     };
 
