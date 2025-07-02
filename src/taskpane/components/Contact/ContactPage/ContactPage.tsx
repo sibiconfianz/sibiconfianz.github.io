@@ -27,12 +27,13 @@ type ContactPageState = {
     canCreatePartner: boolean;
     isLoading: boolean;
     canCreateProject: boolean;
+    canCreateLead: boolean;
 };
 
 class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
     constructor(props, context) {
         super(props, context);
-        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true };
+        this.state = { partner: props.partner, isLoading: true, canCreatePartner: true, canCreateProject: true, canCreateLead: true;};
     }
 
     private fetchContact = () => {
@@ -70,6 +71,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 }
                 // undefined should be considered as true for retro-compatibility
                 const canCreateProject = parsed.result.can_create_project !== false;
+                const canCreateLead = parsed.result.can_create_lead !== false;
 
                 if (parsed.result.tickets) {
                     newPartner.tickets = parsed.result.tickets.map((ticket_json) =>
@@ -89,6 +91,7 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     isLoading: false,
                     canCreatePartner: canCreatePartner,
                     canCreateProject: canCreateProject,
+                    canCreateLead: canCreateLead,
                 });
                 if (parsed.result.partner['enrichment_info']) {
                     const enrichmentInfo = new EnrichmentInfo(
@@ -140,7 +143,12 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         }
 
         const leadsList = this.isCrmInstalled() && (
-            <SectionLeads partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+            <SectionLeads 
+                partner={this.state.partner}
+                canCreatePartner={this.state.canCreatePartner}
+                canCreateLead={this.state.canCreateLead}
+                opportunityLeads={this.state.partner.leads || []}  // Pass the leads here
+            />
         );
 
         const tasksList = this.isProjectInstalled() && (
