@@ -135,8 +135,8 @@ private logRequest = async (event): Promise<any> => {
             : item.attachments || [];       // ✅ Read mode direct access
 
         // 📏 Thresholds
-        const SIZE_THRESHOLD_TOTAL = 10; // MB
-        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
+//        const SIZE_THRESHOLD_TOTAL = 10; // MB
+//        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
 
         let totalSize = 0;
         attachmentsRaw.forEach((a) => (totalSize += a.size));
