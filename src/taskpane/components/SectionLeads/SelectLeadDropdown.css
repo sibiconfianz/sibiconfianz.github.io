@@ -1,5 +1,28 @@
 .Lead-search-result-text {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
 }
+
+.Lead-search-result-text:hover {
+    color: #96417e;
+}
+
+.Lead-search-no-result-text {
+    margin-top: 8px;
+}
+
+.Lead-search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    margin: 8px 0 8px 0;
+}
+
+
+/*.Lead-search-result-text {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
