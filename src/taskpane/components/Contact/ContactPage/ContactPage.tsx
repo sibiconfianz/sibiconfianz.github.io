@@ -3,6 +3,9 @@ import Partner from '../../../../classes/Partner';
 import AppContext from '../../AppContext';
 import ContactListItem from '../ContactList/ContactListItem/ContactListItem';
 import SectionLeads from '../../SectionLeads/SectionLeads';
+import SectionSales from '../../SectionSales/SectionSales';
+import SectionInvoices from '../../SectionInvoices/SectionInvoices';
+import SectionProjects from '../../SectionProjects/SectionProjects';
 import CompanySection from '../../Company/CompanySection/CompanySection';
 import SectionTickets from '../../SectionTickets/SectionTickets';
 import { ContentType, HttpVerb, sendHttpRequest } from '../../../../utils/httpRequest';
@@ -12,10 +15,12 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { OdooTheme } from '../../../../utils/Themes';
 import './ContactPage.css';
 import Lead from '../../../../classes/Lead';
+import SaleOrder from '../../../../classes/SaleOrder';
+import Invoice from '../../../../classes/Invoice';
+import Project from '../../../../classes/Project';
 import HelpdeskTicket from '../../../../classes/HelpdeskTicket';
 import SectionTasks from '../../SectionTasks/SectionTasks';
 import Task from '../../../../classes/Task';
-
 type ContactPageProps = {
     partner: Partner;
     onPartnerChanged?: (Partner) => void;
@@ -42,7 +47,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         const requestData = this.props.partner.isAddedToDatabase()
             ? { partner_id: partner.id }
             : { email: partner.email, name: partner.name };
-
         const partnerRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.getPartner,
@@ -51,7 +55,6 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
             requestData,
             true,
         );
-
         this.context.addRequestCanceller(partnerRequest.cancel);
 
         partnerRequest.promise
@@ -65,6 +68,15 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
 
                 if (parsed.result.leads) {
                     newPartner.leads = parsed.result.leads.map((lead_json) => Lead.fromJSON(lead_json));
+                }
+                if (parsed.result.sales) {
+                    newPartner.sales = parsed.result.sales.map((sale_json) => SaleOrder.fromJSON(sale_json));
+                }
+                if (parsed.result.invoices) {
+                    newPartner.invoices = parsed.result.invoices.map((invoice_json) => Invoice.fromJSON(invoice_json));
+                }
+                if (parsed.result.projects) {
+                    newPartner.projects = parsed.result.projects.map((project_json) => Project.fromJson(project_json));
                 }
                 if (parsed.result.tasks) {
                     newPartner.tasks = parsed.result.tasks.map((task_json) => Task.fromJSON(task_json));
@@ -113,8 +125,16 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
         return this.props.partner.leads !== undefined;
     };
 
+    private isSaleInstalled = (): boolean => {
+        return this.props.partner.sales !== undefined;
+    };
+
+    private isAccountingInstalled = (): boolean => {
+        return this.props.partner.invoices !== undefined;
+    };
+
     private isProjectInstalled = (): boolean => {
-        return this.props.partner.tasks !== undefined;
+        return this.props.partner.tasks !== undefined && this.props.partner.projects !== undefined;
     };
 
     private isHelpdeskInstalled = (): boolean => {
@@ -148,7 +168,19 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                 canCreatePartner={this.state.canCreatePartner}
                 canCreateLead={this.state.canCreateLead}
                 opportunityLeads={this.state.partner.leads || []}  // Pass the leads here
-            />
+             />
+        );
+
+        const saleList = this.isSaleInstalled() && (
+            <SectionSales partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+        );
+
+        const invoiceList = this.isAccountingInstalled() && (
+            <SectionInvoices partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
+        );
+
+        const projectsList = this.isProjectInstalled() && (
+            <SectionProjects partner={this.state.partner} canCreatePartner={this.state.canCreatePartner} />
         );
 
         const tasksList = this.isProjectInstalled() && (
@@ -175,13 +207,16 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
                     />
                 </div>
                 {leadsList}
+                {projectsList}
                 {tasksList}
                 {ticketsList}
+                {saleList}
+                {invoiceList}
                 <CompanySection
                     partner={this.state.partner}
                     canCreatePartner={this.state.canCreatePartner}
                     onPartnerInfoChanged={this.propagatePartnerInfoChange}
-                    hideCollapseButton={!leadsList && !tasksList && !ticketsList}
+                    hideCollapseButton={!leadsList && !tasksList && !ticketsList && !saleList && !invoiceList && !projectsList}
                 />
             </div>
         );

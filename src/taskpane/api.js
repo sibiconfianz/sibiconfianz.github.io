@@ -5,6 +5,8 @@ const api = {
     createProject: '/mail_plugin/project/create',
     createTask: '/mail_plugin/task/create',
     createTicket: '/mail_plugin/ticket/create',
+    createSale: '/mail_plugin/sale/create',
+//    createInvoice: '',
     enrichCompany: '/mail_plugin/partner/enrich_and_create_company',
     enrichAndCreate: '/mail_plugin/partner/enrich_and_create_company',
     enrichAndUpdate: '/mail_plugin/partner/enrich_and_update_company',
@@ -15,6 +17,7 @@ const api = {
     getTranslations: '/mail_plugin/get_translations',
     searchProject: '/mail_plugin/project/search',
     searchLead: '/mail_plugin/lead/search',
+    odooEndpointUpdateLead: '/mail_plugin/lead/update',
 
     // Authentication
     loginPage: '/web/login', // Should be the usual Odoo login page.
