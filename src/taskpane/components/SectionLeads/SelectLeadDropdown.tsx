@@ -5,7 +5,7 @@ import { ContentType, HttpVerb, sendHttpRequest } from '../../../utils/httpReque
 import AppContext from '../AppContext';
 import api from '../../api';
 import Lead from '../../../classes/Lead';
-import './SelectLeadDropdown.css';
+//import './SelectLeadDropdown.css';
 import Logger from '../Log/Logger';
 import { OdooTheme } from '../../../utils/Themes';
 
