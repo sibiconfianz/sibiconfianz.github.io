@@ -55,198 +55,198 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
         });
     }
 
-private logRequest = async (event): Promise<any> => {
-    console.log('---------------------------logRequest');
-    event.stopPropagation();
+    private logRequest = async (event): Promise<any> => {
+        event.stopPropagation();
 
-    const item = Office.context.mailbox.item;
+        const item = Office.context.mailbox.item;
 
-    // 🔍 Detect whether we are in Compose mode by checking if body.setAsync exists
-    const isCompose = typeof item.body.setAsync === 'function';
-    this.setState({ logged: 1 });
+        // 🔍 Detect whether we are in Compose mode by checking if body.setAsync exists
+        const isCompose = typeof item.body.setAsync === 'function';
+        this.setState({ logged: 1 });
 
-    // ✉️ Helper to get "To" recipients in Compose mode
-    const getComposeRecipients = (): Promise<string[]> => {
-        return new Promise((resolve) => {
-            if ((item as any).to?.getAsync) {
-                (item as any).to.getAsync((result) => {
-                    if (result.status === Office.AsyncResultStatus.Succeeded) {
-                        const emails = result.value.map((entry) => entry.emailAddress);
-                        resolve(emails);
-                    } else {
-                        resolve([]);
-                    }
-                });
-            } else {
-                resolve([]);
-            }
-        });
-    };
-
-    // 📎 Helper to get attachments in Compose mode
-    const getComposeAttachments = (): Promise<any[]> => {
-        return new Promise((resolve) => {
-            const attachmentsObj = (item as any).attachments;
-            if (attachmentsObj && typeof attachmentsObj.getAsync === 'function') {
-                attachmentsObj.getAsync((result) => {
-                    if (result.status === Office.AsyncResultStatus.Succeeded) {
-                        resolve(result.value);
-                    } else {
-                        console.warn('Failed to get attachments in compose mode:', result.error);
-                        resolve([]);
-                    }
-                });
-            } else {
-                resolve([]);
-            }
-        });
-    };
-
-    // 📄 Get body content (shared for both modes)
-    Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
-        if (result.status !== Office.AsyncResultStatus.Succeeded) {
-            console.error('Failed to get body:', result.error);
-            this.setState({ logged: 0 });
-            return;
-        }
-
-        const bodyContent = result.value.split('<div id="x_appendonsend"></div>')[0];
-        const msgFooter = `<br/><div class="text-muted font-italic">${_t('Logged from')} <a href="https://www.odoo.com/documentation/master/applications/productivity/mail_plugins.html" target="_blank">${_t('Outlook Inbox')}</a></div>`;
-
-        // 🧠 Compose or Read mode header setup
-        let fromHeader = '';
-        if (isCompose) {
-            // 🆕 Compose mode: show "To" addresses instead of "From"
-            const toEmails = await getComposeRecipients();
-            fromHeader = `<div>${_t('To : %(emails)s', { emails: toEmails.join(', ') })}</div>`;
-        } else {
-            // ✅ Read mode: use sender email
-            fromHeader = `<div>${_t('From : %(email)s', {
-                email: item.sender?.emailAddress || '[unknown]',
-            })}</div>`;
-        }
-
-        const message = fromHeader + bodyContent + msgFooter;
-        const doc = new DOMParser().parseFromString(message, 'text/html');
-
-        // 📎 Attachment collection: supports Compose and Read
-        const attachmentsRaw = isCompose
-            ? await getComposeAttachments() // 🆕 Compose mode fetch
-            : item.attachments || [];       // ✅ Read mode direct access
-
-        // 📏 Thresholds
-//        const SIZE_THRESHOLD_TOTAL = 10; // MB
-//        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
-
-        let totalSize = 0;
-        attachmentsRaw.forEach((a) => (totalSize += a.size));
-
-        const requestJson = {
-            res_id: this.props.resId,
-            model: this.props.model,
-            message: '', // final HTML body
-            attachments: [], // will be populated after processing
+        // ✉️ Helper to get "To" recipients in Compose mode
+        const getComposeRecipients = (): Promise<string[]> => {
+            return new Promise((resolve) => {
+                if ((item as any).to?.getAsync) {
+                    (item as any).to.getAsync((result) => {
+                        if (result.status === Office.AsyncResultStatus.Succeeded) {
+                            const emails = result.value.map((entry) => entry.emailAddress);
+                            resolve(emails);
+                        } else {
+                            resolve([]);
+                        }
+                    });
+                } else {
+                    resolve([]);
+                }
+            });
         };
 
-        const promises = [];
-        let attachments = [];
-        let oversizeAttachments = [];
-        let inlineAttachments = [];
-
-        // 🧱 Check total attachment size before processing
-        if (totalSize > SIZE_THRESHOLD_TOTAL * 1024 * 1024) {
-            const warningMessage = _t(
-                'Warning: Attachments could not be logged in Odoo because their total size exceeded the allowed maximum.'
-            );
-            doc.body.innerHTML += `<div class="text-danger">${warningMessage}</div>`;
-        } else {
-            attachmentsRaw.forEach((attachment, index) => {
-                // 🛠️ Use existing logic to convert each attachment
-                promises.push(this.fetchAttachmentContent(attachment, index));
+        // 📎 Helper to get attachments in Compose mode
+        const getComposeAttachments = (): Promise<any[]> => {
+            console.log('-----------------getComposeAttachments')
+            return new Promise((resolve) => {
+                const attachmentsObj = (item as any).attachments;
+                console.log('========', attachmentsObj)
+                if (attachmentsObj && typeof attachmentsObj.getAsync === 'function') {
+                    attachmentsObj.getAsync((result) => {
+                        if (result.status === Office.AsyncResultStatus.Succeeded) {
+                            resolve(result.value);
+                        } else {
+                            console.warn('Failed to get attachments in compose mode:', result.error);
+                            resolve([]);
+                        }
+                    });
+                } else {
+                    resolve([]);
+                }
             });
-        }
+        };
 
-        const results = await Promise.all(promises);
-
-        // 🧹 Organize attachments into inline, oversize, or regular
-        results.forEach((result) => {
-            if (result.inline) {
-                inlineAttachments[result.index] = result;
-            } else if (result.oversize) {
-                oversizeAttachments.push({ name: result.name });
-            } else {
-                attachments.push([result.name, result.content]);
-            }
-        });
-
-        // 🖼️ Inline image handling
-        const imageElements = doc.getElementsByTagName('img');
-        let j = 0;
-        inlineAttachments.forEach((inlineAttachment) => {
-            if (inlineAttachment && !inlineAttachment.error) {
-                if (inlineAttachment.oversize) {
-                    imageElements[j].setAttribute(
-                        'alt',
-                        _t('Could not display image %(attachmentName)s, size is over limit', {
-                            attachmentName: inlineAttachment.name,
-                        })
-                    );
-                } else {
-                    const fileExtension = inlineAttachment.name.split('.').pop();
-                    imageElements[j].setAttribute(
-                        'src',
-                        `data:image/${fileExtension};base64, ${inlineAttachment.content}`
-                    );
-                }
-                j++;
-            }
-        });
-
-        // 🚨 Show oversize warning message
-        if (oversizeAttachments.length > 0) {
-            const names = oversizeAttachments.map((a) => `"${a.name}"`).join(', ');
-            doc.body.innerHTML += `<div class="text-danger">${_t(
-                'Warning: Could not fetch the attachments %(attachments)s as their sizes are bigger than the maximum size of %(size)sMB per each attachment.',
-                {
-                    attachments: names,
-                    size: SIZE_THRESHOLD_TOTAL,
-                }
-            )}</div>`;
-        }
-
-        requestJson.message = doc.body.innerHTML;
-        requestJson.attachments = attachments;
-
-        console.log('===================== URL:', api.baseURL + api.logSingleMail);
-        console.log('===================== Body:', requestJson);
-
-        // 📨 Final log request to Odoo
-        const logRequest = sendHttpRequest(
-            HttpVerb.POST,
-            api.baseURL + api.logSingleMail,
-            ContentType.Json,
-            this.context.getConnectionToken(),
-            requestJson,
-            true
-        );
-
-        // ✅ Handle log response
-        logRequest.promise
-            .then((response) => {
-                const parsed = JSON.parse(response);
-                if (parsed['error']) {
-                    this.setState({ logged: 0 });
-                    this.context.showHttpErrorMessage();
-                } else {
-                    this.setState({ logged: 2 });
-                }
-            })
-            .catch((error) => {
-                this.context.showHttpErrorMessage(error);
+        // 📄 Get body content (shared for both modes)
+        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
+            if (result.status !== Office.AsyncResultStatus.Succeeded) {
                 this.setState({ logged: 0 });
+                return;
+            }
+
+            const bodyContent = result.value.split('<div id="x_appendonsend"></div>')[0];
+            const msgFooter = `<br/><div class="text-muted font-italic">${_t('Logged from')} <a href="https://www.odoo.com/documentation/master/applications/productivity/mail_plugins.html" target="_blank">${_t('Outlook Inbox')}</a></div>`;
+
+            // 🧠 Compose or Read mode header setup
+            let fromHeader = '';
+            if (isCompose) {
+                // 🆕 Compose mode: show "To" addresses instead of "From"
+                const toEmails = await getComposeRecipients();
+                fromHeader = `<div>${_t('To : %(emails)s', { emails: toEmails.join(', ') })}</div>`;
+            } else {
+                // ✅ Read mode: use sender email
+                fromHeader = `<div>${_t('From : %(email)s', {
+                    email: item.sender?.emailAddress || '[unknown]',
+                })}</div>`;
+            }
+
+            const message = fromHeader + bodyContent + msgFooter;
+            const doc = new DOMParser().parseFromString(message, 'text/html');
+
+            // 📎 Attachment collection: supports Compose and Read
+            const attachmentsRaw = isCompose
+                ? await getComposeAttachments() // 🆕 Compose mode fetch
+                : item.attachments || [];       // ✅ Read mode direct access
+
+            // 📏 Thresholds
+    //        const SIZE_THRESHOLD_TOTAL = 10; // MB
+    //        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
+
+            let totalSize = 0;
+            attachmentsRaw.forEach((a) => (totalSize += a.size));
+
+            const requestJson = {
+                res_id: this.props.resId,
+                model: this.props.model,
+                message: '', // final HTML body
+                attachments: [], // will be populated after processing
+            };
+
+            const promises = [];
+            let attachments = [];
+            let oversizeAttachments = [];
+            let inlineAttachments = [];
+
+            // 🧱 Check total attachment size before processing
+            if (totalSize > SIZE_THRESHOLD_TOTAL * 1024 * 1024) {
+                const warningMessage = _t(
+                    'Warning: Attachments could not be logged in Odoo because their total size exceeded the allowed maximum.'
+                );
+                doc.body.innerHTML += `<div class="text-danger">${warningMessage}</div>`;
+            } else {
+                attachmentsRaw.forEach((attachment, index) => {
+                    // 🛠️ Use existing logic to convert each attachment
+                    promises.push(this.fetchAttachmentContent(attachment, index));
+                });
+            }
+
+            const results = await Promise.all(promises);
+
+            // 🧹 Organize attachments into inline, oversize, or regular
+            results.forEach((result) => {
+                if (result.inline) {
+                    inlineAttachments[result.index] = result;
+                } else if (result.oversize) {
+                    oversizeAttachments.push({ name: result.name });
+                } else {
+                    attachments.push([result.name, result.content]);
+                }
             });
-    });
-};
+
+            // 🖼️ Inline image handling
+            const imageElements = doc.getElementsByTagName('img');
+            let j = 0;
+            inlineAttachments.forEach((inlineAttachment) => {
+                if (inlineAttachment && !inlineAttachment.error) {
+                    if (inlineAttachment.oversize) {
+                        imageElements[j].setAttribute(
+                            'alt',
+                            _t('Could not display image %(attachmentName)s, size is over limit', {
+                                attachmentName: inlineAttachment.name,
+                            })
+                        );
+                    } else {
+                        const fileExtension = inlineAttachment.name.split('.').pop();
+                        imageElements[j].setAttribute(
+                            'src',
+                            `data:image/${fileExtension};base64, ${inlineAttachment.content}`
+                        );
+                    }
+                    j++;
+                }
+            });
+
+            // 🚨 Show oversize warning message
+            if (oversizeAttachments.length > 0) {
+                const names = oversizeAttachments.map((a) => `"${a.name}"`).join(', ');
+                doc.body.innerHTML += `<div class="text-danger">${_t(
+                    'Warning: Could not fetch the attachments %(attachments)s as their sizes are bigger than the maximum size of %(size)sMB per each attachment.',
+                    {
+                        attachments: names,
+                        size: SIZE_THRESHOLD_TOTAL,
+                    }
+                )}</div>`;
+            }
+
+            requestJson.message = doc.body.innerHTML;
+            requestJson.attachments = attachments;
+
+            console.log('===================== URL:', api.baseURL + api.logSingleMail);
+            console.log('===================== Body:', requestJson);
+
+            // 📨 Final log request to Odoo
+            const logRequest = sendHttpRequest(
+                HttpVerb.POST,
+                api.baseURL + api.logSingleMail,
+                ContentType.Json,
+                this.context.getConnectionToken(),
+                requestJson,
+                true
+            );
+
+            // ✅ Handle log response
+            logRequest.promise
+                .then((response) => {
+                    const parsed = JSON.parse(response);
+                    if (parsed['error']) {
+                        this.setState({ logged: 0 });
+                        this.context.showHttpErrorMessage();
+                    } else {
+                        this.setState({ logged: 2 });
+                    }
+                })
+                .catch((error) => {
+                    this.context.showHttpErrorMessage(error);
+                    this.setState({ logged: 0 });
+                });
+        });
+    };
 
 
 
