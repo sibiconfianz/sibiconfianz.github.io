@@ -12,6 +12,8 @@ type SectionAbstractProps = {
     records: any[];
     partner: Partner;
     canCreatePartner: boolean;
+    showSearchButton?: boolean; // <-- NEW
+    onSearchButtonClick?: () => void; // ✅ NEW
 
     // Odoo Record creation
     model: string;
@@ -53,7 +55,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     }
 
     private onClickCreate = () => {
-        console.log('---------onClickCreate')
         if (this.props.onClickCreate) {
             this.props.onClickCreate(this.createRecordRequest);
         } else {
@@ -68,12 +69,10 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const subject = Office.context.mailbox.item.subject;
 
             const requestJson = Object.assign(
-                
                 {
                     partner_id: this.props.partner.id,
                     email_body: message,
                     email_subject: subject,
-                    email_address: this.props.partner.email,
                 },
                 additionnalValues || {},
             );
@@ -92,6 +91,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 this.context.showHttpErrorMessage(error);
                 return;
             }
+
             const parsed = JSON.parse(response);
             if (parsed['error']) {
                 this.context.showTopBarMessage();
@@ -104,9 +104,52 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         });
     };
 
+//    private getSection = () => {
+//        if (!this.props.partner.isAddedToDatabase()) {
+//            return (
+//                <div className="list-text">
+//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
+//                </div>
+//            );
+//        } else if (this.state.records.length > 0) {
+//            return (
+//                <div className="section-content">
+//                    {this.state.records.map((record) => (
+//                        <ListItem
+//                            model={this.props.model}
+//                            res_id={record.id}
+//                            key={record.id}
+//                            title={record.name}
+//                            description={this.props.getRecordDescription(record)}
+//                            logTitle={_t(this.props.msgLogEmail)}
+//                        />
+//                    ))}
+//                </div>
+//            );
+//        }
+//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
+//    };
+
+//    render() {
+//        const recordCount = this.state.records && this.state.records.length;
+//        const title = this.state.records
+//            ? _t(this.props.titleCount, { count: recordCount.toString() })
+//            : _t(this.props.title);
+
+//        return (
+//            <CollapseSection
+//                className={this.props.className}
+//                isCollapsed={this.state.isCollapsed}
+//                title={title}
+//                hasAddButton={this.props.partner.isAddedToDatabase()}
+//                onAddButtonClick={this.onClickCreate}>
+//                {this.getSection()}
+//            </CollapseSection>
+//        );
+//    }
+
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
-//        const hasRecords = this.state.records.length > 0;
         const hasRecords = this.props.records.length > 0;
         if (!this.props.partner.isAddedToDatabase() && !hasRecords) {
             return (
@@ -115,8 +158,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         }
-//{this.state.records.map((record) => (
-
         if (hasRecords) {
             return (
                 <div className="section-content">
@@ -133,22 +174,26 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 </div>
             );
         }
-
         return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
     };
 
     render() {
-    const recordCount = this.props.records && this.props.records.length;
-    const title = this.props.records
-        ? _t(this.props.titleCount, { count: recordCount.toString() })
-        : _t(this.props.title)
+        const recordCount = this.props.records && this.props.records.length;
+        const title = this.props.records
+            ? _t(this.props.titleCount, { count: recordCount.toString() })
+            : _t(this.props.title)
+
         return (
             <CollapseSection
                 className={this.props.className}
                 isCollapsed={this.state.isCollapsed}
                 title={title}
                 hasAddButton={this.props.partner.isAddedToDatabase() || (this.props.partner.leads && this.props.partner.leads.length > 0)}
-                onAddButtonClick={this.onClickCreate}>
+                onAddButtonClick={this.onClickCreate}
+                //showSearchButton={this.props.showSearchButton}
+                onSearchButtonClick={this.props.onSearchButtonClick} // ✅ NEW
+                showSearchButton={!!this.props.onSearchButtonClick} // ✅ NEW
+            >
                 {this.getSection()}
             </CollapseSection>
         );

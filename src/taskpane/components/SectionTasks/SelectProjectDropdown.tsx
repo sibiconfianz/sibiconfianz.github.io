@@ -30,6 +30,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
     private projectsRequest;
 
     private onQueryChanged = (event) => {
+
         const query = event.target.value;
         this.setState({ query: query });
         this.cancelProjectsRequest();
@@ -50,6 +51,7 @@ class SelectProjectDropdown extends React.Component<SelectProjectProps, SelectPr
         }
 
         this.setState({ isLoading: true });
+
         this.projectsRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.searchProject,
