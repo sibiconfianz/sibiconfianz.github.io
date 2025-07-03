@@ -62,7 +62,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
         console.log('--------iscompose', isCompose)
         event.stopPropagation();
 
-        const item = Office.context.mailbox.item;
+//        const item = Office.context.mailbox.item;
         this.setState({ logged: 1 });
         console.log('------------item', item)
         console.log('-------------body', Office.context.mailbox.item.body)
