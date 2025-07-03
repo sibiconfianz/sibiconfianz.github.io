@@ -124,7 +124,7 @@
                 </Group>
               </OfficeTab>
             </ExtensionPoint>
-<ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
                 <Group id="msgComposeGroup">
                   <Label resid="GroupLabel"/>

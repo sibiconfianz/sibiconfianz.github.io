@@ -169,11 +169,8 @@ class Main extends React.Component<MainProps, MainState> {
     };
 
 //    private getEmailInfo = () => {
-//        console.log('getEmailInfo-IN')
 //        let email = Office.context.mailbox.item.from.emailAddress;
 //        let displayName = Office.context.mailbox.item.from.displayName;
-//        console.log('--------mailbox',Office.context.mailbox)
-//        console.log('--------getEmailInfo',Office.context.mailbox.item)
 //        if (Office.context.mailbox.userProfile.emailAddress == Office.context.mailbox.item.from.emailAddress) {
 //            email = Office.context.mailbox.item.to[0].emailAddress;
 //            displayName = Office.context.mailbox.item.to[0].displayName;
@@ -194,13 +191,11 @@ class Main extends React.Component<MainProps, MainState> {
                         const toRecipients = result.value;
                         if (toRecipients.length > 0) {
                             const first = toRecipients[0];
-//                            console.log("Compose mode detected. TO recipient:", first);
                             resolve({ email: first.emailAddress, displayName: first.displayName });
                         } else {
                             resolve({ email: '', displayName: '' });
                         }
                     } else {
-//                        console.error('Error retrieving recipients:', result.error);
                         reject(result.error);
                     }
                 });

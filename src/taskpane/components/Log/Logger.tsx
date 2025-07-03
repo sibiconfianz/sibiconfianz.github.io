@@ -59,12 +59,9 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
         event.stopPropagation();
 
         const item = Office.context.mailbox.item;
-        console.log('---------------sssssss', Office.context.mailbox.item.attachments)
-        // 🔍 Detect whether we are in Compose mode by checking if body.setAsync exists
         const isCompose = typeof item.body.setAsync === 'function';
         this.setState({ logged: 1 });
 
-        // ✉️ Helper to get "To" recipients in Compose mode
         const getComposeRecipients = (): Promise<string[]> => {
             return new Promise((resolve) => {
                 if ((item as any).to?.getAsync) {
@@ -82,18 +79,14 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             });
         };
 
-        // 📎 Helper to get attachments in Compose mode
         const getComposeAttachments = (): Promise<any[]> => {
-            console.log('-----------------getComposeAttachments')
             return new Promise((resolve) => {
                 const attachmentsObj = (item as any).attachments;
-                console.log('========', attachmentsObj)
                 if (attachmentsObj && typeof attachmentsObj.getAsync === 'function') {
                     attachmentsObj.getAsync((result) => {
                         if (result.status === Office.AsyncResultStatus.Succeeded) {
                             resolve(result.value);
                         } else {
-                            console.warn('Failed to get attachments in compose mode:', result.error);
                             resolve([]);
                         }
                     });
@@ -103,7 +96,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             });
         };
 
-        // 📄 Get body content (shared for both modes)
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             if (result.status !== Office.AsyncResultStatus.Succeeded) {
                 this.setState({ logged: 0 });
@@ -113,14 +105,11 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             const bodyContent = result.value.split('<div id="x_appendonsend"></div>')[0];
             const msgFooter = `<br/><div class="text-muted font-italic">${_t('Logged from')} <a href="https://www.odoo.com/documentation/master/applications/productivity/mail_plugins.html" target="_blank">${_t('Outlook Inbox')}</a></div>`;
 
-            // 🧠 Compose or Read mode header setup
             let fromHeader = '';
             if (isCompose) {
-                // 🆕 Compose mode: show "To" addresses instead of "From"
                 const toEmails = await getComposeRecipients();
                 fromHeader = `<div>${_t('To : %(emails)s', { emails: toEmails.join(', ') })}</div>`;
             } else {
-                // ✅ Read mode: use sender email
                 fromHeader = `<div>${_t('From : %(email)s', {
                     email: item.sender?.emailAddress || '[unknown]',
                 })}</div>`;
@@ -129,12 +118,10 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             const message = fromHeader + bodyContent + msgFooter;
             const doc = new DOMParser().parseFromString(message, 'text/html');
 
-            // 📎 Attachment collection: supports Compose and Read
             const attachmentsRaw = isCompose
                 ? await getComposeAttachments() // 🆕 Compose mode fetch
                 : item.attachments || [];       // ✅ Read mode direct access
 
-            // 📏 Thresholds
     //        const SIZE_THRESHOLD_TOTAL = 10; // MB
     //        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
 
@@ -153,7 +140,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             let oversizeAttachments = [];
             let inlineAttachments = [];
 
-            // 🧱 Check total attachment size before processing
             if (totalSize > SIZE_THRESHOLD_TOTAL * 1024 * 1024) {
                 const warningMessage = _t(
                     'Warning: Attachments could not be logged in Odoo because their total size exceeded the allowed maximum.'
@@ -161,14 +147,12 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
                 doc.body.innerHTML += `<div class="text-danger">${warningMessage}</div>`;
             } else {
                 attachmentsRaw.forEach((attachment, index) => {
-                    // 🛠️ Use existing logic to convert each attachment
                     promises.push(this.fetchAttachmentContent(attachment, index));
                 });
             }
 
             const results = await Promise.all(promises);
 
-            // 🧹 Organize attachments into inline, oversize, or regular
             results.forEach((result) => {
                 if (result.inline) {
                     inlineAttachments[result.index] = result;
@@ -179,7 +163,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
                 }
             });
 
-            // 🖼️ Inline image handling
             const imageElements = doc.getElementsByTagName('img');
             let j = 0;
             inlineAttachments.forEach((inlineAttachment) => {
@@ -202,7 +185,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
                 }
             });
 
-            // 🚨 Show oversize warning message
             if (oversizeAttachments.length > 0) {
                 const names = oversizeAttachments.map((a) => `"${a.name}"`).join(', ');
                 doc.body.innerHTML += `<div class="text-danger">${_t(
@@ -217,10 +199,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
             requestJson.message = doc.body.innerHTML;
             requestJson.attachments = attachments;
 
-            console.log('===================== URL:', api.baseURL + api.logSingleMail);
-            console.log('===================== Body:', requestJson);
-
-            // 📨 Final log request to Odoo
             const logRequest = sendHttpRequest(
                 HttpVerb.POST,
                 api.baseURL + api.logSingleMail,
@@ -230,7 +208,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
                 true
             );
 
-            // ✅ Handle log response
             logRequest.promise
                 .then((response) => {
                     const parsed = JSON.parse(response);
