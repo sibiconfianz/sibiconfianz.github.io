@@ -68,31 +68,37 @@ private logRequest = async (event): Promise<any> => {
     // ✉️ Helper to get "To" recipients in Compose mode
     const getComposeRecipients = (): Promise<string[]> => {
         return new Promise((resolve) => {
-            item.to.getAsync((result) => {
-                if (result.status === Office.AsyncResultStatus.Succeeded) {
-                    const emails = result.value.map((entry) => entry.emailAddress);
-                    resolve(emails);
-                } else {
-                    resolve([]);
-                }
-            });
+            if ((item as any).to?.getAsync) {
+                (item as any).to.getAsync((result) => {
+                    if (result.status === Office.AsyncResultStatus.Succeeded) {
+                        const emails = result.value.map((entry) => entry.emailAddress);
+                        resolve(emails);
+                    } else {
+                        resolve([]);
+                    }
+                });
+            } else {
+                resolve([]);
+            }
         });
     };
 
-    // 📎 Helper to get attachments in Compose mode using getAsync()
+    // 📎 Helper to get attachments in Compose mode
     const getComposeAttachments = (): Promise<any[]> => {
-        return new Promise((resolve, reject) => {
-            if (!item.attachments || typeof item.attachments.getAsync !== 'function') {
-                return resolve([]);
+        return new Promise((resolve) => {
+            const attachmentsObj = (item as any).attachments;
+            if (attachmentsObj && typeof attachmentsObj.getAsync === 'function') {
+                attachmentsObj.getAsync((result) => {
+                    if (result.status === Office.AsyncResultStatus.Succeeded) {
+                        resolve(result.value);
+                    } else {
+                        console.warn('Failed to get attachments in compose mode:', result.error);
+                        resolve([]);
+                    }
+                });
+            } else {
+                resolve([]);
             }
-            item.attachments.getAsync((result) => {
-                if (result.status === Office.AsyncResultStatus.Succeeded) {
-                    resolve(result.value);
-                } else {
-                    console.warn('Failed to get attachments in compose mode:', result.error);
-                    resolve([]);
-                }
-            });
         });
     };
 
@@ -110,10 +116,11 @@ private logRequest = async (event): Promise<any> => {
         // 🧠 Compose or Read mode header setup
         let fromHeader = '';
         if (isCompose) {
-            const toEmails = await getComposeRecipients(); // ✉️ Compose mode — fetch "To"
+            // 🆕 Compose mode: show "To" addresses instead of "From"
+            const toEmails = await getComposeRecipients();
             fromHeader = `<div>${_t('To : %(emails)s', { emails: toEmails.join(', ') })}</div>`;
         } else {
-            // 📥 Read mode — fetch sender
+            // ✅ Read mode: use sender email
             fromHeader = `<div>${_t('From : %(email)s', {
                 email: item.sender?.emailAddress || '[unknown]',
             })}</div>`;
@@ -124,11 +131,12 @@ private logRequest = async (event): Promise<any> => {
 
         // 📎 Attachment collection: supports Compose and Read
         const attachmentsRaw = isCompose
-            ? await getComposeAttachments()  // Compose mode attachment fetch
-            : item.attachments || [];        // Read mode attachment access
+            ? await getComposeAttachments() // 🆕 Compose mode fetch
+            : item.attachments || [];       // ✅ Read mode direct access
 
+        // 📏 Thresholds
         const SIZE_THRESHOLD_TOTAL = 10; // MB
-        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB per attachment
+        const SIZE_THRESHOLD_SINGLE_ELEMENT = 5; // MB (not currently used, but defined)
 
         let totalSize = 0;
         attachmentsRaw.forEach((a) => (totalSize += a.size));
@@ -137,7 +145,7 @@ private logRequest = async (event): Promise<any> => {
             res_id: this.props.resId,
             model: this.props.model,
             message: '', // final HTML body
-            attachments: [], // populated after processing
+            attachments: [], // will be populated after processing
         };
 
         const promises = [];
@@ -145,7 +153,7 @@ private logRequest = async (event): Promise<any> => {
         let oversizeAttachments = [];
         let inlineAttachments = [];
 
-        // 🧱 Check size limits before processing attachments
+        // 🧱 Check total attachment size before processing
         if (totalSize > SIZE_THRESHOLD_TOTAL * 1024 * 1024) {
             const warningMessage = _t(
                 'Warning: Attachments could not be logged in Odoo because their total size exceeded the allowed maximum.'
@@ -153,7 +161,7 @@ private logRequest = async (event): Promise<any> => {
             doc.body.innerHTML += `<div class="text-danger">${warningMessage}</div>`;
         } else {
             attachmentsRaw.forEach((attachment, index) => {
-                // 🚚 Fetch and convert each attachment (common method you already have)
+                // 🛠️ Use existing logic to convert each attachment
                 promises.push(this.fetchAttachmentContent(attachment, index));
             });
         }
@@ -171,7 +179,7 @@ private logRequest = async (event): Promise<any> => {
             }
         });
 
-        // 🖼️ Inline image handling (Read mode + Compose mode)
+        // 🖼️ Inline image handling
         const imageElements = doc.getElementsByTagName('img');
         let j = 0;
         inlineAttachments.forEach((inlineAttachment) => {
@@ -194,7 +202,7 @@ private logRequest = async (event): Promise<any> => {
             }
         });
 
-        // 🚨 Display warning if some attachments were too large
+        // 🚨 Show oversize warning message
         if (oversizeAttachments.length > 0) {
             const names = oversizeAttachments.map((a) => `"${a.name}"`).join(', ');
             doc.body.innerHTML += `<div class="text-danger">${_t(
@@ -212,7 +220,7 @@ private logRequest = async (event): Promise<any> => {
         console.log('===================== URL:', api.baseURL + api.logSingleMail);
         console.log('===================== Body:', requestJson);
 
-        // 📨 Send final log request to Odoo
+        // 📨 Final log request to Odoo
         const logRequest = sendHttpRequest(
             HttpVerb.POST,
             api.baseURL + api.logSingleMail,
@@ -222,7 +230,7 @@ private logRequest = async (event): Promise<any> => {
             true
         );
 
-        // ✅ Handle response
+        // ✅ Handle log response
         logRequest.promise
             .then((response) => {
                 const parsed = JSON.parse(response);
@@ -239,6 +247,7 @@ private logRequest = async (event): Promise<any> => {
             });
     });
 };
+
 
 
 //    private logRequest = async (event): Promise<any> => {
