@@ -57,6 +57,9 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
 
     private logRequest = async (event): Promise<any> => {
         console.log('---------------------------logRequestsss')
+        const item = Office.context.mailbox.item;
+        const isCompose = typeof item.body.setAsync === 'function'; // Compose mode
+        console.log('--------iscompose', isCompose)
         event.stopPropagation();
 
         const item = Office.context.mailbox.item;
