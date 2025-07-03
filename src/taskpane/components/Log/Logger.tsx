@@ -62,7 +62,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
         const item = Office.context.mailbox.item;
         this.setState({ logged: 1 });
         console.log('------------item', item)
-        cosole.log('-------------body', Office.context.mailbox.item.body)
+        console.log('-------------body', Office.context.mailbox.item.body)
         Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
             const msgHeader = `<div>${_t('From : %(email)s', {
                 email: Office.context.mailbox.item.sender.emailAddress,
