@@ -59,7 +59,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
         event.stopPropagation();
 
         const item = Office.context.mailbox.item;
-
+        console.log('---------------sssssss', Office.context.mailbox.item.attachments)
         // 🔍 Detect whether we are in Compose mode by checking if body.setAsync exists
         const isCompose = typeof item.body.setAsync === 'function';
         this.setState({ logged: 1 });
