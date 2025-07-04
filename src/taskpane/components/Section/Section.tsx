@@ -67,7 +67,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
             const subject = Office.context.mailbox.item.subject;
-
+            console.log('==============', this.props)
             const requestJson = Object.assign(
                 {
                     partner_id: this.props.partner.id,
