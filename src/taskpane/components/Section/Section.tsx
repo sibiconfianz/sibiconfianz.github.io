@@ -12,8 +12,8 @@ type SectionAbstractProps = {
     records: any[];
     partner: Partner;
     canCreatePartner: boolean;
-    showSearchButton?: boolean; // <-- NEW
-    onSearchButtonClick?: () => void; // ✅ NEW
+    showSearchButton?: boolean;
+    onSearchButtonClick?: () => void;
 
     // Odoo Record creation
     model: string;
@@ -67,7 +67,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
             const subject = Office.context.mailbox.item.subject;
-            console.log('==============', this.props)
+
             const requestJson = Object.assign(
                 {
                     partner_id: this.props.partner.id,
@@ -104,50 +104,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             window.open(url);
         });
     };
-
-//    private getSection = () => {
-//        if (!this.props.partner.isAddedToDatabase()) {
-//            return (
-//                <div className="list-text">
-//                    {_t(this.props.canCreatePartner ? this.props.msgNoPartner : this.props.msgNoPartnerNoAccess)}
-//                </div>
-//            );
-//        } else if (this.state.records.length > 0) {
-//            return (
-//                <div className="section-content">
-//                    {this.state.records.map((record) => (
-//                        <ListItem
-//                            model={this.props.model}
-//                            res_id={record.id}
-//                            key={record.id}
-//                            title={record.name}
-//                            description={this.props.getRecordDescription(record)}
-//                            logTitle={_t(this.props.msgLogEmail)}
-//                        />
-//                    ))}
-//                </div>
-//            );
-//        }
-//        return <div className="list-text">{_t(this.props.msgNoRecord)}</div>;
-//    };
-
-//    render() {
-//        const recordCount = this.state.records && this.state.records.length;
-//        const title = this.state.records
-//            ? _t(this.props.titleCount, { count: recordCount.toString() })
-//            : _t(this.props.title);
-
-//        return (
-//            <CollapseSection
-//                className={this.props.className}
-//                isCollapsed={this.state.isCollapsed}
-//                title={title}
-//                hasAddButton={this.props.partner.isAddedToDatabase()}
-//                onAddButtonClick={this.onClickCreate}>
-//                {this.getSection()}
-//            </CollapseSection>
-//        );
-//    }
 
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
@@ -192,8 +148,8 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                 hasAddButton= {true}//{this.props.partner.isAddedToDatabase() || (this.props.partner.leads && this.props.partner.leads.length > 0)}
                 onAddButtonClick={this.onClickCreate}
                 //showSearchButton={this.props.showSearchButton}
-                onSearchButtonClick={this.props.onSearchButtonClick} // ✅ NEW
-                showSearchButton={!!this.props.onSearchButtonClick} // ✅ NEW
+                onSearchButtonClick={this.props.onSearchButtonClick}
+                showSearchButton={!!this.props.onSearchButtonClick}
             >
                 {this.getSection()}
             </CollapseSection>

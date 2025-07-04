@@ -18,7 +18,7 @@ type LeadSectionProps = {
 
 type SectionLeadsState = {
     leads: Lead[];
-    isLeadSearchCalloutOpen: boolean; // ✅ NEW
+    isLeadSearchCalloutOpen: boolean;
 };
 
 class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> {
@@ -67,7 +67,7 @@ class SectionLeads extends React.Component<LeadSectionProps, SectionLeadsState> 
                 msgLogEmail="Log Email Into Lead"
                 getRecordDescription={this.getLeadDescription}
                 showSearchButton={true} // <-- ONLY HERE
-                onSearchButtonClick={this.toggleLeadSearchCallout} // ✅ NEW
+                onSearchButtonClick={this.toggleLeadSearchCallout}
             />
             {this.state.isLeadSearchCalloutOpen && (
                 <Callout

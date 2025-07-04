@@ -168,16 +168,6 @@ class Main extends React.Component<MainProps, MainState> {
             });
     };
 
-//    private getEmailInfo = () => {
-//        let email = Office.context.mailbox.item.from.emailAddress;
-//        let displayName = Office.context.mailbox.item.from.displayName;
-//        if (Office.context.mailbox.userProfile.emailAddress == Office.context.mailbox.item.from.emailAddress) {
-//            email = Office.context.mailbox.item.to[0].emailAddress;
-//            displayName = Office.context.mailbox.item.to[0].displayName;
-//        }
-//        return { email: email, displayName: displayName };
-//    };
-
     private getEmailInfo = async (): Promise<{ email: string, displayName: string }> => {
 
         const item = Office.context.mailbox.item;
