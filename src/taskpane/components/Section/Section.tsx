@@ -73,6 +73,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
                     partner_id: this.props.partner.id,
                     email_body: message,
                     email_subject: subject,
+                    email_address: this.props.partner.email,
                 },
                 additionnalValues || {},
             );
