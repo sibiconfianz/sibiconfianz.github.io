@@ -68,7 +68,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
             const subject = Office.context.mailbox.item.subject;
             const isCompose = typeof item.from?.getAsync === 'function';
-            console.log('---------------------------------------------------------p', this.message, this.subject, this.isCompose)
+            console.log('---------------------------------------------------------p', message, subject, isCompose)
             const requestJson = Object.assign(
                 {
                     partner_id: this.props.partner.id,
