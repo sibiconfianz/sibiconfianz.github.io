@@ -67,8 +67,8 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
             // Remove the history and only log the most recent message.
             const message = result.value.split('<div id="x_appendonsend"></div>')[0];
             const subject = Office.context.mailbox.item.subject;
-            const isCompose = typeof item.from?.getAsync === 'function';
-            console.log('---------------------------------------------------------p', message, subject, isCompose)
+//            const isCompose = typeof item.from?.getAsync === 'function';
+            console.log('---------------------------------------------------------p', message, subject)
             const requestJson = Object.assign(
                 {
                     partner_id: this.props.partner.id,
