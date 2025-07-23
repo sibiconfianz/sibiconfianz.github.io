@@ -165,6 +165,10 @@ class ContactPage extends React.Component<ContactPageProps, ContactPageState> {
 
         const onItemClick = this.props.partner.isAddedToDatabase() ? this.viewContact : null;
         console.log('---------------------------', leadsList, tasksList, ticketsList)
+        console.log('1111111111111111111111111111', this.isCrmInstalled())
+        console.log('222222222222222222', this.props )
+        console.log('333333333', this.props.partner )
+        console.log('44444444', this.props.partner.leads )
         return (
             <div className="contact-page">
                 <div className="section-card">
