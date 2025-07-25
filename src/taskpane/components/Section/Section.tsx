@@ -62,49 +62,108 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         }
     };
 
+//    private createRecordRequest = (additionnalValues?) => {
+//        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
+//            // Remove the history and only log the most recent message.
+//            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
+//            const subject = Office.context.mailbox.item.subject;
+//            console.log('---------------------------------------------------------p', message, Office.context.mailbox.item)
+//            const requestJson = Object.assign(
+//                {
+//                    partner_id: this.props.partner.id,
+//                    email_body: message,
+//                    email_subject: subject,
+//                    email_address: this.props.partner.email,
+//                },
+//                additionnalValues || {},
+//            );
+
+//            let response = null;
+//            try {
+//                response = await sendHttpRequest(
+//                    HttpVerb.POST,
+//                    api.baseURL + this.props.odooEndpointCreateRecord,
+//                    ContentType.Json,
+//                    this.context.getConnectionToken(),
+//                    requestJson,
+//                    true,
+//                ).promise;
+//            } catch (error) {
+//                this.context.showHttpErrorMessage(error);
+//                return;
+//            }
+
+//            const parsed = JSON.parse(response);
+//            if (parsed['error']) {
+//                this.context.showTopBarMessage();
+//                return;
+//            }
+//            const cids = this.context.getUserCompaniesString();
+//            const recordId = parsed.result[this.props.odooRecordIdName];
+//            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+//            window.open(url);
+//        });
+//    };
+
     private createRecordRequest = (additionnalValues?) => {
-        Office.context.mailbox.item.body.getAsync(Office.CoercionType.Html, async (result) => {
-            // Remove the history and only log the most recent message.
-            const message = result.value.split('<div id="x_appendonsend"></div>')[0];
-            const subject = Office.context.mailbox.item.subject;
-//            const isCompose = typeof item.from?.getAsync === 'function';
-            console.log('---------------------------------------------------------p', message, Office.context.mailbox.item)
-            const requestJson = Object.assign(
-                {
-                    partner_id: this.props.partner.id,
-                    email_body: message,
-                    email_subject: subject,
-                    email_address: this.props.partner.email,
-                },
-                additionnalValues || {},
-            );
+        const item = Office.context.mailbox.item;
 
-            let response = null;
-            try {
-                response = await sendHttpRequest(
-                    HttpVerb.POST,
-                    api.baseURL + this.props.odooEndpointCreateRecord,
-                    ContentType.Json,
-                    this.context.getConnectionToken(),
-                    requestJson,
-                    true,
-                ).promise;
-            } catch (error) {
-                this.context.showHttpErrorMessage(error);
+        item.body.getAsync(Office.CoercionType.Html, (bodyResult) => {
+            if (bodyResult.status !== Office.AsyncResultStatus.Succeeded) {
+                console.error('Failed to get email body');
                 return;
             }
 
-            const parsed = JSON.parse(response);
-            if (parsed['error']) {
-                this.context.showTopBarMessage();
-                return;
-            }
-            const cids = this.context.getUserCompaniesString();
-            const recordId = parsed.result[this.props.odooRecordIdName];
-            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-            window.open(url);
+            const message = bodyResult.value.split('<div id="x_appendonsend"></div>')[0];
+
+            // Use getAsync for subject (works in both read and compose modes)
+            item.subject.getAsync(async (subjectResult) => {
+                if (subjectResult.status !== Office.AsyncResultStatus.Succeeded) {
+                    console.error('Failed to get email subject');
+                    return;
+                }
+
+                const subject = subjectResult.value;
+
+                const requestJson = Object.assign(
+                    {
+                        partner_id: this.props.partner.id,
+                        email_body: message,
+                        email_subject: subject,
+                        email_address: this.props.partner.email,
+                    },
+                    additionnalValues || {},
+                );
+
+                let response = null;
+                try {
+                    response = await sendHttpRequest(
+                        HttpVerb.POST,
+                        api.baseURL + this.props.odooEndpointCreateRecord,
+                        ContentType.Json,
+                        this.context.getConnectionToken(),
+                        requestJson,
+                        true,
+                    ).promise;
+                } catch (error) {
+                    this.context.showHttpErrorMessage(error);
+                    return;
+                }
+
+                const parsed = JSON.parse(response);
+                if (parsed['error']) {
+                    this.context.showTopBarMessage();
+                    return;
+                }
+
+                const cids = this.context.getUserCompaniesString();
+                const recordId = parsed.result[this.props.odooRecordIdName];
+                const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+                window.open(url);
+            });
         });
     };
+
 
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
