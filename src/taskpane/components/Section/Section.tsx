@@ -108,7 +108,7 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
     private createRecordRequest = (additionnalValues?) => {
         const item = Office.context.mailbox.item;
 
-        item.body.getAsync(Office.CoercionType.Html, (bodyResult) => {
+        item.body.getAsync(Office.CoercionType.Html, async (bodyResult) => {
             if (bodyResult.status !== Office.AsyncResultStatus.Succeeded) {
                 console.error('Failed to get email body');
                 return;
@@ -116,53 +116,72 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
             const message = bodyResult.value.split('<div id="x_appendonsend"></div>')[0];
 
-            // Use getAsync for subject (works in both read and compose modes)
-            item.subject.getAsync(async (subjectResult) => {
-                if (subjectResult.status !== Office.AsyncResultStatus.Succeeded) {
-                    console.error('Failed to get email subject');
-                    return;
-                }
+            const getSubject = (): Promise<string> => {
+                return new Promise((resolve, reject) => {
+                    if (typeof item.subject === 'string') {
+                        // Read mode
+                        resolve(item.subject);
+                    } else if (item.subject && typeof item.subject.getAsync === 'function') {
+                        // Compose mode
+                        item.subject.getAsync((subjectResult) => {
+                            if (subjectResult.status === Office.AsyncResultStatus.Succeeded) {
+                                resolve(subjectResult.value);
+                            } else {
+                                reject('Failed to get email subject');
+                            }
+                        });
+                    } else {
+                        reject('Subject is not accessible');
+                    }
+                });
+            };
 
-                const subject = subjectResult.value;
+            let subject = '';
+            try {
+                subject = await getSubject();
+            } catch (err) {
+                console.error(err);
+                return;
+            }
 
-                const requestJson = Object.assign(
-                    {
-                        partner_id: this.props.partner.id,
-                        email_body: message,
-                        email_subject: subject,
-                        email_address: this.props.partner.email,
-                    },
-                    additionnalValues || {},
-                );
+            const requestJson = Object.assign(
+                {
+                    partner_id: this.props.partner.id,
+                    email_body: message,
+                    email_subject: subject,
+                    email_address: this.props.partner.email,
+                },
+                additionnalValues || {},
+            );
 
-                let response = null;
-                try {
-                    response = await sendHttpRequest(
-                        HttpVerb.POST,
-                        api.baseURL + this.props.odooEndpointCreateRecord,
-                        ContentType.Json,
-                        this.context.getConnectionToken(),
-                        requestJson,
-                        true,
-                    ).promise;
-                } catch (error) {
-                    this.context.showHttpErrorMessage(error);
-                    return;
-                }
+            let response = null;
+            try {
+                response = await sendHttpRequest(
+                    HttpVerb.POST,
+                    api.baseURL + this.props.odooEndpointCreateRecord,
+                    ContentType.Json,
+                    this.context.getConnectionToken(),
+                    requestJson,
+                    true,
+                ).promise;
+            } catch (error) {
+                this.context.showHttpErrorMessage(error);
+                return;
+            }
 
-                const parsed = JSON.parse(response);
-                if (parsed['error']) {
-                    this.context.showTopBarMessage();
-                    return;
-                }
+            const parsed = JSON.parse(response);
+            if (parsed['error']) {
+                this.context.showTopBarMessage();
+                return;
+            }
 
-                const cids = this.context.getUserCompaniesString();
-                const recordId = parsed.result[this.props.odooRecordIdName];
-                const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
-                window.open(url);
-            });
+            const cids = this.context.getUserCompaniesString();
+            const recordId = parsed.result[this.props.odooRecordIdName];
+            const url = `${api.baseURL}/web#action=${this.props.odooRedirectAction}&id=${recordId}&model=${this.props.model}&view_type=form${cids}`;
+            window.open(url);
         });
     };
+
 
 
 //  updated to show leads even without a partner saved on odoo side.
