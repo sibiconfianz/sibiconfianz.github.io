@@ -110,7 +110,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
 
         item.body.getAsync(Office.CoercionType.Html, async (bodyResult) => {
             if (bodyResult.status !== Office.AsyncResultStatus.Succeeded) {
-                console.error('Failed to get email body');
                 return;
             }
 
