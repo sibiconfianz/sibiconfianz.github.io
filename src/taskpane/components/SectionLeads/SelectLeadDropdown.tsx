@@ -64,9 +64,12 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
 
         let response = null;
         try {
-            response = JSON.parse(await this.leadsRequest.promise);
+            const raw = await this.leadsRequest.promise;
+            console.log('[Lead search] Raw response:', raw);
+            response = JSON.parse(raw);
+//            response = JSON.parse(await this.leadsRequest.promise);
         } catch (error) {
-            console.log('Lead seacrh error')
+            console.error('[Lead search] Failed to parse JSON or request failed:', error);
             this.setState({ isLoading: false, leads: [] });
             this.context.showHttpErrorMessage(error);
             return;
