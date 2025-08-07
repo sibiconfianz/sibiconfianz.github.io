@@ -6,11 +6,11 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Odoo for Outlook"/>
   <Description DefaultValue="Odoo for Outlook."/>
-  <IconUrl DefaultValue="https://sibiconfianz.github.io/assets/scita_small_logo.png"/>
-  <HighResolutionIconUrl DefaultValue="https://sibiconfianz.github.io/assets/odoo.png"/>
+  <IconUrl DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo.png"/>
+  <HighResolutionIconUrl DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo.png"/>
   <SupportUrl DefaultValue="https://www.odoo.com/help"/>
   <AppDomains>
-    <AppDomain>https://sibiconfianz.github.io</AppDomain>
+    <AppDomain>https://odoo-outlook.confianzit.org</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://sibiconfianz.github.io/taskpane.html"/>
+        <SourceLocation DefaultValue="https://odoo-outlook.confianzit.org/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -72,14 +72,14 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://sibiconfianz.github.io/assets/odoo-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://sibiconfianz.github.io/assets/odoo-32.png"/>
-        <bt:Image id="Icon.64x64" DefaultValue="https://sibiconfianz.github.io/assets/odoo-64.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://sibiconfianz.github.io/assets/odoo-80.png"/>
-        <bt:Image id="Icon.128x128" DefaultValue="https://sibiconfianz.github.io/assets/odoo-128.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-32.png"/>
+        <bt:Image id="Icon.64x64" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-64.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-80.png"/>
+        <bt:Image id="Icon.128x128" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-128.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://sibiconfianz.github.io/taskpane.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://odoo-outlook.confianzit.org/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Odoo for Outlook"/>
@@ -153,14 +153,14 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.16x16" DefaultValue="https://sibiconfianz.github.io/assets/odoo-16.png"/>
-          <bt:Image id="Icon.32x32" DefaultValue="https://sibiconfianz.github.io/assets/odoo-32.png"/>
-          <bt:Image id="Icon.64x64" DefaultValue="https://sibiconfianz.github.io/assets/odoo-64.png"/>
-          <bt:Image id="Icon.80x80" DefaultValue="https://sibiconfianz.github.io/assets/odoo-80.png"/>
-          <bt:Image id="Icon.128x128" DefaultValue="https://sibiconfianz.github.io/assets/odoo-128.png"/>
+          <bt:Image id="Icon.16x16" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-16.png"/>
+          <bt:Image id="Icon.32x32" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-32.png"/>
+          <bt:Image id="Icon.64x64" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-64.png"/>
+          <bt:Image id="Icon.80x80" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-80.png"/>
+          <bt:Image id="Icon.128x128" DefaultValue="https://odoo-outlook.confianzit.org/assets/odoo-128.png"/>
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="Taskpane.Url" DefaultValue="https://sibiconfianz.github.io/taskpane.html"/>
+          <bt:Url id="Taskpane.Url" DefaultValue="https://odoo-outlook.confianzit.org/taskpane.html"/>
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="GroupLabel" DefaultValue="Odoo for Outlook"/>

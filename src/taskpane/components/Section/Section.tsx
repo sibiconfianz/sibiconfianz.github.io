@@ -181,8 +181,6 @@ class Section extends React.Component<SectionAbstractProps, SectionAbstractState
         });
     };
 
-
-
 //  updated to show leads even without a partner saved on odoo side.
     private getSection = () => {
         const hasRecords = this.props.records.length > 0;
