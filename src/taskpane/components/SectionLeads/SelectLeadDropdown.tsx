@@ -77,7 +77,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
 
         } catch (error) {
             console.warn('[Lead search] Request failed or was cancelled');
-
+            console.log('pppppppp', error?.message)
             if (error?.message === 'canceled' || error?.name === 'AbortError') {
                 console.log('[Lead search] Request was intentionally cancelled. Skipping error handling.');
                 return; // Don't show error for user-cancelled requests
