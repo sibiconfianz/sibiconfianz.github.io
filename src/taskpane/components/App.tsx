@@ -119,12 +119,16 @@ export default class App extends React.Component<AppProps, AppState> {
             },
 
             showHttpErrorMessage: (error?) => {
+                console.log('---- HTTP Error caught ----');
+                console.log('Error object:', error);
                 if (error && error.message == '0') {
+                    console.log('Connection Error Triggered');
                     this.setState({
                         EnrichmentInfo: new EnrichmentInfo(EnrichmentInfoType.ConnectionError),
                         showEnrichmentInfoMessage: true,
                     });
                 } else {
+                    console.log('Other Error Triggered');
                     this.setState({
                         EnrichmentInfo: new EnrichmentInfo(EnrichmentInfoType.Other),
                         showEnrichmentInfoMessage: true,

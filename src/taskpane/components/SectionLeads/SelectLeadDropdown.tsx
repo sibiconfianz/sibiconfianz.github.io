@@ -66,6 +66,7 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
         try {
             response = JSON.parse(await this.leadsRequest.promise);
         } catch (error) {
+            console.log('Lead seacrh error')
             this.setState({ isLoading: false, leads: [] });
             this.context.showHttpErrorMessage(error);
             return;
