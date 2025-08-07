@@ -142,7 +142,9 @@ export default class App extends React.Component<AppProps, AppState> {
             style: { fontSize: '20px' },
         };
         let bars = [];
+        console.log('11111111111111111111111111111111111111111', message)
         if (this.state.showPartnerCreatedMessage) {
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
             bars.push(
                 <MessageBar messageBarType={MessageBarType.success} onDismiss={this.hidePartnerCreatedMessage}>
                     {_t('Contact created')}
@@ -150,6 +152,7 @@ export default class App extends React.Component<AppProps, AppState> {
             );
         }
         if (this.state.showEnrichmentInfoMessage) {
+            console.log('bbbbbbbbbbbbbbbbbbbbbbb')
             switch (type) {
                 case EnrichmentInfoType.CompanyCreated:
                     bars.push(
