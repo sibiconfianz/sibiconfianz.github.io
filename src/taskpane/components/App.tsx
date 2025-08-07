@@ -48,9 +48,8 @@ export default class App extends React.Component<AppProps, AppState> {
     requestCancellers: (() => void)[] = [];
 
     constructor(props, context) {
-        console.log('--------------------------------------------------')
         super(props, context);
-
+        console.log('--------------------------------------------------')
         props.itemChangedRegister(this.onItemChanged);
 
         this.state = {
