@@ -64,28 +64,11 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
 
         let response = null;
         try {
-            const raw = await this.leadsRequest.promise;
-            console.log('[Lead search] Raw response:', raw);
-            response = JSON.parse(raw);
-//            response = JSON.parse(await this.leadsRequest.promise);
-//        } catch (error) {
-//            console.error('[Lead search] Failed to parse JSON or request failed:', error);
-//            this.setState({ isLoading: false, leads: [] });
-//            this.context.showHttpErrorMessage(error);
-//            return;
-//        }
-
+            response = JSON.parse(await this.leadsRequest.promise);
         } catch (error) {
-            console.warn('[Lead search] Request failed or was cancelled');
-            console.log('pppppppp', error?.message)
-            if (error?.message === 'canceled' || error?.name === 'AbortError') {
-                console.log('[Lead search] Request was intentionally cancelled. Skipping error handling.');
-                return; // Don't show error for user-cancelled requests
-            }
-
-            console.error('[Lead search] Error during fetch or parsing:', error);
+            console.error('[Lead search] Failed to parse JSON or request failed:', error);
             this.setState({ isLoading: false, leads: [] });
-            this.context.showHttpErrorMessage(error || { message: 'Unknown error in lead search' });
+            this.context.showHttpErrorMessage(error);
             return;
         }
 
@@ -128,11 +111,11 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
     render() {
         return (
             <div className="Lead-result-container">
-                <div>{_t('Pick a Lead')}</div>
+                <div>{_t('Pick an Opportunity')}</div>
                 <div className="Lead-search-bar">
                     <TextField
                         className="input-search"
-                        placeholder={_t('Search Leads...')}
+                        placeholder={_t('Search Opportunities...')}
                         onChange={this.onQueryChanged}
                         value={this.state.query}
                         autoComplete="off"
