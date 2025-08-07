@@ -68,10 +68,24 @@ class SelectLeadDropdown extends React.Component<SelectLeadDropdownProps, Select
             console.log('[Lead search] Raw response:', raw);
             response = JSON.parse(raw);
 //            response = JSON.parse(await this.leadsRequest.promise);
+//        } catch (error) {
+//            console.error('[Lead search] Failed to parse JSON or request failed:', error);
+//            this.setState({ isLoading: false, leads: [] });
+//            this.context.showHttpErrorMessage(error);
+//            return;
+//        }
+
         } catch (error) {
-            console.error('[Lead search] Failed to parse JSON or request failed:', error);
+            console.warn('[Lead search] Request failed or was cancelled');
+
+            if (error?.message === 'canceled' || error?.name === 'AbortError') {
+                console.log('[Lead search] Request was intentionally cancelled. Skipping error handling.');
+                return; // Don't show error for user-cancelled requests
+            }
+
+            console.error('[Lead search] Error during fetch or parsing:', error);
             this.setState({ isLoading: false, leads: [] });
-            this.context.showHttpErrorMessage(error);
+            this.context.showHttpErrorMessage(error || { message: 'Unknown error in lead search' });
             return;
         }
 
