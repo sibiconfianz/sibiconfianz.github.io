@@ -49,7 +49,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     constructor(props, context) {
         super(props, context);
-        console.log('--------------------------------------------------')
+        console.log('--------------------------------------------------' , this)
         props.itemChangedRegister(this.onItemChanged);
 
         this.state = {
@@ -67,13 +67,16 @@ export default class App extends React.Component<AppProps, AppState> {
             },
             connect: (token) => {
                 localStorage.setItem('odooConnectionToken', token);
+                console.log('Conncet', this.localStorage)
             },
             disconnect: () => {
                 localStorage.removeItem('odooConnectionToken');
                 localStorage.removeItem('translations');
                 localStorage.removeItem('translationsTimestamp');
+                console.log('disconnect', this)
             },
             getConnectionToken: () => {
+                console.log('getConnectionToken', localStorage.getItem('odooConnectionToken'))
                 return 'Bearer ' + localStorage.getItem('odooConnectionToken');
             },
             getUserCompaniesString: () => {
@@ -207,7 +210,7 @@ export default class App extends React.Component<AppProps, AppState> {
                                     onClick={() => {
                                         this.goToLogin();
                                     }}>
-                                    {_t('Login --')}
+                                    {_t('Login')}
                                 </div>
                             </MessageBar>
                         </>,
