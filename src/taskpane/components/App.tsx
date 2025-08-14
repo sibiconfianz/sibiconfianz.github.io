@@ -76,7 +76,7 @@ export default class App extends React.Component<AppProps, AppState> {
                 console.log('disconnect', this)
             },
             getConnectionToken: () => {
-                console.log('getConnectionToken', localStorage.getItem('odooConnectionToken'))
+                console.log('getConnectionToken', this.localStorage.getItem('odooConnectionToken'))
                 return 'Bearer ' + localStorage.getItem('odooConnectionToken');
             },
             getUserCompaniesString: () => {
