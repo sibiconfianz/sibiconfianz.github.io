@@ -207,7 +207,7 @@ export default class App extends React.Component<AppProps, AppState> {
                                     onClick={() => {
                                         this.goToLogin();
                                     }}>
-                                    {_t('Login')}
+                                    {_t('Login --')}
                                 </div>
                             </MessageBar>
                         </>,
