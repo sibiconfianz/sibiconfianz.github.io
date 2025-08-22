@@ -57,7 +57,6 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
 
     private logRequest = async (event): Promise<any> => {
         event.stopPropagation();
-
         const item = Office.context.mailbox.item;
         const isCompose = typeof item.body.setAsync === 'function';
         this.setState({ logged: 1 });
@@ -195,7 +194,7 @@ class Logger extends React.Component<LoggerProps, LoggerState> {
 
             requestJson.message = doc.body.innerHTML;
             requestJson.attachments = attachments;
-
+            console.log('tag emal', api.baseURL + api.logSingleMail)
             const logRequest = sendHttpRequest(
                 HttpVerb.POST,
                 api.baseURL + api.logSingleMail,
